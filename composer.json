@@ -1,0 +1,22 @@
+{
+  "name": "humanmade/cms",
+  "description": "CMS Module for Platform",
+  "type": "composer-plugin",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Human Made",
+      "email": "hello@humanmade.com"
+    }
+  ],
+  "require": {
+    "johnpbloch/wordpress": "5.0.3",
+    "composer-plugin-api": "^1.1"
+  },
+  "extra": {
+    "class": "HM\\Platform\\CMS\\Composer\\Plugin"
+  },
+  "autoload": {
+    "classmap": [ "inc/" ]
+  }
+}
