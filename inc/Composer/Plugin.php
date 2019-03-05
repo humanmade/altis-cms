@@ -8,8 +8,22 @@ use Composer\Plugin\PluginInterface;
 use Composer\EventDispatcher\EventSubscriberInterface;
 
 class Plugin implements PluginInterface, EventSubscriberInterface {
+
+	/**
+	 * Activate is not used, but is part of the abstract class.
+	 *
+	 * @param Composer $composer
+	 * @param IOInterface $io
+	 * @return void
+	 */
 	public function activate( Composer $composer, IOInterface $io ) {
 	}
+
+	/**
+	 * Register the composer events we want to run on.
+	 *
+	 * @return array
+	 */
 	public static function getSubscribedEvents() : array {
 		return [
 			'post-update-cmd' => [ 'on_post_update_cmd' ],
