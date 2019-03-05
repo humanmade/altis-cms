@@ -9,9 +9,15 @@
  * directory.
  */
 
+// Load the plugin API (like add_action etc) early, so everything loaded
+// via the Composer autoloaders can using actions.
+require_once __DIR__ . '/wordpress/wp-includes/plugin.php';
+
 // Load the whole autoloader very early, this will also include
 // all `autoload.files` from all modules.
 require_once __DIR__ . '/vendor/autoload.php';
+
+do_action( 'loaded_autoloader' );
 
 if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', __DIR__ . '/wordpress/' );
