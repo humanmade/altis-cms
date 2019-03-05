@@ -31,6 +31,11 @@ class Plugin implements PluginInterface, EventSubscriberInterface {
 		];
 	}
 
+	/**
+	 * Install additional files to the project on update / install
+	 *
+	 * @return void
+	 */
 	public function install_files() {
 		$source = dirname( __DIR__, 2 );
 		$dest   = dirname( $source, 3 );
