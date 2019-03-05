@@ -9,6 +9,9 @@
  * directory.
  */
 
+// Provide a reference to the app root directory early.
+define( 'ROOT_DIR', __DIR__ );
+
 // Load the plugin API (like add_action etc) early, so everything loaded
 // via the Composer autoloaders can using actions.
 require_once __DIR__ . '/wordpress/wp-includes/plugin.php';
