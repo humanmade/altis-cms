@@ -26,14 +26,15 @@ class Plugin implements PluginInterface, EventSubscriberInterface {
 	 */
 	public static function getSubscribedEvents() : array {
 		return [
-			'post-update-cmd' => [ 'on_post_update_cmd' ],
-			'pre-install-cmd' => [ 'on_post_update_cmd' ],
+			'post-update-cmd' => [ 'install_files' ],
+			'pre-install-cmd' => [ 'install_files' ],
 		];
 	}
 
-	public function on_post_update_cmd() {
-		$source = dirname( dirname( __DIR__ ) );
-		$dest = dirname( dirname( dirname( $source ) ) );
+	public function install_files() {
+		$source = dirname( __DIR__, 2 );
+		$dest   = dirname( $source, 3 );
+
 		copy( $source . '/index.php', $dest . '/index.php' );
 		copy( $source . '/wp-config.php', $dest . '/wp-config.php' );
 
