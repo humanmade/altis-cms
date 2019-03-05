@@ -22,7 +22,8 @@ if ( ! defined( 'WP_CONTENT_DIR' ) ) {
 }
 
 if ( ! defined( 'WP_CONTENT_URL' ) ) {
-	define( 'WP_CONTENT_URL', 'http://' . $_SERVER['HTTP_HOST'] . '/content' );
+	$protocol = ! empty( $_SERVER['HTTPS'] ) ? 'https' : 'http';
+	define( 'WP_CONTENT_URL', $protocol . '://' . $_SERVER['HTTP_HOST'] . '/content' );
 }
 
 if ( ! defined( 'WP_INSTALLING' ) || ! WP_INSTALLING ) {
