@@ -14,7 +14,6 @@ class Plugin implements PluginInterface, EventSubscriberInterface {
 	 *
 	 * @param Composer $composer
 	 * @param IOInterface $io
-	 * @return void
 	 */
 	public function activate( Composer $composer, IOInterface $io ) {
 	}
@@ -33,8 +32,6 @@ class Plugin implements PluginInterface, EventSubscriberInterface {
 
 	/**
 	 * Install additional files to the project on update / install
-	 *
-	 * @return void
 	 */
 	public function install_files() {
 		$source = dirname( __DIR__, 2 );
