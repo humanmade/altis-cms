@@ -17,8 +17,6 @@
     "class": "HM\\Platform\\CMS\\Composer\\Plugin"
   },
   "autoload": {
-    "psr-4": {
-      "HM\\Platform\\CMS\\": "inc/"
-    }
+    "classmap": [ "inc/" ]
   }
 }

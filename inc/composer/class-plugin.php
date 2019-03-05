@@ -3,9 +3,9 @@
 namespace HM\Platform\CMS\Composer;
 
 use Composer\Composer;
+use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
-use Composer\EventDispatcher\EventSubscriberInterface;
 
 class Plugin implements PluginInterface, EventSubscriberInterface {
 
