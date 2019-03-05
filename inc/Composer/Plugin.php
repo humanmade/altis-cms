@@ -43,8 +43,14 @@ class Plugin implements PluginInterface, EventSubscriberInterface {
 			file_put_contents( $dest . '/.gitignore', "wordpress/\nindex.php\nwp-config.php" );
 		}
 
-		@mkdir( $dest . '/content' ); // @codingStandardsIgnoreLine
-		@mkdir( $dest . '/content/plugins' ); // @codingStandardsIgnoreLine
-		@mkdir( $dest . '/content/themes' ); // @codingStandardsIgnoreLine
+		if ( ! is_dir( $dest . '/content' ) ) {
+			mkdir( $dest . '/content' );
+		}
+		if ( ! is_dir( $dest . '/content/plugins' ) ) {
+			mkdir( $dest . '/content/plugins' );
+		}
+		if ( ! is_dir( $dest . '/content/themes' ) ) {
+			mkdir( $dest . '/content/themes' );
+		}
 	}
 }
