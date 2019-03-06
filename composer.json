@@ -17,6 +17,10 @@
     "class": "HM\\Platform\\CMS\\Composer\\Plugin"
   },
   "autoload": {
-    "classmap": [ "inc/" ]
+    "classmap": [ "inc/" ],
+    "files": [
+      "inc/remove_updates/namespace.php",
+      "load.php"
+    ]
   }
 }
