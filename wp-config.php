@@ -20,7 +20,7 @@ require_once __DIR__ . '/wordpress/wp-includes/plugin.php';
 // all `autoload.files` from all modules.
 require_once __DIR__ . '/vendor/autoload.php';
 
-do_action( 'loaded_autoloader' );
+do_action( 'hm-platform.loaded_autoloader' );
 
 if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', __DIR__ . '/wordpress/' );
