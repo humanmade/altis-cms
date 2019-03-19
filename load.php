@@ -1,6 +1,7 @@
 <?php
 
 namespace HM\Platform\CMS;
+
 use function HM\Platform\register_module;
 
 require_once __DIR__ . '/inc/namespace.php';
