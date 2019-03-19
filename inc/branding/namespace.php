@@ -21,8 +21,6 @@ function remove_wordpress_admin_bar_item() {
 
 /**
  * Remove dashboard widgets that are not useful.
- *
- * @return void
  */
 function remove_dashboard_widgets() {
 	remove_meta_box( 'dashboard_primary', [ 'dashboard', 'dashboard-network', 'dashboard-user' ], 'side' );
