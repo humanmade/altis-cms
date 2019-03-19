@@ -19,7 +19,6 @@
   "autoload": {
     "classmap": [ "inc/" ],
     "files": [
-      "inc/remove_updates/namespace.php",
       "load.php"
     ]
   }

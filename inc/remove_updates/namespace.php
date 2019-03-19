@@ -2,6 +2,11 @@
 
 namespace HM\Platform\CMS\Remove_Updates;
 
+function bootstrap() {
+	add_action( 'admin_init', 'HM\\Platform\\CMS\\Remove_Updates\\remove_update_nag' );
+	add_action( 'plugins_loaded', 'HM\\Platform\\CMS\\Remove_Updates\\remove_update_check_cron' );
+}
+
 /**
  * Remove the update nag messages from the admin header.
  *
