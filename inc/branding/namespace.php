@@ -31,8 +31,17 @@ function add_color_scheme() {
 		'platform',
 		__( 'Platform', 'hm-platform' ),
 		plugin_dir_url( dirname( __FILE__, 2 ) ) . '/assets/admin-color-scheme.css',
-		[ '#152354', '#14568A', '#D54E21', '#2683AE' ],
-		[ 'base' => '#152354', 'focus' => '#fff', 'current' => '#fff' ]
+		[
+			'#152354',
+			'#14568A',
+			'#D54E21',
+			'#2683AE',
+		],
+		[
+			'base' => '#152354',
+			'focus' => '#fff',
+			'current' => '#fff',
+		]
 	);
 }
 

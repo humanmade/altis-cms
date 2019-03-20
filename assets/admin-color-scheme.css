@@ -9,32 +9,34 @@
 
   /* Links */
   a {
-	color: #0073aa;
+  color: #0073aa;
+  awd: #4667de;
+  awd: #152a4e;
   }
 
   a:hover, a:active, a:focus {
-	color: #0096dd;
+	color: #4667de;
   }
 
   #media-upload a.del-link:hover,
   div.dashboard-widget-submit input:hover,
   .subsubsub a:hover,
   .subsubsub a.current:hover {
-	color: #0096dd;
+	color: #4667de;
   }
 
   /* Forms */
   input[type=checkbox]:checked:before {
-	color: #263a88;
+	color: #152a4e;
   }
 
   input[type=radio]:checked:before {
-	background: #263a88;
+	background: #152a4e;
   }
 
   .wp-core-ui input[type="reset"]:hover,
   .wp-core-ui input[type="reset"]:active {
-	color: #0096dd;
+	color: #4667de;
   }
 
   /* Core UI */
@@ -65,7 +67,7 @@
 
   .wp-core-ui .button-primary[disabled], .wp-core-ui .button-primary:disabled, .wp-core-ui .button-primary.button-primary-disabled, .wp-core-ui .button-primary.disabled {
 	color: #d1cdc7 !important;
-	background: #db9925 !important;
+	background: #4667de !important;
 	border-color: #5155ef !important;
 	text-shadow: none !important;
   }
@@ -89,11 +91,11 @@
 
   .wp-core-ui .wp-ui-highlight {
 	color: #fff;
-	background-color: #263a88;
+	background-color: #3FCF8E;
   }
 
   .wp-core-ui .wp-ui-text-highlight {
-	color: #263a88;
+	color: #3FCF8E;
   }
 
   .wp-core-ui .wp-ui-notification {
@@ -115,7 +117,7 @@
   .tablenav .tablenav-pages a:hover,
   .tablenav .tablenav-pages a:focus {
 	color: #fff;
-	background-color: #152354;
+	background-color: #3FCF8E;
   }
 
   .view-switch a.current:before {
@@ -146,7 +148,7 @@
   #adminmenu li.opensub > a.menu-top,
   #adminmenu li > a.menu-top:focus {
 	color: #fff;
-	background-color: #263a88;
+	background-color: #3FCF8E;
   }
 
   #adminmenu li.menu-top:hover div.wp-menu-image:before,
@@ -224,7 +226,7 @@
   #adminmenu li.wp-has-current-submenu .wp-submenu .wp-submenu-head,
   .folded #adminmenu li.current.menu-top {
 	color: #fff;
-	background: #263a88;
+	background: #3FCF8E;
   }
 
   #adminmenu li.wp-has-current-submenu div.wp-menu-image:before,
@@ -392,50 +394,50 @@
 
   /* Pointers */
   .wp-pointer .wp-pointer-content h3 {
-	background-color: #263a88;
+	background-color: #152a4e;
 	border-color: #07526c;
   }
 
   .wp-pointer .wp-pointer-content h3:before {
-	color: #263a88;
+	color: #152a4e;
   }
 
   .wp-pointer.wp-pointer-top .wp-pointer-arrow,
   .wp-pointer.wp-pointer-top .wp-pointer-arrow-inner,
   .wp-pointer.wp-pointer-undefined .wp-pointer-arrow,
   .wp-pointer.wp-pointer-undefined .wp-pointer-arrow-inner {
-	border-bottom-color: #263a88;
+	border-bottom-color: #152a4e;
   }
 
   /* Media */
   .media-item .bar,
   .media-progress-bar div {
-	background-color: #263a88;
+	background-color: #152a4e;
   }
 
   .details.attachment {
-	box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 7px #263a88;
+	box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 7px #152a4e;
   }
 
   .attachment.details .check {
-	background-color: #263a88;
-	box-shadow: 0 0 0 1px #fff, 0 0 0 2px #263a88;
+	background-color: #152a4e;
+	box-shadow: 0 0 0 1px #fff, 0 0 0 2px #152a4e;
   }
 
   .media-selection .attachment.selection.details .thumbnail {
-	box-shadow: 0 0 0 1px #fff, 0 0 0 3px #263a88;
+	box-shadow: 0 0 0 1px #fff, 0 0 0 3px #152a4e;
   }
 
   /* Themes */
   .theme-browser .theme.active .theme-name,
   .theme-browser .theme.add-new-theme a:hover:after,
   .theme-browser .theme.add-new-theme a:focus:after {
-	background: #263a88;
+	background: #152a4e;
   }
 
   .theme-browser .theme.add-new-theme a:hover span:after,
   .theme-browser .theme.add-new-theme a:focus span:after {
-	color: #263a88;
+	color: #152a4e;
   }
 
   .theme-section.current,
@@ -454,7 +456,7 @@
 
   body.more-filters-opened .more-filters:hover,
   body.more-filters-opened .more-filters:focus {
-	background-color: #263a88;
+	background-color: #152a4e;
 	color: #fff;
   }
 
@@ -465,7 +467,7 @@
 
   /* Widgets */
   .widgets-chooser li.widgets-chooser-selected {
-	background-color: #263a88;
+	background-color: #152a4e;
 	color: #fff;
   }
 
@@ -481,7 +483,7 @@
 
   .wp-responsive-open div#wp-responsive-toggle a {
 	border-color: transparent;
-	background: #263a88;
+	background: #152a4e;
   }
 
   .wp-responsive-open #wpadminbar #wp-admin-bar-menu-toggle a {
@@ -498,5 +500,5 @@
   .mce-container.mce-menu .mce-menu-item:focus,
   .mce-container.mce-menu .mce-menu-item-normal.mce-active,
   .mce-container.mce-menu .mce-menu-item-preview.mce-active {
-	background: #263a88;
+	background: #152a4e;
   }
