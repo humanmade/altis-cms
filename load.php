@@ -1,6 +1,7 @@
 <?php
 
-namespace HM\Platform\CMS;
+namespace HM\Platform\CMS; // @codingStandardsIgnoreLine
+
 use function HM\Platform\register_module;
 
 require_once __DIR__ . '/inc/namespace.php';
@@ -14,5 +15,3 @@ add_action( 'hm-platform.modules.init', function () {
 	];
 	register_module( 'cms', __DIR__, 'CMS', $default_settings, __NAMESPACE__ . '\\bootstrap' );
 } );
-
-
