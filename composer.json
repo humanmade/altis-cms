@@ -17,6 +17,9 @@
     "class": "HM\\Platform\\CMS\\Composer\\Plugin"
   },
   "autoload": {
-    "classmap": [ "inc/" ]
+    "classmap": [ "inc/" ],
+    "files": [
+      "load.php"
+    ]
   }
 }
