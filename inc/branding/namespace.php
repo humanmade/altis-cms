@@ -95,7 +95,10 @@ function detect_missing_default_theme() {
 	$message = sprintf(
 		'<h1>%s</h1><p>%s</p><p><small>%s</small></p>',
 		$title,
-		__( 'HM Platform is installed and ready to go. Activate a theme to get started.', 'hm-platform' ),
+		sprintf(
+			__( 'HM Platform is installed and ready to go. <a href="%s">Activate a theme to get started</a>.', 'hm-platform' ),
+			admin_url( 'themes.php' )
+		),
 		__( 'You‘re seeing this page because debug mode is enabled, and the default theme directory is missing.', 'hm-platform' )
 	);
 
