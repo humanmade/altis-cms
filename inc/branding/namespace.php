@@ -2,6 +2,14 @@
 
 namespace HM\Platform\CMS\Branding;
 
+const COLOR_BLUE = '#4667de';
+const COLOR_DARKBLUE = '#152a4e';
+const COLOR_GREEN = '#3FCF8E';
+const COLOR_OFFWHITE = '#f3f5f9';
+
+/**
+ * Bootstrap the branding.
+ */
 function bootstrap() {
 	add_action( 'add_admin_bar_menus', __NAMESPACE__ . '\\remove_wordpress_admin_bar_item' );
 	add_filter( 'admin_footer_text', '__return_empty_string' );
@@ -26,21 +34,24 @@ function remove_dashboard_widgets() {
 	remove_meta_box( 'dashboard_primary', [ 'dashboard', 'dashboard-network', 'dashboard-user' ], 'side' );
 }
 
+/**
+ * Add the Platform color scheme to the user options.
+ */
 function add_color_scheme() {
 	wp_admin_css_color(
 		'platform',
 		__( 'Platform', 'hm-platform' ),
 		plugin_dir_url( dirname( __FILE__, 2 ) ) . '/assets/admin-color-scheme.css',
 		[
-			'#152354',
-			'#14568A',
-			'#D54E21',
-			'#2683AE',
+			COLOR_BLUE,
+			COLOR_DARKBLUE,
+			COLOR_GREEN,
+			COLOR_OFFWHITE,
 		],
 		[
-			'base' => '#152354',
-			'focus' => '#fff',
-			'current' => '#fff',
+			'base' => '#e5f8ff',
+			'focus' => 'white',
+			'current' => 'white',
 		]
 	);
 }
