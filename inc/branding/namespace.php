@@ -75,7 +75,7 @@ function override_default_color_scheme( $value ) : string {
  */
 function detect_missing_default_theme() {
 	$env = get_environment_type();
-	if ( $env !== 'development' && $env !== 'local' ) {
+	if ( ! in_array( $env, [ 'development', 'local' ], true ) ) {
 		return;
 	}
 
