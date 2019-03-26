@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'WP_CONTENT_DIR' ) ) {
-	define( 'WP_CONTENT_DIR', $_SERVER['DOCUMENT_ROOT'] . '/content' );
+	define( 'WP_CONTENT_DIR', __DIR__ . '/content' );
 }
 
 if ( ! defined( 'WP_CONTENT_URL' ) ) {

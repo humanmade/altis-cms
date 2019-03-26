@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "johnpbloch/wordpress": "5.0.3",
+    "johnpbloch/wordpress": "5.1.1",
     "composer-plugin-api": "^1.1"
   },
   "extra": {
