@@ -2,9 +2,12 @@
 
 namespace HM\Platform\CMS\Remove_Updates;
 
+/**
+ * Boostrap setup to remove updates from the admin.
+ */
 function bootstrap() {
-	add_action( 'admin_init', 'HM\\Platform\\CMS\\Remove_Updates\\remove_update_nag' );
-	add_action( 'plugins_loaded', 'HM\\Platform\\CMS\\Remove_Updates\\remove_update_check_cron' );
+	add_action( 'admin_init', __NAMESPACE__ . '\\remove_update_nag' );
+	add_action( 'plugins_loaded', __NAMESPACE__ . '\\remove_update_check_cron' );
 }
 
 /**

@@ -4,10 +4,10 @@ namespace HM\Platform\CMS;
 
 use function HM\Platform\get_config;
 
+/**
+ * Main bootstrap / entry point for the CMS module.
+ */
 function bootstrap() {
-	require_once __DIR__ . '/remove_updates/namespace.php';
-	require_once __DIR__ . '/branding/namespace.php';
-
 	$config = get_config()['modules']['cms'];
 	Remove_Updates\bootstrap();
 
@@ -22,8 +22,6 @@ function bootstrap() {
 
 /**
  * Add the custom login logo to the login page.
- *
- * @return void
  */
 function add_login_logo() {
 	$logo = get_config()['modules']['cms']['login-logo'];
