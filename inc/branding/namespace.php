@@ -8,7 +8,7 @@ use WP_Theme;
 
 const COLOR_BLUE = '#4667de';
 const COLOR_DARKBLUE = '#152a4e';
-const COLOR_GREEN = '#3FCF8E';
+const COLOR_GREEN = '#3fcf8e';
 const COLOR_OFFWHITE = '#f3f5f9';
 
 /**
