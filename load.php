@@ -12,9 +12,10 @@ require_once __DIR__ . '/inc/block_editor/namespace.php';
 // Register core module.
 add_action( 'hm-platform.modules.init', function () {
 	$default_settings = [
-		'enabled'    => true,
-		'branding'   => true,
-		'login-logo' => null,
+		'enabled'       => true,
+		'branding'      => true,
+		'login-logo'    => null,
+		'shared-blocks' => true,
 	];
 	register_module( 'cms', __DIR__, 'CMS', $default_settings, __NAMESPACE__ . '\\bootstrap' );
 } );

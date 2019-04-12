@@ -10,7 +10,6 @@ use function HM\Platform\get_config;
 function bootstrap() {
 	$config = get_config()['modules']['cms'];
 	Remove_Updates\bootstrap();
-	Block_Editor\bootstrap();
 
 	if ( $config['branding'] ) {
 		Branding\bootstrap();
@@ -18,6 +17,10 @@ function bootstrap() {
 
 	if ( $config['login-logo'] ) {
 		add_action( 'login_header', __NAMESPACE__ . '\\add_login_logo' );
+	}
+
+	if ( $config['shared-blocks'] ) {
+		Block_Editor\bootstrap();
 	}
 }
 
