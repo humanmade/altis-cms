@@ -10,6 +10,7 @@ use function HM\Platform\get_config;
 function bootstrap() {
 	$config = get_config()['modules']['cms'];
 	Remove_Updates\bootstrap();
+	Block_Editor\bootstrap();
 
 	if ( $config['branding'] ) {
 		Branding\bootstrap();
