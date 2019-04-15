@@ -8,6 +8,11 @@ require_once __DIR__ . '/inc/namespace.php';
 require_once __DIR__ . '/inc/remove_updates/namespace.php';
 require_once __DIR__ . '/inc/branding/namespace.php';
 
+// Don't self-initialize if this is not a Platform execution.
+if ( ! function_exists( 'add_action' ) ) {
+	return;
+}
+
 // Register core module.
 add_action( 'hm-platform.modules.init', function () {
 	$default_settings = [
