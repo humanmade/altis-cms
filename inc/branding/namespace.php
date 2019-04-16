@@ -35,6 +35,7 @@ function bootstrap() {
 	add_action( 'admin_init', __NAMESPACE__ . '\\add_color_scheme' );
 	add_filter( 'get_user_option_admin_color', __NAMESPACE__ . '\\override_default_color_scheme' );
 	add_action( 'template_redirect', __NAMESPACE__ . '\\detect_missing_default_theme' );
+	add_action( 'plugins_loaded', __NAMESPACE__ . '\\remove_color_schemes' );
 }
 
 /**
@@ -90,10 +91,6 @@ function enqueue_admin_scripts() {
  * @return string
  */
 function override_default_color_scheme( $value ) : string {
-	if ( $value ) {
-		return $value;
-	}
-
 	return 'platform';
 }
 
@@ -154,4 +151,16 @@ function admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
 	];
 
 	$wp_admin_bar->add_menu( $logo_menu_args );
+}
+
+/**
+ * Remove the WordPress admin color schemes.
+ *
+ * In Platform we have a single color scheme, so we don't need the default WordPress ones,
+ * and we don't need the color scheme picker.
+ *
+ */
+function remove_color_schemes() {
+	remove_action( 'admin_init', 'register_admin_color_schemes', 1 );
+	remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
 }
