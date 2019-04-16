@@ -144,7 +144,7 @@ function detect_missing_default_theme() {
  */
 function admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
 	$logo_menu_args = [
-		'id'    => 'hm-platform-logo',
+		'id'    => 'hm-platform',
 		'title' => '<span class="icon">' . LOGO . '</span>',
 	];
 
