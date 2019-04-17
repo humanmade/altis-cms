@@ -21,6 +21,10 @@ function bootstrap() {
 
 	if ( $config['custom-meta-boxes'] ) {
 		Custom_Meta_Boxes\bootstrap();
+  }
+    
+	if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {
+		define( 'DISALLOW_FILE_EDIT', true );
 	}
 }
 
