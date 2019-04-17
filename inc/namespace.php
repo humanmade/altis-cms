@@ -18,6 +18,10 @@ function bootstrap() {
 	if ( $config['login-logo'] ) {
 		add_action( 'login_header', __NAMESPACE__ . '\\add_login_logo' );
 	}
+
+	if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {
+		define( 'DISALLOW_FILE_EDIT', true );
+	}
 }
 
 /**
