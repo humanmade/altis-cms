@@ -42,6 +42,12 @@ add_action( 'cmb2_init', function () {
 } );
 ```
 
+The metadata can then be retrieved using `get_post_meta()`.
+
+```php
+$short_title = get_post_meta( get_the_ID(), 'short-title', true );
+```
+
 You can [find complete documentation for CMB2 here](https://cmb2.io/) and [full code examples for creating each type of form in the `example-functions.php` file of the CMB2 plugin](https://github.com/CMB2/CMB2/blob/develop/example-functions.php).
 
 ## Disabling the framework
