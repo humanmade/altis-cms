@@ -657,3 +657,19 @@ select:focus,
 textarea:focus {
 	border-color: #4667de;
 }
+
+.components-modal__content input[type="checkbox"]:checked,
+.components-modal__content input[type="radio"]:checked,
+.components-popover input[type="checkbox"]:checked,
+.components-popover input[type="radio"]:checked,
+.edit-post-sidebar input[type="checkbox"]:checked,
+.edit-post-sidebar input[type="radio"]:checked,
+.editor-block-list__block input[type="checkbox"]:checked,
+.editor-block-list__block input[type="radio"]:checked,
+.editor-post-permalink input[type="checkbox"]:checked,
+.editor-post-permalink input[type="radio"]:checked,
+.editor-post-publish-panel input[type="checkbox"]:checked,
+.editor-post-publish-panel input[type="radio"]:checked {
+	border-color: #4667de;
+	background: #4667de;
+}
