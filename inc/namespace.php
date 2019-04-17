@@ -2,8 +2,8 @@
 
 namespace HM\Platform\CMS;
 
-use function HM\Platform\get_config;
 use const HM\Platform\ROOT_DIR;
+use function HM\Platform\get_config;
 
 /**
  * Main bootstrap / entry point for the CMS module.
