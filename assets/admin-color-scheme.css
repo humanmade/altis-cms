@@ -673,3 +673,21 @@ textarea:focus {
 	border-color: #4667de;
 	background: #4667de;
 }
+
+.components-form-toggle.is-checked .components-form-toggle__track {
+	background-color: #4667de;
+}
+
+.components-popover input[type=search].editor-inserter__search:focus {
+	border-color: #4667de;
+	box-shadow: 0 0 0 1px #4667de;
+}
+
+.editor-block-list__insertion-point-inserter .editor-inserter__toggle {
+	color: #4667de;
+}
+
+.components-form-token-field__input-container.is-active {
+	border-color: #4667de;
+	box-shadow: 0 0 0 1px #4667de;
+}
