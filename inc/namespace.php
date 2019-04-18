@@ -21,6 +21,10 @@ function bootstrap() {
 	}
 
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_plugins', 1 );
+
+	if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {
+		define( 'DISALLOW_FILE_EDIT', true );
+	}
 }
 
 /**
