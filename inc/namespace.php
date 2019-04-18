@@ -21,6 +21,10 @@ function bootstrap() {
 
 	if ( $config['shared-blocks'] ) {
 		Block_Editor\bootstrap();
+  }
+
+	if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {
+		define( 'DISALLOW_FILE_EDIT', true );
 	}
 }
 
