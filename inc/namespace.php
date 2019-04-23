@@ -2,6 +2,7 @@
 
 namespace HM\Platform\CMS;
 
+use const HM\Platform\ROOT_DIR;
 use function HM\Platform\get_config;
 
 /**
@@ -18,6 +19,8 @@ function bootstrap() {
 	if ( $config['login-logo'] ) {
 		add_action( 'login_header', __NAMESPACE__ . '\\add_login_logo' );
 	}
+
+	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_plugins', 1 );
 
 	if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {
 		define( 'DISALLOW_FILE_EDIT', true );
@@ -38,4 +41,11 @@ function add_login_logo() {
 		}
 	</style>
 	<?php
+}
+
+/**
+ * Load plugins that are bundled with the CMS module.
+ */
+function load_plugins() {
+	require_once ROOT_DIR . '/vendor/stuttter/wp-user-signups/wp-user-signups.php';
 }
