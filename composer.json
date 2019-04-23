@@ -12,7 +12,8 @@
   "require": {
     "johnpbloch/wordpress": "5.1.1",
     "composer-plugin-api": "^1.1",
-    "cmb2/cmb2": "2.6.0"
+    "cmb2/cmb2": "2.6.0",
+    "stuttter/wp-user-signups": "3.1.0"
   },
   "extra": {
     "class": "HM\\Platform\\CMS\\Composer\\Plugin"

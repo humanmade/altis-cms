@@ -35,6 +35,7 @@ function bootstrap() {
 	add_action( 'admin_init', __NAMESPACE__ . '\\add_color_scheme' );
 	add_filter( 'get_user_option_admin_color', __NAMESPACE__ . '\\override_default_color_scheme' );
 	add_action( 'template_redirect', __NAMESPACE__ . '\\detect_missing_default_theme' );
+	add_filter( 'admin_title', __NAMESPACE__ . '\\override_admin_title' );
 }
 
 /**
@@ -154,4 +155,16 @@ function admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
 	];
 
 	$wp_admin_bar->add_menu( $logo_menu_args );
+}
+
+/**
+ * Override the admin title.
+ *
+ * WordPress puts a '> WordPress' after all the <title>.
+ *
+ * @param string $admin_title
+ * @return string
+ */
+function override_admin_title( string $admin_title ) : string {
+	return str_replace( ' &#8212; WordPress', ' &#8212; HM Platform', $admin_title );
 }
