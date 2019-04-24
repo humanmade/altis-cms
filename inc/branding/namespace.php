@@ -99,7 +99,6 @@ function override_default_color_scheme( $value ) : string {
 	return 'platform';
 }
 
-
 /**
  * Filter meta for new users to set admin_color to HM theme.
  *
@@ -117,7 +116,6 @@ function insert_user_meta( array $meta, $user, $update ) : array {
 
 	return $meta;
 }
-
 
 /**
  * Detect a missing default theme.
