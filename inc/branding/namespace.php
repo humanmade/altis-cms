@@ -36,6 +36,7 @@ function bootstrap() {
 	add_filter( 'get_user_option_admin_color', __NAMESPACE__ . '\\override_default_color_scheme' );
 	add_action( 'template_redirect', __NAMESPACE__ . '\\detect_missing_default_theme' );
 	add_filter( 'admin_title', __NAMESPACE__ . '\\override_admin_title' );
+	add_filter( 'insert_user_meta', __NAMESPACE__ . '\\insert_user_meta', 10, 3 );
 }
 
 /**
@@ -78,7 +79,7 @@ function add_color_scheme() {
  * Enqueue the branding scripts and styles
  */
 function enqueue_admin_scripts() {
-	wp_enqueue_style( 'hm-platform-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . '/assets/branding.css', [], '1.1.0' );
+	wp_enqueue_style( 'hm-platform-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . '/assets/branding.css', [], '2019-04-24-1' );
 }
 
 /**
@@ -96,6 +97,24 @@ function override_default_color_scheme( $value ) : string {
 	}
 
 	return 'platform';
+}
+
+/**
+ * Filter meta for new users to set admin_color to HM theme.
+ *
+ * @param array    $meta
+ * @param \WP_User $user
+ * @param bool     $update
+ * @return array
+ */
+function insert_user_meta( array $meta, $user, $update ) : array {
+	if ( $update ) {
+		return $meta;
+	}
+
+	$meta['admin_color'] = 'platform';
+
+	return $meta;
 }
 
 /**
