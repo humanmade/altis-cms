@@ -520,17 +520,7 @@ ul.striped > :nth-child(odd) {
 	border-color: #436cff;
 	background: #436cff;
 	color: #fff;
-	box-shadow: #152a4e 0 3px 4px 0;
-	transition: 0.3s;
-}
-
-.components-button.is-default:hover,
-.wp-core-ui .button:hover,
-.wp-core-ui .button-secondary:hover {
-	border-color: #436cff;
-	background: #436cff;
-	color: #fff;
-	box-shadow: #152a4e 0 3px 4px 0;
+	box-shadow: rgba( 21, 42, 78, 0.125 ) 0 3px 4px 0;
 	transition: 0.3s;
 }
 
@@ -565,7 +555,7 @@ ul.striped > :nth-child(odd) {
 .wrap .add-new-h2:hover,
 .wrap .page-title-action:hover {
 	background: #436cff;
-	box-shadow: #152a4e 0 3px 4px 0;
+	box-shadow: rgba( 21, 42, 78, 0.188 ) 0 3px 4px 0;
 	border: 1px #4667de solid;
 	transition: 0.2s;
 }
