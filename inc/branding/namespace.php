@@ -60,7 +60,7 @@ function add_color_scheme() {
 	wp_admin_css_color(
 		'platform',
 		__( 'Platform', 'hm-platform' ),
-		plugin_dir_url( dirname( __FILE__, 2 ) ) . '/assets/admin-color-scheme.css',
+		add_query_arg( 'version', '2019-04-25-1', plugin_dir_url( dirname( __FILE__, 2 ) ) . '/assets/admin-color-scheme.css' ),
 		[
 			COLOR_BLUE,
 			COLOR_DARKBLUE,
