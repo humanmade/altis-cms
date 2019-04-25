@@ -10,6 +10,7 @@
     }
   ],
   "require": {
+    "php": ">=7.1",
     "johnpbloch/wordpress": "5.1.1",
     "composer-plugin-api": "^1.1",
     "stuttter/wp-user-signups": "3.1.0"
