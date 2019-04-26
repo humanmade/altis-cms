@@ -83,7 +83,7 @@ function admin_menu() {
 	}
 
 	$ptype_menu_position = is_int( $ptype_obj->menu_position ) ? $ptype_obj->menu_position : ++$_wp_last_object_menu; // If we're to use $_wp_last_object_menu, increment it first.
-	$ptype_for_id        = sanitize_html_class( $ptype );
+	$ptype_for_id = sanitize_html_class( $ptype );
 
 	$menu_icon = 'dashicons-admin-post';
 	if ( is_string( $ptype_obj->menu_icon ) ) {
@@ -97,8 +97,8 @@ function admin_menu() {
 
 	$menu_class = 'menu-top menu-icon-' . $ptype_for_id;
 
-	$ptype_file     = "edit.php?post_type=$ptype";
-	$post_new_file  = "post-new.php?post_type=$ptype";
+	$ptype_file = "edit.php?post_type=$ptype";
+	$post_new_file = "post-new.php?post_type=$ptype";
 	$edit_tags_file = "edit-tags.php?taxonomy=%s&amp;post_type=$ptype";
 
 	$ptype_menu_id = 'menu-posts-' . $ptype_for_id;
@@ -107,21 +107,21 @@ function admin_menu() {
 		* If $ptype_menu_position is already populated or will be populated
 		* by a hard-coded value below, increment the position.
 		*/
-	$core_menu_positions = array( 59, 60, 65, 70, 75, 80, 85, 99 );
+	$core_menu_positions = [ 59, 60, 65, 70, 75, 80, 85, 99 ];
 	while ( isset( $menu[ $ptype_menu_position ] ) || in_array( $ptype_menu_position, $core_menu_positions ) ) {
 		$ptype_menu_position++;
 	}
 
-	$menu[ $ptype_menu_position ] = array( esc_attr( $ptype_obj->labels->menu_name ), $ptype_obj->cap->edit_posts, $ptype_file, '', $menu_class, $ptype_menu_id, $menu_icon );
-	$submenu[ $ptype_file ][5]    = array( $ptype_obj->labels->all_items, $ptype_obj->cap->edit_posts, $ptype_file );
-	$submenu[ $ptype_file ][10]   = array( $ptype_obj->labels->add_new, $ptype_obj->cap->create_posts, $post_new_file );
+	$menu[ $ptype_menu_position ] = [ esc_attr( $ptype_obj->labels->menu_name ), $ptype_obj->cap->edit_posts, $ptype_file, '', $menu_class, $ptype_menu_id, $menu_icon ];
+	$submenu[ $ptype_file ][5] = [ $ptype_obj->labels->all_items, $ptype_obj->cap->edit_posts, $ptype_file ];
+	$submenu[ $ptype_file ][10] = [ $ptype_obj->labels->add_new, $ptype_obj->cap->create_posts, $post_new_file ];
 
 	$i = 15;
-	foreach ( get_taxonomies( array(), 'objects' ) as $tax ) {
+	foreach ( get_taxonomies( [], 'objects' ) as $tax ) {
 		if ( ! $tax->show_ui || ! $tax->show_in_menu || ! in_array( $ptype, (array) $tax->object_type, true ) ) {
 			continue;
 		}
 
-		$submenu[ $ptype_file ][ $i++ ] = array( esc_attr( $tax->labels->menu_name ), $tax->cap->manage_terms, sprintf( $edit_tags_file, $tax->name ) );
+		$submenu[ $ptype_file ][ $i++ ] = [ esc_attr( $tax->labels->menu_name ), $tax->cap->manage_terms, sprintf( $edit_tags_file, $tax->name ) ];
 	}
 }
