@@ -20,6 +20,10 @@ function bootstrap() {
 		add_action( 'login_header', __NAMESPACE__ . '\\add_login_logo' );
 	}
 
+	if ( $config['shared-blocks'] ) {
+		Block_Editor\bootstrap();
+	}
+
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_plugins', 1 );
 
 	if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {
