@@ -25,6 +25,8 @@ function bootstrap() {
 	if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {
 		define( 'DISALLOW_FILE_EDIT', true );
 	}
+
+	add_filter( 'pre_site_option_fileupload_maxk', __NAMESPACE__ . '\\override_fileupload_maxk_option' );
 }
 
 /**
@@ -48,4 +50,13 @@ function add_login_logo() {
  */
 function load_plugins() {
 	require_once ROOT_DIR . '/vendor/stuttter/wp-user-signups/wp-user-signups.php';
+}
+
+/**
+ * Increase the max upload size (in kb) to 1GB.
+ *
+ * @return integer
+ */
+function override_fileupload_maxk_option() : int {
+	return 1024 * 1024;
 }
