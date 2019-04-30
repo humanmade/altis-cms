@@ -11,7 +11,7 @@
   "require": {
     "php": ">=7.1",
     "stuttter/wp-user-signups": "3.1.0",
-    "humanmade/cms-installer": "dev-master"
+    "humanmade/cms-installer": "*"
   },
   "extra": {
     "class": "HM\\Platform\\CMS\\Composer\\Plugin"
