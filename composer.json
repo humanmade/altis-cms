@@ -1,7 +1,6 @@
 {
   "name": "humanmade/cms",
   "description": "CMS Module for Platform",
-  "type": "composer-plugin",
   "license": "GPL-2.0-or-later",
   "authors": [
     {
@@ -11,9 +10,8 @@
   ],
   "require": {
     "php": ">=7.1",
-    "johnpbloch/wordpress": "5.1.1",
-    "composer-plugin-api": "^1.1",
-    "stuttter/wp-user-signups": "3.1.0"
+    "stuttter/wp-user-signups": "3.1.0",
+    "humanmade/cms-installer": "0.1.0"
   },
   "extra": {
     "class": "HM\\Platform\\CMS\\Composer\\Plugin"
