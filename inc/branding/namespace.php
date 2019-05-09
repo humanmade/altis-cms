@@ -177,6 +177,27 @@ function admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
 }
 
 /**
+ * Get URL for the logo.
+ *
+ * @param string|null $variant Variant of the logo. One of 'white' or null.
+ * @return string URL for the Altis logo.
+ */
+function get_logo_url( $variant = null ) {
+	$file = $variant === 'white' ? 'logo-white.svg' : 'logo.svg';
+	return sprintf( '%s/assets/%s', untrailingslashit( plugin_dir_url( dirname( __FILE__, 2 ) ) ), $file );
+}
+
+/**
+ * Render the logo image.
+ *
+ * @param string|null $variant Variant of the logo. One of 'white' or null.
+ * @return void Outputs the logo directly to the page.
+ */
+function render_logo( $variant = null ) {
+	printf( '<img class="altis-logo" alt="Altis" src="%s" />', get_logo_url( $variant ) );
+}
+
+/**
  * Override the admin title.
  *
  * WordPress puts a '> WordPress' after all the <title>.
