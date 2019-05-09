@@ -9,7 +9,7 @@ You can change the logo shown on the CMS login screen using the `login-logo` con
 ```json
 {
 	"extra": {
-		"platform": {
+		"altis": {
 			"modules": {
 				"cms": {
 					"login-logo": "/content/site-logo.svg"

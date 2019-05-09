@@ -2,7 +2,7 @@
 	<tr>
 		<td align="left" width="70">
 			<strong>CMS</strong><br />
-			CMS module for Platform.
+			CMS module for Altis.
 		</td>
 		<td align="right" width="20%">
 		</td>
@@ -19,4 +19,4 @@
 
 # CMS
 
-The CMS module includes WordPress and other "WordPress additions". It is possibly the most special module, as it provides the bootstrap for Platform.
+The CMS module includes WordPress and other "WordPress additions". It is possibly the most special module, as it provides the bootstrap for Altis.

@@ -13,7 +13,7 @@ function bootstrap() {
 /**
  * Remove the update nag messages from the admin header.
  *
- * Because we provide WordPress updates via the Platform central version, we don't want
+ * Because we provide WordPress updates via the Altis central version, we don't want
  * to be nagging users about available updates.
  */
 function remove_update_nag() {

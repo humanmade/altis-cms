@@ -45,7 +45,7 @@ function remove_dashboard_widgets() {
 }
 
 /**
- * Add the Platform color scheme to the user options.
+ * Add the Altis color scheme to the user options.
  */
 function add_color_scheme() {
 	wp_admin_css_color(
@@ -148,8 +148,7 @@ function detect_missing_default_theme() {
 
 
 /**
- * Add the Platform logo menu.
- *
+ * Add the Altis logo menu.
  *
  * @param WP_Admin_Bar $wp_admin_bar
  */
@@ -197,5 +196,5 @@ function render_logo( $variant = null ) {
  * @return string
  */
 function override_admin_title( string $admin_title ) : string {
-	return str_replace( ' &#8212; WordPress', ' &#8212; HM Platform', $admin_title );
+	return str_replace( ' &#8212; WordPress', ' &#8212; Altis', $admin_title );
 }
