@@ -12,8 +12,9 @@ body.folded #wp-admin-bar-hm-platform {
 }
 
 #wp-admin-bar-hm-platform .icon img {
-	height: 16px;
+	height: 20px;
 	width: auto;
+	margin-top: 4px;
 }
 
 #wpadminbar #wp-admin-bar-hm-platform-logo .ab-item {
