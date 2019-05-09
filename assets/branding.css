@@ -2,6 +2,20 @@
 	width: 160px;
 }
 
+body.folded #wp-admin-bar-hm-platform {
+	width: auto;
+}
+
+#wp-admin-bar-hm-platform .icon {
+	display: block;
+	height: auto;
+}
+
+#wp-admin-bar-hm-platform .icon img {
+	height: 16px;
+	width: auto;
+}
+
 #wpadminbar #wp-admin-bar-hm-platform-logo .ab-item {
 	padding-top: 2px;
 }
