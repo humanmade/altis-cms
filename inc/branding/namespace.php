@@ -1,8 +1,8 @@
 <?php
 
-namespace HM\Platform\CMS\Branding;
+namespace Altis\CMS\Branding;
 
-use function HM\Platform\get_environment_type;
+use function Altis\get_environment_type;
 use WP_Admin_Bar;
 use WP_Http;
 use WP_Theme;
@@ -49,8 +49,8 @@ function remove_dashboard_widgets() {
  */
 function add_color_scheme() {
 	wp_admin_css_color(
-		'platform',
-		__( 'Platform', 'hm-platform' ),
+		'altis',
+		__( 'Altis', 'altis' ),
 		add_query_arg( 'version', '2019-04-25-1', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/admin-color-scheme.css' ),
 		[
 			COLOR_BLUE,
@@ -70,7 +70,7 @@ function add_color_scheme() {
  * Enqueue the branding scripts and styles
  */
 function enqueue_admin_scripts() {
-	wp_enqueue_style( 'hm-platform-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2019-04-24-1' );
+	wp_enqueue_style( 'altis-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2019-04-24-1' );
 }
 
 /**
@@ -87,7 +87,7 @@ function override_default_color_scheme( $value ) : string {
 		return $value;
 	}
 
-	return 'platform';
+	return 'altis';
 }
 
 /**
@@ -103,7 +103,7 @@ function insert_user_meta( array $meta, $user, $update ) : array {
 		return $meta;
 	}
 
-	$meta['admin_color'] = 'platform';
+	$meta['admin_color'] = 'altis';
 
 	return $meta;
 }
@@ -132,15 +132,15 @@ function detect_missing_default_theme() {
 	}
 
 	// No theme, load default helper.
-	$title = __( 'Welcome to HM Platform', 'hm-platform' );
+	$title = __( 'Welcome to Altis', 'altis' );
 	$message = sprintf(
 		'<h1>%s</h1><p>%s</p><p><small>%s</small></p>',
 		$title,
 		sprintf(
-			__( 'HM Platform is installed and ready to go. <a href="%s">Activate a theme to get started</a>.', 'hm-platform' ),
+			__( 'Altis is installed and ready to go. <a href="%s">Activate a theme to get started</a>.', 'altis' ),
 			admin_url( 'themes.php' )
 		),
-		__( 'You‘re seeing this page because debug mode is enabled, and the default theme directory is missing.', 'hm-platform' )
+		__( 'You‘re seeing this page because debug mode is enabled, and the default theme directory is missing.', 'altis' )
 	);
 
 	wp_die( $message, $title, [ 'response' => WP_Http::NOT_FOUND ] );
@@ -155,7 +155,7 @@ function detect_missing_default_theme() {
  */
 function admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
 	$logo_menu_args = [
-		'id'    => 'hm-platform',
+		'id'    => 'altis',
 		'title' => '<span class="icon"><img src="' . get_logo_url( 'white' ) . '" /></span>',
 	];
 

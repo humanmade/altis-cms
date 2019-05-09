@@ -1,6 +1,6 @@
 <?php
 
-namespace HM\Platform\CMS\Remove_Updates;
+namespace Altis\CMS\Remove_Updates;
 
 /**
  * Boostrap setup to remove updates from the admin.

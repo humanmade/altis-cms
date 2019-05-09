@@ -14,7 +14,7 @@
     "humanmade/cms-installer": "0.1.0"
   },
   "extra": {
-    "class": "HM\\Platform\\CMS\\Composer\\Plugin"
+    "class": "Altis\\CMS\\Composer\\Plugin"
   },
   "autoload": {
     "classmap": [ "inc/" ],

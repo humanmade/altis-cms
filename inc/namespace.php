@@ -1,9 +1,9 @@
 <?php
 
-namespace HM\Platform\CMS;
+namespace Altis\CMS;
 
-use const HM\Platform\ROOT_DIR;
-use function HM\Platform\get_config;
+use const Altis\ROOT_DIR;
+use function Altis\get_config;
 
 /**
  * Main bootstrap / entry point for the CMS module.

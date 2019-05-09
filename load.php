@@ -1,8 +1,8 @@
 <?php
 
-namespace HM\Platform\CMS; // @codingStandardsIgnoreLine
+namespace Altis\CMS; // @codingStandardsIgnoreLine
 
-use function HM\Platform\register_module;
+use function Altis\register_module;
 
 require_once __DIR__ . '/inc/namespace.php';
 require_once __DIR__ . '/inc/remove_updates/namespace.php';
@@ -15,7 +15,7 @@ if ( ! function_exists( 'add_action' ) ) {
 }
 
 // Register core module.
-add_action( 'hm-platform.modules.init', function () {
+add_action( 'altis.modules.init', function () {
 	$default_settings = [
 		'enabled'       => true,
 		'branding'      => true,
