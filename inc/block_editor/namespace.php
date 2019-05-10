@@ -1,6 +1,6 @@
 <?php
 
-namespace HM\Platform\CMS\Block_Editor;
+namespace Altis\CMS\Block_Editor;
 
 /**
  * Set up block editor modifications.
@@ -16,24 +16,24 @@ function bootstrap() {
  */
 function register_block_categories() {
 	register_taxonomy( 'wp_block_category', 'wp_block', [
-		'label' => __( 'Block Categories', 'hm-platform' ),
+		'label' => __( 'Block Categories', 'altis' ),
 		'labels' => [
-			'name'                       => _x( 'Block Categories', 'taxonomy general name', 'hm-platform' ),
-			'singular_name'              => _x( 'Block Category', 'taxonomy singular name', 'hm-platform' ),
-			'search_items'               => __( 'Search Block Categories', 'hm-platform' ),
-			'popular_items'              => __( 'Popular Block Categories', 'hm-platform' ),
-			'all_items'                  => __( 'All Writers', 'hm-platform' ),
+			'name'                       => _x( 'Block Categories', 'taxonomy general name', 'altis' ),
+			'singular_name'              => _x( 'Block Category', 'taxonomy singular name', 'altis' ),
+			'search_items'               => __( 'Search Block Categories', 'altis' ),
+			'popular_items'              => __( 'Popular Block Categories', 'altis' ),
+			'all_items'                  => __( 'All Writers', 'altis' ),
 			'parent_item'                => null,
 			'parent_item_colon'          => null,
-			'edit_item'                  => __( 'Edit Block Category', 'hm-platform' ),
-			'update_item'                => __( 'Update Block Category', 'hm-platform' ),
-			'add_new_item'               => __( 'Add New Block Category', 'hm-platform' ),
-			'new_item_name'              => __( 'New Block Category Name', 'hm-platform' ),
-			'separate_items_with_commas' => __( 'Separate block categories with commas', 'hm-platform' ),
-			'add_or_remove_items'        => __( 'Add or remove block categories', 'hm-platform' ),
-			'choose_from_most_used'      => __( 'Choose from the most used block categories', 'hm-platform' ),
-			'not_found'                  => __( 'No block categories found.', 'hm-platform' ),
-			'menu_name'                  => __( 'Categories', 'hm-platform' ),
+			'edit_item'                  => __( 'Edit Block Category', 'altis' ),
+			'update_item'                => __( 'Update Block Category', 'altis' ),
+			'add_new_item'               => __( 'Add New Block Category', 'altis' ),
+			'new_item_name'              => __( 'New Block Category Name', 'altis' ),
+			'separate_items_with_commas' => __( 'Separate block categories with commas', 'altis' ),
+			'add_or_remove_items'        => __( 'Add or remove block categories', 'altis' ),
+			'choose_from_most_used'      => __( 'Choose from the most used block categories', 'altis' ),
+			'not_found'                  => __( 'No block categories found.', 'altis' ),
+			'menu_name'                  => __( 'Categories', 'altis' ),
 		],
 		'public' => true,
 		'publicly_queryable' => false,

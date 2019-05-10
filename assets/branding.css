@@ -1,7 +1,22 @@
-#wp-admin-bar-hm-platform {
+#wp-admin-bar-altis {
 	width: 160px;
 }
 
-#wpadminbar #wp-admin-bar-hm-platform-logo .ab-item {
+body.folded #wp-admin-bar-altis {
+	width: auto;
+}
+
+#wp-admin-bar-altis .icon {
+	display: block;
+	height: auto;
+}
+
+#wp-admin-bar-altis .icon img {
+	height: 20px;
+	width: auto;
+	margin-top: 4px;
+}
+
+#wpadminbar #wp-admin-bar-altis-logo .ab-item {
 	padding-top: 2px;
 }
