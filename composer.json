@@ -11,6 +11,7 @@
   "require": {
     "php": ">=7.1",
     "stuttter/wp-user-signups": "3.1.0",
+    "johnpbloch/wordpress": "5.2.0",
     "humanmade/cms-installer": "0.1.0"
   },
   "extra": {
