@@ -31,6 +31,9 @@ function bootstrap() {
 	}
 
 	add_filter( 'pre_site_option_fileupload_maxk', __NAMESPACE__ . '\\override_fileupload_maxk_option' );
+	add_filter( 'wp_fatal_error_handler_enabled', __NAMESPACE__ . '\\disable_wp_fatal_handler' );
+	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_site_healthcheck_admin_menu' );
+	add_action( 'admin_init', __NAMESPACE__ . '\\disable_site_healthcheck_access' );
 }
 
 /**
@@ -63,4 +66,43 @@ function load_plugins() {
  */
 function override_fileupload_maxk_option() : int {
 	return 1024 * 1024;
+}
+
+/**
+ * Disable the WP fatal error handler.
+ *
+ * This is intended mostly for non-technical users to receive error information.
+ *
+ * @return boolean
+ */
+function disable_wp_fatal_handler() : bool {
+	return false;
+}
+
+/**
+ * Remove the Site Health link in the Tools menu
+ */
+function remove_site_healthcheck_admin_menu() {
+	remove_submenu_page( 'tools.php', 'site-health.php' );
+}
+
+/**
+ * Disable access to the site health check admin page.
+ *
+ * We have disables the site health check as it exposes a lot of details
+ * and potential false positives, and ultimately is not useful for our
+ * platform.
+ *
+ * @return void
+ */
+function disable_site_healthcheck_access() {
+	/**
+	 * @var string
+	 */
+	global $pagenow;
+	if ( $pagenow !== 'site-health.php' ) {
+		return;
+	}
+
+	wp_die( 'Site Health not accessible.' );
 }
