@@ -31,7 +31,7 @@ function bootstrap() {
 	}
 
 	add_filter( 'pre_site_option_fileupload_maxk', __NAMESPACE__ . '\\override_fileupload_maxk_option' );
-	add_filter( 'wp_fatal_error_handler_enabled', __NAMESPACE__ . '\\disable_wp_fatal_handler' );
+	add_filter( 'wp_fatal_error_handler_enabled', __NAMESPACE__ . '\\filter_wp_fatal_handler' );
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_site_healthcheck_admin_menu' );
 	add_action( 'admin_init', __NAMESPACE__ . '\\disable_site_healthcheck_access' );
 }
@@ -73,9 +73,13 @@ function override_fileupload_maxk_option() : int {
  *
  * This is intended mostly for non-technical users to receive error information.
  *
+ * This is hooked into the `wp_fatal_error_handler_enabled` hook, where we cannot
+ * just pass the `__return_false` function as that is not available so early in
+ * the bootstrap process.
+ *
  * @return boolean
  */
-function disable_wp_fatal_handler() : bool {
+function filter_wp_fatal_handler() : bool {
 	return false;
 }
 
