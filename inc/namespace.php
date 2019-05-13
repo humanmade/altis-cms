@@ -30,7 +30,7 @@ function bootstrap() {
 		define( 'DISALLOW_FILE_EDIT', true );
 	}
 	if ( ! defined( 'WP_DEFAULT_THEME' ) ) {
-		define( 'WP_DEFAULT_THEME', $config['default_theme'] ?? 'base' );
+		define( 'WP_DEFAULT_THEME', $config['default-theme'] ?? 'base' );
 	}
 
 	add_filter( 'pre_site_option_fileupload_maxk', __NAMESPACE__ . '\\override_fileupload_maxk_option' );
