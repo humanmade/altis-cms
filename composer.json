@@ -14,9 +14,6 @@
     "johnpbloch/wordpress": "5.2.0",
     "altis/cms-installer": "0.2.0"
   },
-  "extra": {
-    "class": "Altis\\CMS\\Composer\\Plugin"
-  },
   "autoload": {
     "classmap": [ "inc/" ],
     "files": [
