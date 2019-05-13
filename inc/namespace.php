@@ -29,6 +29,9 @@ function bootstrap() {
 	if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {
 		define( 'DISALLOW_FILE_EDIT', true );
 	}
+	if ( ! defined( 'WP_DEFAULT_THEME' ) ) {
+		define( 'WP_DEFAULT_THEME', $config['default_theme'] );
+	}
 
 	add_filter( 'pre_site_option_fileupload_maxk', __NAMESPACE__ . '\\override_fileupload_maxk_option' );
 	add_filter( 'wp_fatal_error_handler_enabled', __NAMESPACE__ . '\\filter_wp_fatal_handler' );
