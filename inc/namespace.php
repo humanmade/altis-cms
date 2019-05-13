@@ -122,7 +122,7 @@ function disable_site_healthcheck_access() {
 }
 
 /**
- * When WordPress is installed via WP-CLI, run the user-signups setup
+ * When WordPress is installed via WP-CLI, run the user-signups setup.
  */
 function setup_user_signups_on_install() {
 	$signups = new WP_DB_Table_Signups();
