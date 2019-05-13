@@ -21,6 +21,7 @@ add_action( 'altis.modules.init', function () {
 		'branding'      => true,
 		'login-logo'    => null,
 		'shared-blocks' => true,
+		'default-theme' => 'base',
 	];
 	register_module( 'cms', __DIR__, 'CMS', $default_settings, __NAMESPACE__ . '\\bootstrap' );
 } );
