@@ -1,5 +1,5 @@
 {
-  "name": "humanmade/cms",
+  "name": "altis/cms",
   "description": "CMS Module for Altis",
   "license": "GPL-2.0-or-later",
   "authors": [
@@ -12,7 +12,7 @@
     "php": ">=7.1",
     "stuttter/wp-user-signups": "3.1.0",
     "johnpbloch/wordpress": "5.2.0",
-    "humanmade/cms-installer": "0.2.0"
+    "altis/cms-installer": "0.2.0"
   },
   "extra": {
     "class": "Altis\\CMS\\Composer\\Plugin"
