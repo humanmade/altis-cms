@@ -4,6 +4,9 @@ namespace Altis\CMS;
 
 use const Altis\ROOT_DIR;
 use function Altis\get_config;
+use WP_CLI;
+use WP_DB_Table_Signups;
+use WP_DB_Table_Signupmeta;
 
 /**
  * Main bootstrap / entry point for the CMS module.
@@ -37,6 +40,10 @@ function bootstrap() {
 	add_filter( 'wp_fatal_error_handler_enabled', __NAMESPACE__ . '\\filter_wp_fatal_handler' );
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_site_healthcheck_admin_menu' );
 	add_action( 'admin_init', __NAMESPACE__ . '\\disable_site_healthcheck_access' );
+
+	if ( defined( 'WP_CLI' ) && WP_CLI ) {
+		WP_CLI::add_hook( 'after_invoke:core multisite-install', __NAMESPACE__ . '\\setup_user_signups_on_install' );
+	}
 }
 
 /**
@@ -112,4 +119,15 @@ function disable_site_healthcheck_access() {
 	}
 
 	wp_die( 'Site Health not accessible.' );
+}
+
+/**
+ * When WordPress is installed via WP-CLI, run the user-signups setup.
+ */
+function setup_user_signups_on_install() {
+	$signups = new WP_DB_Table_Signups();
+	$signups->maybe_upgrade();
+
+	$signups_meta = new WP_DB_Table_Signupmeta();
+	$signups_meta->maybe_upgrade();
 }
