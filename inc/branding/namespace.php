@@ -137,6 +137,7 @@ function detect_missing_default_theme() {
 		'<h1>%s</h1><p>%s</p><p><small>%s</small></p>',
 		$title,
 		sprintf(
+			/* translators: %s: URL for the themes page */
 			__( 'Altis is installed and ready to go. <a href="%s">Activate a theme to get started</a>.', 'altis' ),
 			admin_url( 'themes.php' )
 		),
