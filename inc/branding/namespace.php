@@ -28,6 +28,7 @@ function bootstrap() {
 	add_action( 'template_redirect', __NAMESPACE__ . '\\detect_missing_default_theme' );
 	add_filter( 'admin_title', __NAMESPACE__ . '\\override_admin_title' );
 	add_filter( 'insert_user_meta', __NAMESPACE__ . '\\insert_user_meta', 10, 3 );
+	add_filter( 'login_title', __NAMESPACE__ . '\\wordpress_to_altis' );
 	add_filter( 'login_headertext', __NAMESPACE__ . '\\wordpress_to_altis' );
 }
 
