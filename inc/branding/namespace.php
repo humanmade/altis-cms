@@ -28,6 +28,8 @@ function bootstrap() {
 	add_action( 'template_redirect', __NAMESPACE__ . '\\detect_missing_default_theme' );
 	add_filter( 'admin_title', __NAMESPACE__ . '\\override_admin_title' );
 	add_filter( 'insert_user_meta', __NAMESPACE__ . '\\insert_user_meta', 10, 3 );
+	add_filter( 'login_title', __NAMESPACE__ . '\\wordpress_to_altis' );
+	add_filter( 'login_headertext', __NAMESPACE__ . '\\wordpress_to_altis' );
 }
 
 /**
@@ -198,4 +200,14 @@ function render_logo( $variant = null ) {
  */
 function override_admin_title( string $admin_title ) : string {
 	return str_replace( ' &#8212; WordPress', ' &#8212; Altis', $admin_title );
+}
+
+/**
+ * Replace WordPress with Altis in text.
+ *
+ * @param string $text The string to modify.
+ * @return string
+ */
+function wordpress_to_altis( string $text ) : string {
+	return str_replace( 'WordPress', 'Altis', $text );
 }
