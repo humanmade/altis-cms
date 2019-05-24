@@ -13,7 +13,9 @@ use WP_DB_Table_Signups;
  */
 function bootstrap() {
 	$config = get_config()['modules']['cms'];
+
 	Remove_Updates\bootstrap();
+	Permalinks\bootstrap();
 
 	if ( $config['branding'] ) {
 		Branding\bootstrap();
