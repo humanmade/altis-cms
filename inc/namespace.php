@@ -43,6 +43,8 @@ function bootstrap() {
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_site_healthcheck_admin_menu' );
 	add_action( 'admin_init', __NAMESPACE__ . '\\disable_site_healthcheck_access' );
 
+	add_filter( 'login_headerurl', __NAMESPACE__ . '\\login_header_url' );
+
 	if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		WP_CLI::add_hook( 'after_invoke:core multisite-install', __NAMESPACE__ . '\\setup_user_signups_on_install' );
 	}
@@ -135,6 +137,16 @@ function setup_user_signups_on_install() {
 
 	$signups_meta = new WP_DB_Table_Signupmeta();
 	$signups_meta->maybe_upgrade();
+}
+
+/**
+ * Set the login header URL to the current site.
+ * Defaults to wordpress.org for some reason.
+ *
+ * @return string
+ */
+function login_header_url() : string {
+	return home_url( '/' );
 }
 
 /**
