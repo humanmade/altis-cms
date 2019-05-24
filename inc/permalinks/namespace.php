@@ -2,6 +2,9 @@
 
 namespace Altis\CMS\Permalinks;
 
+/**
+ * Set up permalink related hooks.
+ */
 function bootstrap() {
 	add_filter( 'sanitize_option_permalink_structure', __NAMESPACE__ . '\\remove_blog_prefix' );
 	add_filter( 'option_permalink_structure', __NAMESPACE__ . '\\remove_blog_prefix' );
