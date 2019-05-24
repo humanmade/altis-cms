@@ -5,8 +5,8 @@ namespace Altis\CMS;
 use const Altis\ROOT_DIR;
 use function Altis\get_config;
 use WP_CLI;
-use WP_DB_Table_Signups;
 use WP_DB_Table_Signupmeta;
+use WP_DB_Table_Signups;
 
 /**
  * Main bootstrap / entry point for the CMS module.
