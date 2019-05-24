@@ -13,7 +13,9 @@ use WP_DB_Table_Signups;
  */
 function bootstrap() {
 	$config = get_config()['modules']['cms'];
+
 	Remove_Updates\bootstrap();
+	Permalinks\bootstrap();
 
 	if ( $config['branding'] ) {
 		Branding\bootstrap();
@@ -46,6 +48,9 @@ function bootstrap() {
 	if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		WP_CLI::add_hook( 'after_invoke:core multisite-install', __NAMESPACE__ . '\\setup_user_signups_on_install' );
 	}
+
+	// Don't show the welcome panel.
+	add_filter( 'get_user_metadata', __NAMESPACE__ . '\\hide_welcome_panel', 10, 3 );
 }
 
 /**
@@ -142,4 +147,20 @@ function setup_user_signups_on_install() {
  */
 function login_header_url() : string {
 	return home_url( '/' );
+}
+
+/**
+ * Filter the show welcome panel meta data to always be false.
+ *
+ * @param null $value The value to override.
+ * @param int $user_id The user ID to get meta data for.
+ * @param string $meta_key The meta key being requested.
+ * @return mixed
+ */
+function hide_welcome_panel( $value, int $user_id, string $meta_key ) {
+	if ( $meta_key !== 'show_welcome_panel' ) {
+		return $value;
+	}
+
+	return 0;
 }
