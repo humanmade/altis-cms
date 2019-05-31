@@ -30,6 +30,12 @@ function bootstrap() {
 	add_filter( 'insert_user_meta', __NAMESPACE__ . '\\insert_user_meta', 10, 3 );
 	add_filter( 'login_title', __NAMESPACE__ . '\\wordpress_to_altis' );
 	add_filter( 'login_headertext', __NAMESPACE__ . '\\wordpress_to_altis' );
+	add_filter( 'get_the_generator_html', __NAMESPACE__ . '\\override_generator', 10, 2 );
+	add_filter( 'get_the_generator_xhtml', __NAMESPACE__ . '\\override_generator', 10, 2 );
+	add_filter( 'get_the_generator_atom', __NAMESPACE__ . '\\override_generator', 10, 2 );
+	add_filter( 'get_the_generator_rss2', __NAMESPACE__ . '\\override_generator', 10, 2 );
+	add_filter( 'get_the_generator_comment', __NAMESPACE__ . '\\override_generator', 10, 2 );
+	add_filter( 'get_the_generator_export', __NAMESPACE__ . '\\override_generator', 10, 2 );
 }
 
 /**
@@ -210,4 +216,60 @@ function override_admin_title( string $admin_title ) : string {
  */
 function wordpress_to_altis( string $text ) : string {
 	return str_replace( 'WordPress', 'Altis', $text );
+}
+
+/**
+ * Override the various generator tags.
+ *
+ * @param string $gen Default HTML for the type.
+ * @param string $type The type of generator. One of 'html', 'xhtml', 'atom', 'rss2', 'rdf', 'comment', 'export'.
+ * @return string Overridden generator.
+ */
+function override_generator( string $gen, string $type ) : string {
+	$wp_version = get_bloginfo( 'version' );
+	$wp_version_rss = convert_chars( strip_tags( $wp_version ) );
+	switch ( $type ) {
+		case 'html':
+			return sprintf(
+				'<meta name="generator" content="Altis (WordPress %s)">',
+				esc_attr( $wp_version )
+			);
+
+		case 'xhtml':
+			return sprintf(
+				'<meta name="generator" content="Altis (WordPress %s)" />',
+				esc_attr( $wp_version )
+			);
+
+		case 'atom':
+			return sprintf(
+				'<generator uri="https://www.altis-dxp.com/" version="%s">Altis</generator>',
+				esc_attr( $wp_version_rss )
+			);
+
+		case 'rss2':
+			return sprintf(
+				'<generator>%s</generator>',
+				esc_url_raw( add_query_arg( 'v', $wp_version_rss, 'https://www.altis-dxp.com/' ) )
+			);
+
+		case 'rdf':
+			return sprintf(
+				'<admin:generatorAgent rdf:resource="%s" />',
+				esc_url_raw( add_query_arg( 'v', $wp_version_rss, 'https://www.altis-dxp.com/' ) )
+			);
+
+		case 'comment':
+			return sprintf(
+				'<!-- generator="Altis (WordPress/%s)" -->',
+				$wp_version
+			);
+
+		case 'export':
+			return sprintf(
+				'<!-- generator="Altis (WordPress/%s)" created="%s" -->',
+				$wp_version_rss,
+				date( 'Y-m-d H:i' )
+			);
+	}
 }
