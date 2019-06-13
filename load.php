@@ -23,6 +23,7 @@ add_action( 'altis.modules.init', function () {
 		'login-logo'    => '/vendor/altis/cms/assets/logo.svg',
 		'shared-blocks' => true,
 		'default-theme' => 'base',
+		'remove-emojis' => true,
 	];
 	register_module( 'cms', __DIR__, 'CMS', $default_settings, __NAMESPACE__ . '\\bootstrap' );
 } );
