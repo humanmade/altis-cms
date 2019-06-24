@@ -35,7 +35,7 @@ function register_block_categories() {
 			'not_found'                  => __( 'No block categories found.', 'altis' ),
 			'menu_name'                  => __( 'Categories', 'altis' ),
 		],
-		'public' => true,
+		'public' => false,
 		'publicly_queryable' => false,
 		'show_ui' => true,
 		'show_in_nav_menus' => false,
