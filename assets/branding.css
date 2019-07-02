@@ -20,3 +20,8 @@ body.folded #wp-admin-bar-altis {
 #wpadminbar #wp-admin-bar-altis-logo .ab-item {
 	padding-top: 2px;
 }
+
+/* Hide WordPress version and update button from At a Glance dashboard widget. */
+#dashboard_right_now #wp-version-message {
+	display: none;
+}
