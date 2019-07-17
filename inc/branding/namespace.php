@@ -278,15 +278,15 @@ function override_generator( string $gen, string $type ) : string {
 /**
  * Remove the 'Howdy <name>' greeting in the admin bar.
  *
- * @param object $wp_admin_bar $wp_admin_bar object
+ * @param WP_Admin_Bar Admin bar object.
  */
-function remove_howdy_greeting( $wp_admin_bar ) {
+function remove_howdy_greeting( WP_Admin_Bar $wp_admin_bar ) {
 	$acct_bar = $wp_admin_bar->get_node( 'my-account' );
 
-	$newtext = str_replace( 'Howdy,', '', $acct_bar->title );
+	$new_text = str_replace( 'Howdy,', 'Welcome,', $acct_bar->title );
 
 	$wp_admin_bar->add_node( [
 		'id' => 'my-account',
-		'title' => $newtext,
+		'title' => $new_text,
 	] );
 }
