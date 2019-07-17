@@ -36,6 +36,7 @@ function bootstrap() {
 	add_filter( 'get_the_generator_rss2', __NAMESPACE__ . '\\override_generator', 10, 2 );
 	add_filter( 'get_the_generator_comment', __NAMESPACE__ . '\\override_generator', 10, 2 );
 	add_filter( 'get_the_generator_export', __NAMESPACE__ . '\\override_generator', 10, 2 );
+	add_filter( 'admin_bar_menu', __NAMESPACE__ . '\\remove_howdy_greeting', 25 );
 }
 
 /**
@@ -272,4 +273,20 @@ function override_generator( string $gen, string $type ) : string {
 				date( 'Y-m-d H:i' )
 			);
 	}
+}
+
+/**
+ * Remove the 'Howdy <name>' greeting in the admin bar.
+ *
+ * @param WP_Admin_Bar Admin bar object.
+ */
+function remove_howdy_greeting( WP_Admin_Bar $wp_admin_bar ) {
+	$acct_bar = $wp_admin_bar->get_node( 'my-account' );
+
+	$new_text = str_replace( 'Howdy,', 'Welcome,', $acct_bar->title );
+
+	$wp_admin_bar->add_node( [
+		'id' => 'my-account',
+		'title' => $new_text,
+	] );
 }
