@@ -8,6 +8,7 @@ namespace Altis\CMS\Remove_Updates;
 function bootstrap() {
 	add_action( 'admin_init', __NAMESPACE__ . '\\remove_update_nag' );
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\remove_update_check_cron' );
+	add_filter( 'map_meta_cap', __NAMESPACE__ . '\\remove_update_core_capability', 10, 2 );
 }
 
 /**
@@ -30,4 +31,21 @@ function remove_update_nag() {
  */
 function remove_update_check_cron() {
 	remove_action( 'init', 'wp_schedule_update_checks' );
+}
+
+/**
+ * Remove the update_core capability from all users.
+ *
+ * This hooks via map_meta_cap.
+ *
+ * @param bool[]   $allcaps Array of key/value pairs where keys represent a capability name and boolean values
+ * @return array
+ */
+function remove_update_core_capability( array $caps, string $requested_cap ) : array {
+	if ( $requested_cap !== 'update_core' ) {
+		return $caps;
+	}
+
+	$caps['do_not_allow'] = true;
+	return $caps;
 }
