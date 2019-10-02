@@ -53,7 +53,7 @@ function bootstrap() {
 	add_filter( 'get_user_metadata', __NAMESPACE__ . '\\hide_welcome_panel', 10, 3 );
 
 	if ( $config['remove-emoji'] ) {
-		remove_emoji();
+		add_action( 'plugins_loaded', __NAMESPACE__ . '\\remove_emoji' );
 	}
 }
 
