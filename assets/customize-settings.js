@@ -32,3 +32,7 @@ function updatedomainText( event ) {
 			break;
 	}
 }
+
+// On load, dispatch a change event for the first radio button.
+let changeEvent = new Event( 'change' );
+domainTypeRadioBtns[0].dispatchEvent( changeEvent );
