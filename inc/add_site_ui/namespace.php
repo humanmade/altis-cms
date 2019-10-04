@@ -43,6 +43,33 @@ function output_add_site_page() {
 			<?php wp_nonce_field( 'altis-add-site' ); ?>
 			<table class="form-table">
 				<tr class="form-field form-required">
+					<th scope="row">
+						<?php _e( 'Site Type' ); ?> <span class="required">*</span>
+					</th>
+					<td>
+						<fieldset>
+							<legend class="screen-reader-text"><?php _e( 'Site domain settings' ); ?></legend>
+							<label>
+								<input name="domain-type" type="radio" id="site-subdomain" aria-describedby="site-subdomain-desc" checked />
+								<strong><?php _e( 'Subdomain' ); ?>: </strong>
+								<span class="radio-description" id="site-subdomain-desc"><?php _e( 'recommended for related sites', 'altis' ) ?></span>
+							</label>
+							<br />
+							<label>
+								<input name="domain-type" type="radio" id="site-subdirectory" aria-describedby="site-subdirectory-desc" />
+								<strong><?php _e( 'Subdirectory' ); ?>: </strong>
+								<span class="radio-description" id="site-subdirectory-desc"><?php _e( 'recommended for regional or multilingual sites', 'altis' ) ?></span>
+							</label>
+							<br />
+							<label>
+								<input name="domain-type" type="radio" id="site-custom-domain" aria-describedby="site-custom-domain-desc" />
+								<strong><?php _e( 'Custom domain' ); ?>: </strong>
+								<span class="radio-description" id="site-custom-domain-desc"><?php _e( 'recommended for microsites', 'altis' ) ?></span>
+							</label>
+						</fieldset>
+					</td>
+				</tr>
+				<tr class="form-field form-required">
 					<th scope="row"><label for="site-address"><?php _e( 'Site Address (URL)' ); ?> <span class="required">*</span></label></th>
 					<td>
 						<input name="url" type="text" class="regular-text" id="site-address" aria-describedby="site-address-desc" autocapitalize="none" autocorrect="off" required />
