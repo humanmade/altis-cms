@@ -85,7 +85,7 @@ function enqueue_admin_scripts( string $hook ) {
 	wp_enqueue_style( 'altis-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2019-04-24-1' );
 
 	if ( $hook === 'sites_page_altis-add-site' ) {
-		wp_enqueue_script( 'customize-settings', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/customize-settings.js' , [], false, true );
+		wp_enqueue_script( 'customize-settings', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/customize-settings.js', [], false, true );
 	}
 }
 
@@ -235,7 +235,7 @@ function wordpress_to_altis( string $text ) : string {
  */
 function override_generator( string $gen, string $type ) : string {
 	$wp_version = get_bloginfo( 'version' );
-	$wp_version_rss = convert_chars( strip_tags( $wp_version ) );
+	$wp_version_rss = convert_chars( wp_strip_all_tags( $wp_version ) );
 	switch ( $type ) {
 		case 'html':
 			return sprintf(
