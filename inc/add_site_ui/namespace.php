@@ -72,7 +72,9 @@ function output_add_site_page() {
 				<tr class="form-field form-required">
 					<th scope="row"><label for="site-address"><?php _e( 'Site Address (URL)' ); ?> <span class="required">*</span></label></th>
 					<td>
-						<input name="url" type="text" class="regular-text" id="site-address" aria-describedby="site-address-desc" autocapitalize="none" autocorrect="off" required />
+						<div class="site-address-wrapper">
+							<input name="url" type="text" class="regular-text" id="site-address" aria-describedby="site-address-desc" autocapitalize="none" autocorrect="off" required />
+						</div>
 						<p class="description" id="site-address-desc"><?php _e( 'Only lowercase letters (a-z), numbers, and hyphens are allowed.', 'altis' ) ?></p>
 					</td>
 				</tr>
