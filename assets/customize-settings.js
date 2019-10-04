@@ -10,12 +10,13 @@ const siteSubdomain = document.getElementById( 'site-subdomain' ),
 let domainTextEl = document.createElement( 'span' );
 domainTextEl.className = 'site-address-domain-text';
 
+// Add an event listener to each radio button.
 domainTypeRadioBtns.forEach( function ( element ) {
 	element.addEventListener( 'change', updatedomainText );
 } );
 
+// Add domain hints around the site address field.
 function updatedomainText( event ) {
-
 	switch ( event.target ) {
 		case siteSubdomain:
 			domainTextEl.innerHTML = '.' + networkAddress;
