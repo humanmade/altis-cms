@@ -50,19 +50,19 @@ function output_add_site_page() {
 						<fieldset>
 							<legend class="screen-reader-text"><?php _e( 'Site domain settings' ); ?></legend>
 							<label>
-								<input name="domain-type" type="radio" id="site-subdomain" aria-describedby="site-subdomain-desc" checked />
+								<input name="domain-type" type="radio" id="site-subdomain" value="site-subdomain" aria-describedby="site-subdomain-desc" checked />
 								<strong><?php _e( 'Subdomain' ); ?>: </strong>
 								<span class="radio-description" id="site-subdomain-desc"><?php _e( 'recommended for related sites', 'altis' ) ?></span>
 							</label>
 							<br />
 							<label>
-								<input name="domain-type" type="radio" id="site-subdirectory" aria-describedby="site-subdirectory-desc" />
+								<input name="domain-type" type="radio" id="site-subdirectory" value="site-subdirectory" aria-describedby="site-subdirectory-desc" />
 								<strong><?php _e( 'Subdirectory' ); ?>: </strong>
 								<span class="radio-description" id="site-subdirectory-desc"><?php _e( 'recommended for regional or multilingual sites', 'altis' ) ?></span>
 							</label>
 							<br />
 							<label>
-								<input name="domain-type" type="radio" id="site-custom-domain" aria-describedby="site-custom-domain-desc" />
+								<input name="domain-type" type="radio" id="site-custom-domain" value="site-custom-domain" aria-describedby="site-custom-domain-desc" />
 								<strong><?php _e( 'Custom domain' ); ?>: </strong>
 								<span class="radio-description" id="site-custom-domain-desc"><?php _e( 'recommended for microsites', 'altis' ) ?></span>
 							</label>
@@ -137,17 +137,49 @@ function add_site_form_handler() {
 		return;
 	}
 
-	$url = sanitize_text_field( $_POST['url'] );
-	if ( strpos( $url, 'http' ) !== 0 ) {
-		$url = 'https://' . $url;
+	$site_type_valid_values = [
+		'site-subdomain',
+		'site-subdirectory',
+		'site-custom-domain',
+	];
+
+	$site_type_value = sanitize_text_field( $_POST['domain-type'] );
+
+	if ( in_array( $site_type_value, $site_type_valid_values ) ) {
+		$site_type = $site_type_value;
+	} else {
+		$site_type = 'site-subdomain';
 	}
-	$url = wp_parse_url( $url );
+
+	$network_url = wp_parse_url( network_site_url() );
+	$network_url = $network_url['host'];
+	$url = sanitize_text_field( $_POST['url'] );
+	
 	$title = sanitize_text_field( $_POST['title'] );
 	$language = $_POST['language'] ?? null;
 
+	switch ( $site_type ) {
+		case 'site-subdomain':
+			$domain = $url . '.' . $network_url;
+			$path   = '/';
+			break;
+		case 'site-subdirectory':
+			$domain = $network_url;
+			$path   = '/' . $url;	
+			break;
+		case 'site-custom-domain':
+			if ( strpos( $url, 'http' ) !== 0 ) {
+				$url = 'https://' . $url;
+				$url = wp_parse_url( $url );
+			}
+			$domain = $url['host'];
+			$path   = $url['path'];
+			break;
+	}
+
 	$result = wp_insert_site( [
-		'domain'  => $url['host'],
-		'path'    => $url['path'],
+		'domain'  => $domain,
+		'path'    => $path,
 		'lang_id' => $language, // Todo: Language not updating currently.
 		'title'   => $title,
 	] );
