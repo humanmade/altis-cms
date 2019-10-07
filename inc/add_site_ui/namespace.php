@@ -156,7 +156,7 @@ function add_site_form_handler() {
 	$url = sanitize_text_field( $_POST['url'] );
 	
 	$title = sanitize_text_field( $_POST['title'] );
-	$language = $_POST['language'] ?? null;
+	$language = $_POST['language'] ?? '';
 
 	switch ( $site_type ) {
 		case 'site-subdomain':
@@ -177,12 +177,7 @@ function add_site_form_handler() {
 			break;
 	}
 
-	$result = wp_insert_site( [
-		'domain'  => $domain,
-		'path'    => $path,
-		'lang_id' => $language, // Todo: Language not updating currently.
-		'title'   => $title,
-	] );
+	wpmu_create_blog( $domain, $path, $title, '', ['WPLANG' => $language ]);
 
 	if ( is_wp_error( $result ) ) {
 		print_r( $result ); // Todo: redirect with error
