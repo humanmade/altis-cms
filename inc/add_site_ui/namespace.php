@@ -29,7 +29,7 @@ function register_menu_page() {
 function output_add_site_page() {
 	?>
 	<div class="wrap">
-		<h1 id="add-new-site"><?php _e( 'Add New Site' ); ?></h1>
+		<h1 id="add-new-site"><?php _e( 'Add New Site', 'altis' ); ?></h1>
 		<p>
 			<?php
 			printf(
@@ -44,33 +44,33 @@ function output_add_site_page() {
 			<table class="form-table">
 				<tr class="form-field form-required">
 					<th scope="row">
-						<?php _e( 'Site Type' ); ?> <span class="required">*</span>
+						<?php _e( 'Site Type', 'altis' ); ?> <span class="required">*</span>
 					</th>
 					<td>
 						<fieldset>
-							<legend class="screen-reader-text"><?php _e( 'Site domain settings' ); ?></legend>
+							<legend class="screen-reader-text"><?php _e( 'Site domain settings', 'altis' ); ?></legend>
 							<label>
 								<input name="domain-type" type="radio" id="site-subdomain" value="site-subdomain" aria-describedby="site-subdomain-desc" checked />
-								<strong><?php _e( 'Subdomain' ); ?>: </strong>
+								<strong><?php _e( 'Subdomain', 'altis' ); ?>: </strong>
 								<span class="input-description" id="site-subdomain-desc"><?php _e( 'recommended for related sites', 'altis' ) ?></span>
 							</label>
 							<br />
 							<label>
 								<input name="domain-type" type="radio" id="site-subdirectory" value="site-subdirectory" aria-describedby="site-subdirectory-desc" />
-								<strong><?php _e( 'Subdirectory' ); ?>: </strong>
+								<strong><?php _e( 'Subdirectory', 'altis' ); ?>: </strong>
 								<span class="input-description" id="site-subdirectory-desc"><?php _e( 'recommended for regional or multilingual sites', 'altis' ) ?></span>
 							</label>
 							<br />
 							<label>
 								<input name="domain-type" type="radio" id="site-custom-domain" value="site-custom-domain" aria-describedby="site-custom-domain-desc" />
-								<strong><?php _e( 'Custom domain' ); ?>: </strong>
+								<strong><?php _e( 'Custom domain', 'altis' ); ?>: </strong>
 								<span class="input-description" id="site-custom-domain-desc"><?php _e( 'recommended for microsites', 'altis' ) ?></span>
 							</label>
 						</fieldset>
 					</td>
 				</tr>
 				<tr class="form-field form-required">
-					<th scope="row"><label for="site-address"><?php _e( 'Site Address (URL)' ); ?> <span class="required">*</span></label></th>
+					<th scope="row"><label for="site-address"><?php _e( 'Site Address (URL)', 'altis' ); ?> <span class="required">*</span></label></th>
 					<td>
 						<div class="site-address-wrapper">
 							<input name="url" type="text" class="regular-text" id="site-address" aria-describedby="site-address-desc" autocapitalize="none" autocorrect="off" required />
@@ -163,9 +163,9 @@ function add_site_form_handler() {
 
 	$network_url = wp_parse_url( network_site_url() );
 	$network_url = $network_url['host'];
-	$url = sanitize_text_field( $_POST['url'] );
+	$url         = sanitize_text_field( $_POST['url'] );
 	
-	$title = sanitize_text_field( $_POST['title'] );
+	$title    = sanitize_text_field( $_POST['title'] );
 	$language = sanitize_text_field( $_POST['language'] ) ?? '';
 	$public   = sanitize_text_field( $_POST['public'] );
 
