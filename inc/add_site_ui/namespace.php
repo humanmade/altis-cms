@@ -112,8 +112,8 @@ function output_add_site_page() {
 						</td>
 					</tr>
 				<?php endif; // Languages. ?>
-				<tr class="form-field form-required">
-					<th scope="row"><?php _e( 'Public', 'altis' ); ?> <span class="required">*</span></th>
+				<tr class="form-field">
+					<th scope="row"><?php _e( 'Public', 'altis' ); ?></th>
 					<td>
 						<label>
 							<input name="public" type="checkbox" id="public" value="1" aria-describedby="public-desc" checked />
