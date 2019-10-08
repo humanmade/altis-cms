@@ -6,27 +6,17 @@ namespace Altis\CMS\Add_Site_UI;
  * Setup the Add Site UI.
  */
 function bootstrap() {
-	add_action( 'network_admin_menu', __NAMESPACE__ . '\\register_menu_page' );
 	add_action( 'admin_init', __NAMESPACE__ . '\\add_site_form_handler' );
-}
-
-/**
- * Register the menu page for the overrided Add New Site page.
- *
- * @return void
- */
-function register_menu_page() {
-	if ( ! is_network_admin() ) {
-		return;
-	}
-	remove_submenu_page( 'sites.php', 'site-new.php' );
-	add_submenu_page( 'sites.php', __( 'Add New', 'altis' ), __( 'Add New', 'altis' ), 'create_sites', 'altis-add-site', __NAMESPACE__ . '\\output_add_site_page' );
+	add_action( 'load-site-new.php', __NAMESPACE__ . '\\output_add_site_page', 1000 );
 }
 
 /**
  * Display the New Site page in the admin.
  */
 function output_add_site_page() {
+	$GLOBALS['title'] = __( 'Add New Site', 'altis' );
+
+	require ABSPATH . 'wp-admin/admin-header.php';
 	?>
 	<div class="wrap">
 		<h1 id="add-new-site"><?php _e( 'Add New Site', 'altis' ); ?></h1>
@@ -70,7 +60,7 @@ function output_add_site_page() {
 			);
 			?>
 		</p>
-		<form method="post" action="<?php echo network_admin_url( 'sites.php?page=altis-add-site' ); ?>" novalidate="novalidate">
+		<form method="post" action="<?php echo network_admin_url( 'site-new.php' ); ?>" novalidate="novalidate">
 			<?php wp_nonce_field( 'altis-add-site' ); ?>
 			<table class="form-table">
 				<tr class="form-field form-required">
@@ -168,6 +158,11 @@ function output_add_site_page() {
 		</form>
 	</div>
 	<?php
+
+	require ABSPATH . 'wp-admin/admin-footer.php';
+
+	// Exit before we attempt to render WordPress' about page.
+	exit;
 }
 
 /**
@@ -208,7 +203,7 @@ function add_site_form_handler() {
 					'message' => 'error',
 					'error'      => 'missing_values',
 				],
-				network_admin_url( 'sites.php?page=altis-add-site' )
+				network_admin_url( 'site-new.php' )
 			)
 		);
 		exit;
@@ -248,7 +243,7 @@ function add_site_form_handler() {
 					'message' => 'error',
 					'error'      => 'wp_error',
 				],
-				network_admin_url( 'sites.php?page=altis-add-site' )
+				network_admin_url( 'site-new.php' )
 			)
 		);
 		exit;
@@ -261,7 +256,7 @@ function add_site_form_handler() {
 				'message' => 'created',
 				'id'      => $blog_id,
 			],
-			network_admin_url( 'sites.php?page=altis-add-site' )
+			network_admin_url( 'site-new.php' )
 		)
 	);
 	exit;

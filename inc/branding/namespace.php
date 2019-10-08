@@ -84,7 +84,7 @@ function enqueue_admin_scripts( string $hook ) {
 
 	wp_enqueue_style( 'altis-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2019-04-24-1' );
 
-	if ( $hook === 'sites_page_altis-add-site' ) {
+	if ( $hook === 'site-new.php' ) {
 		wp_enqueue_script( 'customize-settings', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/customize-settings.js', [], false, true );
 	}
 }
