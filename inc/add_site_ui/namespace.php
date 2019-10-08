@@ -46,11 +46,16 @@ function output_add_site_page() {
 				echo '<div id="message" class="updated notice is-dismissible"><p>' . $notice . '</p></div>';
 
 			} else if ( 'error' === $message ) {
-				$notice = sprintf(
-					/* translators: network admin all sites url */
-					__( 'Sorry, we were unable to create your site. Please <a href="%s">double check that the same url doesn\'t already exist.</a>', 'altis' ),
-					network_admin_url( 'sites.php' )
-				);
+				$error = $_GET['error'];
+				if ( 'wp_error' === $error ) {
+					$notice = sprintf(
+						/* translators: network admin all sites url */
+						__( 'Sorry, we were unable to create your site. Please <a href="%s">double check that the same url doesn\'t already exist.</a>', 'altis' ),
+						network_admin_url( 'sites.php' )
+					);
+				} else if ( 'missing_values' === $error ) {
+					$notice = __( 'Sorry, we were unable to create your site. Please make sure that all required fields are filled in.', 'altis' );
+				}
 				echo '<div id="message" class="error notice is-dismissible"><p>' . $notice . '</p></div>';
 			}
 		}
@@ -195,6 +200,20 @@ function add_site_form_handler() {
 	$language = sanitize_text_field( $_POST['language'] ) ?? '';
 	$public   = sanitize_text_field( $_POST['public'] );
 
+	if ( '' === $url || '' === $title ) {
+		// Add URL arg to use for error message.
+		wp_safe_redirect(
+			add_query_arg(
+				[
+					'message' => 'error',
+					'error'      => 'missing_values',
+				],
+				network_admin_url( 'sites.php?page=altis-add-site')
+			)
+		);
+		exit;
+	}
+
 	switch ( $site_type ) {
 		case 'site-subdomain':
 			$domain = $url . '.' . $network_url;
@@ -224,7 +243,13 @@ function add_site_form_handler() {
 	if ( is_wp_error( $blog_id ) ) {
 		// Add URL arg to use for error message.
 		wp_safe_redirect(
-			add_query_arg( 'message', 'error', network_admin_url( 'sites.php?page=altis-add-site') )
+			add_query_arg(
+				[
+					'message' => 'error',
+					'error'      => 'wp_error',
+				],
+				network_admin_url( 'sites.php?page=altis-add-site')
+			)
 		);
 		exit;
 	}
