@@ -52,19 +52,19 @@ function output_add_site_page() {
 							<label>
 								<input name="domain-type" type="radio" id="site-subdomain" value="site-subdomain" aria-describedby="site-subdomain-desc" checked />
 								<strong><?php _e( 'Subdomain' ); ?>: </strong>
-								<span class="radio-description" id="site-subdomain-desc"><?php _e( 'recommended for related sites', 'altis' ) ?></span>
+								<span class="input-description" id="site-subdomain-desc"><?php _e( 'recommended for related sites', 'altis' ) ?></span>
 							</label>
 							<br />
 							<label>
 								<input name="domain-type" type="radio" id="site-subdirectory" value="site-subdirectory" aria-describedby="site-subdirectory-desc" />
 								<strong><?php _e( 'Subdirectory' ); ?>: </strong>
-								<span class="radio-description" id="site-subdirectory-desc"><?php _e( 'recommended for regional or multilingual sites', 'altis' ) ?></span>
+								<span class="input-description" id="site-subdirectory-desc"><?php _e( 'recommended for regional or multilingual sites', 'altis' ) ?></span>
 							</label>
 							<br />
 							<label>
 								<input name="domain-type" type="radio" id="site-custom-domain" value="site-custom-domain" aria-describedby="site-custom-domain-desc" />
 								<strong><?php _e( 'Custom domain' ); ?>: </strong>
-								<span class="radio-description" id="site-custom-domain-desc"><?php _e( 'recommended for microsites', 'altis' ) ?></span>
+								<span class="input-description" id="site-custom-domain-desc"><?php _e( 'recommended for microsites', 'altis' ) ?></span>
 							</label>
 						</fieldset>
 					</td>
@@ -112,6 +112,16 @@ function output_add_site_page() {
 						</td>
 					</tr>
 				<?php endif; // Languages. ?>
+				<tr class="form-field form-required">
+					<th scope="row"><?php _e( 'Public', 'altis' ); ?> <span class="required">*</span></th>
+					<td>
+						<label>
+							<input name="public" type="checkbox" id="public" value="1" aria-describedby="public-desc" checked />
+							<strong><?php _e( 'Should this site be public?', 'altis' ); ?> </strong>
+							<span class="input-description" id="public-desc"><?php _e( 'Uncheck to require login.', 'altis' ) ?></span>
+						</label>
+					</td>
+				</tr>
 			</table>
 
 			<?php
@@ -156,7 +166,8 @@ function add_site_form_handler() {
 	$url = sanitize_text_field( $_POST['url'] );
 	
 	$title = sanitize_text_field( $_POST['title'] );
-	$language = $_POST['language'] ?? '';
+	$language = sanitize_text_field( $_POST['language'] ) ?? '';
+	$public   = sanitize_text_field( $_POST['public'] );
 
 	switch ( $site_type ) {
 		case 'site-subdomain':
@@ -177,7 +188,12 @@ function add_site_form_handler() {
 			break;
 	}
 
-	wpmu_create_blog( $domain, $path, $title, '', ['WPLANG' => $language ]);
+	$options = [
+		'WPLANG' => $language,
+		'public' => $public,
+	];
+
+	wpmu_create_blog( $domain, $path, $title, '', $options );
 
 	if ( is_wp_error( $result ) ) {
 		print_r( $result ); // Todo: redirect with error
