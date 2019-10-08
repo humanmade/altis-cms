@@ -30,6 +30,32 @@ function output_add_site_page() {
 	?>
 	<div class="wrap">
 		<h1 id="add-new-site"><?php _e( 'Add New Site', 'altis' ); ?></h1>
+
+		<?php
+		// Add message if a new site was just added or had an error.
+		if ( isset( $_GET['message'] ) ) {
+			$message = $_GET['message'];
+
+			if ( 'created' === $message ) {
+				$notice = sprintf(
+					/* translators: 1: dashboard url, 2: network admin edit url */
+					__( 'Site added. <a href="%1$s">Visit Dashboard</a> or <a href="%2$s">Edit Site</a>', 'altis' ),
+					esc_url( get_admin_url( absint( $_GET['id'] ) ) ),
+					network_admin_url( 'site-info.php?id=' . absint( $_GET['id'] ) )
+				);
+				echo '<div id="message" class="updated notice is-dismissible"><p>' . $notice . '</p></div>';
+
+			} else if ( 'error' === $message ) {
+				$notice = sprintf(
+					/* translators: network admin all sites url */
+					__( 'Sorry, we were unable to create your site. Please <a href="%s">double check that the same url doesn\'t already exist.</a>', 'altis' ),
+					network_admin_url( 'sites.php' )
+				);
+				echo '<div id="message" class="error notice is-dismissible"><p>' . $notice . '</p></div>';
+			}
+		}
+		?>
+
 		<p>
 			<?php
 			printf(
@@ -193,13 +219,25 @@ function add_site_form_handler() {
 		'public' => $public,
 	];
 
-	wpmu_create_blog( $domain, $path, $title, '', $options );
+	$blog_id = wpmu_create_blog( $domain, $path, $title, '', $options );
 
-	if ( is_wp_error( $result ) ) {
-		print_r( $result ); // Todo: redirect with error
+	if ( is_wp_error( $blog_id ) ) {
+		// Add URL arg to use for error message.
+		wp_safe_redirect(
+			add_query_arg( 'message', 'error', network_admin_url( 'sites.php?page=altis-add-site') )
+		);
 		exit;
 	}
 
-	wp_redirect( add_query_arg( 'message', 'created', network_admin_url( 'sites.php?page=altis-add-site' ) ) ); // Todo: Show created message
+	// Add URL args to use for success message.
+	wp_safe_redirect(
+		add_query_arg(
+			[
+				'message' => 'created',
+				'id'      => $blog_id,
+			],
+			network_admin_url( 'sites.php?page=altis-add-site')
+		)
+	);
 	exit;
 }
