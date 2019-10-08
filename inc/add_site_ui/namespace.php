@@ -45,7 +45,7 @@ function output_add_site_page() {
 				);
 				echo '<div id="message" class="updated notice is-dismissible"><p>' . $notice . '</p></div>';
 
-			} else if ( 'error' === $message ) {
+			} elseif ( 'error' === $message ) {
 				$error = $_GET['error'];
 				if ( 'wp_error' === $error ) {
 					$notice = sprintf(
@@ -53,7 +53,7 @@ function output_add_site_page() {
 						__( 'Sorry, we were unable to create your site. Please <a href="%s">double check that the same url doesn\'t already exist.</a>', 'altis' ),
 						network_admin_url( 'sites.php' )
 					);
-				} else if ( 'missing_values' === $error ) {
+				} elseif ( 'missing_values' === $error ) {
 					$notice = __( 'Sorry, we were unable to create your site. Please make sure that all required fields are filled in.', 'altis' );
 				}
 				echo '<div id="message" class="error notice is-dismissible"><p>' . $notice . '</p></div>';
@@ -195,7 +195,7 @@ function add_site_form_handler() {
 	$network_url = wp_parse_url( network_site_url() );
 	$network_url = $network_url['host'];
 	$url         = sanitize_text_field( $_POST['url'] );
-	
+
 	$title    = sanitize_text_field( $_POST['title'] );
 	$language = sanitize_text_field( $_POST['language'] ) ?? '';
 	$public   = sanitize_text_field( $_POST['public'] );
@@ -208,7 +208,7 @@ function add_site_form_handler() {
 					'message' => 'error',
 					'error'      => 'missing_values',
 				],
-				network_admin_url( 'sites.php?page=altis-add-site')
+				network_admin_url( 'sites.php?page=altis-add-site' )
 			)
 		);
 		exit;
@@ -221,7 +221,7 @@ function add_site_form_handler() {
 			break;
 		case 'site-subdirectory':
 			$domain = $network_url;
-			$path   = '/' . $url;	
+			$path   = '/' . $url;
 			break;
 		case 'site-custom-domain':
 			if ( strpos( $url, 'http' ) !== 0 ) {
@@ -248,7 +248,7 @@ function add_site_form_handler() {
 					'message' => 'error',
 					'error'      => 'wp_error',
 				],
-				network_admin_url( 'sites.php?page=altis-add-site')
+				network_admin_url( 'sites.php?page=altis-add-site' )
 			)
 		);
 		exit;
@@ -261,7 +261,7 @@ function add_site_form_handler() {
 				'message' => 'created',
 				'id'      => $blog_id,
 			],
-			network_admin_url( 'sites.php?page=altis-add-site')
+			network_admin_url( 'sites.php?page=altis-add-site' )
 		)
 	);
 	exit;
