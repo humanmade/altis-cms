@@ -55,6 +55,10 @@ function bootstrap() {
 	if ( $config['remove-emoji'] ) {
 		add_action( 'plugins_loaded', __NAMESPACE__ . '\\remove_emoji' );
 	}
+
+	if ( ! defined( 'WP_DISABLE_FATAL_ERROR_HANDLER' ) ) {
+		define( 'WP_DISABLE_FATAL_ERROR_HANDLER', true );
+	}
 }
 
 /**
