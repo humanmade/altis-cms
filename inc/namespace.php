@@ -151,7 +151,7 @@ function filter_wp_fatal_handler() : bool {
  *
  * @param bool $enabled Whether XML-RPC is enabled. Default true.
  */
-function filter_xmlrpc_handler() : bool {
+function filter_xmlrpc_handler( bool $enabled ) : bool {
 	return false;
 }
 
@@ -160,7 +160,7 @@ function filter_xmlrpc_handler() : bool {
  *
  * @param array $methods An array of XML-RPC methods.
  */
-function filter_xmlrpc_methods_handler() : array {
+function filter_xmlrpc_methods_handler( array $methods ) : array {
 	return [];
 }
 
@@ -171,7 +171,7 @@ function filter_xmlrpc_methods_handler() : array {
  *
  * @param int $element_limit Default elements limit.
  */
-function filter_xmlrpc_element_limit_handler() : int {
+function filter_xmlrpc_element_limit_handler( int $element_limit ) : int {
 	return 1;
 }
 
