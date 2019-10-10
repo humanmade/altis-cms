@@ -30,7 +30,9 @@ function bootstrap() {
 	}
 
 	if ( $config['xmlrpc'] === false ) {
-		add_filter( 'xmlrpc_enabled', '__return_false' );
+		add_filter( 'xmlrpc_enabled', __NAMESPACE__ . '\\filter_xmlrpc_handler', 999 );
+		add_filter( 'xmlrpc_methods', __NAMESPACE__ . '\\filter_xmlrpc_methods_handler', 999 );
+		add_filter( 'xmlrpc_element_limit', __NAMESPACE__ . '\\filter_xmlrpc_element_limit_handler', 999 );
 	}
 
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_plugins', 1 );
@@ -142,6 +144,35 @@ function override_fileupload_maxk_option() : int {
  */
 function filter_wp_fatal_handler() : bool {
 	return false;
+}
+
+/**
+ * Filters whether XML-RPC methods requiring authentication are enabled.
+ *
+ * @param bool $enabled Whether XML-RPC is enabled. Default true.
+ */
+function filter_xmlrpc_handler() : bool {
+	return false;
+}
+
+/**
+ * Filters the methods exposed by the XML-RPC server.
+ *
+ * @param array $methods An array of XML-RPC methods.
+ */
+function filter_xmlrpc_methods_handler() : array {
+	return [];
+}
+
+/**
+ * Filters the number of elements to parse in an XML-RPC response.
+ *
+ * @since 4.0.0
+ *
+ * @param int $element_limit Default elements limit.
+ */
+function filter_xmlrpc_element_limit_handler() : int {
+	return 1;
 }
 
 /**
