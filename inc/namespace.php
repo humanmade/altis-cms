@@ -29,6 +29,10 @@ function bootstrap() {
 		Block_Editor\bootstrap();
 	}
 
+	if ( $config['xmlrpc'] === false ) {
+		add_filter( 'xmlrpc_enabled', '__return_false' );
+	}
+
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_plugins', 1 );
 
 	if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {
