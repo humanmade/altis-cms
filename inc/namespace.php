@@ -167,8 +167,6 @@ function filter_xmlrpc_methods_handler( array $methods ) : array {
 /**
  * Filters the number of elements to parse in an XML-RPC response.
  *
- * @since 4.0.0
- *
  * @param int $element_limit Default elements limit.
  */
 function filter_xmlrpc_element_limit_handler( int $element_limit ) : int {
