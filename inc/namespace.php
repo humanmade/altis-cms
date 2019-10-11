@@ -114,6 +114,7 @@ function add_login_logo() {
  */
 function load_plugins() {
 	require_once ROOT_DIR . '/vendor/stuttter/wp-user-signups/wp-user-signups.php';
+	require_once ROOT_DIR . '/vendor/10up/simple-local-avatars/simple-local-avatars.php';
 }
 
 /**
