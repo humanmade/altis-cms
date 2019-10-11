@@ -46,6 +46,9 @@ function output_add_site_page() {
 				} elseif ( 'missing_values' === $error ) {
 					$notice = __( 'Sorry, we were unable to create your site. Please make sure that all required fields are filled in.', 'altis' );
 				}
+				elseif ( 'mismatched_values' === $error ) {
+					$notice = __( 'Sorry, we were unable to create your site. Please check the Site Address field to be sure that what you enter matches the Site Type selected.', 'altis' );
+				}
 				echo '<div id="message" class="error notice is-dismissible"><p>' . $notice . '</p></div>';
 			}
 		}
@@ -189,19 +192,49 @@ function add_site_form_handler() {
 
 	$network_url = wp_parse_url( network_site_url() );
 	$network_url = $network_url['host'];
-	$url         = sanitize_text_field( $_POST['url'] );
+	$form_url    = sanitize_text_field( $_POST['url'] );
+	$url         = $form_url;
+	$title       = sanitize_text_field( $_POST['title'] );
+	$language    = sanitize_text_field( $_POST['language'] ) ?? '';
+	$public      = sanitize_text_field( $_POST['public'] );
+	$domain      = '';
+	$path        = '';
 
-	$title    = sanitize_text_field( $_POST['title'] );
-	$language = sanitize_text_field( $_POST['language'] ) ?? '';
-	$public   = sanitize_text_field( $_POST['public'] );
+	if ( ( strpos( $url, $network_url ) && strpos( $url, 'http' ) !== 0 )
+		|| ( 'site-custom-domain' === $site_type && strpos( $url, 'http' ) !== 0 ) ) {
+		$url = 'https://' . $url;
+	}
 
-	if ( '' === $url || '' === $title ) {
+	if ( wp_http_validate_url( $url ) ) {
+		$url_array = wp_parse_url( $url );
+		$domain    = str_replace( $network_url, '', $url_array['host'] );
+		$domain    = trim( $domain, '.' );
+		$path      = trim( $url_array['path'], '/' );
+	} else {
+		$domain = trim( $url, '.' );
+		$path   = trim( $url, '/' );
+	}
+
+	if ( '' === $form_url || '' === $title ) {
 		// Add URL arg to use for error message.
 		wp_safe_redirect(
 			add_query_arg(
 				[
 					'message' => 'error',
-					'error'      => 'missing_values',
+					'error'   => 'missing_values',
+				],
+				network_admin_url( 'site-new.php' )
+			)
+		);
+		exit;
+	} elseif ( ( ( 'site-custom-domain' === $site_type || 'site-subdomain' === $site_type ) && '' === $domain )
+		|| ( 'site-subdirectory' === $site_type && '' === $path ) ) {
+		// Add URL arg to use for error message.
+		wp_safe_redirect(
+			add_query_arg(
+				[
+					'message' => 'error',
+					'error'   => 'mismatched_values',
 				],
 				network_admin_url( 'site-new.php' )
 			)
@@ -211,20 +244,16 @@ function add_site_form_handler() {
 
 	switch ( $site_type ) {
 		case 'site-subdomain':
-			$domain = $url . '.' . $network_url;
+			$domain = $domain . '.' . $network_url;
 			$path   = '/';
 			break;
 		case 'site-subdirectory':
 			$domain = $network_url;
-			$path   = '/' . $url;
+			$path   = '/' . $path;
 			break;
 		case 'site-custom-domain':
-			if ( strpos( $url, 'http' ) !== 0 ) {
-				$url = 'https://' . $url;
-				$url = wp_parse_url( $url );
-			}
-			$domain = $url['host'];
-			$path   = $url['path'];
+			$domain = $domain;
+			$path   = '/' . $path;
 			break;
 	}
 
@@ -241,7 +270,7 @@ function add_site_form_handler() {
 			add_query_arg(
 				[
 					'message' => 'error',
-					'error'      => 'wp_error',
+					'error'   => 'wp_error',
 				],
 				network_admin_url( 'site-new.php' )
 			)
