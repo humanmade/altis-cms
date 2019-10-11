@@ -16,6 +16,7 @@ function bootstrap() {
 
 	Remove_Updates\bootstrap();
 	Permalinks\bootstrap();
+	Health_Check\bootstrap();
 
 	if ( $config['branding'] ) {
 		Branding\bootstrap();
@@ -40,8 +41,8 @@ function bootstrap() {
 
 	add_filter( 'pre_site_option_fileupload_maxk', __NAMESPACE__ . '\\override_fileupload_maxk_option' );
 	add_filter( 'wp_fatal_error_handler_enabled', __NAMESPACE__ . '\\filter_wp_fatal_handler' );
-	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_site_healthcheck_admin_menu' );
-	add_action( 'admin_init', __NAMESPACE__ . '\\disable_site_healthcheck_access' );
+//	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_site_healthcheck_admin_menu' );
+//	add_action( 'admin_init', __NAMESPACE__ . '\\disable_site_healthcheck_access' );
 
 	add_filter( 'login_headerurl', __NAMESPACE__ . '\\login_header_url' );
 

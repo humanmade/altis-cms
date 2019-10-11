@@ -9,6 +9,7 @@ require_once __DIR__ . '/inc/remove_updates/namespace.php';
 require_once __DIR__ . '/inc/branding/namespace.php';
 require_once __DIR__ . '/inc/block_editor/namespace.php';
 require_once __DIR__ . '/inc/permalinks/namespace.php';
+require_once __DIR__ . '/inc/health_check/namespace.php';
 
 // Don't self-initialize if this is not an Altis execution.
 if ( ! function_exists( 'add_action' ) ) {
