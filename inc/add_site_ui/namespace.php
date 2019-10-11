@@ -45,8 +45,7 @@ function output_add_site_page() {
 					);
 				} elseif ( 'missing_values' === $error ) {
 					$notice = __( 'Sorry, we were unable to create your site. Please make sure that all required fields are filled in.', 'altis' );
-				}
-				elseif ( 'mismatched_values' === $error ) {
+				} elseif ( 'mismatched_values' === $error ) {
 					$notice = __( 'Sorry, we were unable to create your site. Please check the Site Address field to be sure that what you enter matches the Site Type selected.', 'altis' );
 				}
 				echo '<div id="message" class="error notice is-dismissible"><p>' . $notice . '</p></div>';
