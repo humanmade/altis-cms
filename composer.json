@@ -12,7 +12,8 @@
     "php": ">=7.1",
     "stuttter/wp-user-signups": "3.1.0",
     "johnpbloch/wordpress": "5.2.3",
-    "altis/cms-installer": "~0.2.1"
+    "altis/cms-installer": "~0.2.1",
+    "roots/wp-password-bcrypt": "^1.0"
   },
   "autoload": {
     "classmap": [ "inc/" ],
