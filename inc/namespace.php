@@ -12,7 +12,6 @@ use WP_DB_Table_Signups;
  * Main bootstrap / entry point for the CMS module.
  */
 function bootstrap() {
-	require_once ROOT_DIR . '/vendor/roots/wp-password-bcrypt/wp-password-bcrypt.php';
 
 	$config = get_config()['modules']['cms'];
 
