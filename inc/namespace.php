@@ -12,7 +12,6 @@ use WP_DB_Table_Signups;
  * Main bootstrap / entry point for the CMS module.
  */
 function bootstrap() {
-
 	$config = get_config()['modules']['cms'];
 
 	Remove_Updates\bootstrap();
