@@ -12,6 +12,8 @@ use WP_DB_Table_Signups;
  * Main bootstrap / entry point for the CMS module.
  */
 function bootstrap() {
+	require_once ROOT_DIR . '/vendor/roots/wp-password-bcrypt/wp-password-bcrypt.php';
+
 	$config = get_config()['modules']['cms'];
 
 	Remove_Updates\bootstrap();
@@ -114,7 +116,6 @@ function add_login_logo() {
  */
 function load_plugins() {
 	require_once ROOT_DIR . '/vendor/stuttter/wp-user-signups/wp-user-signups.php';
-	require_once ROOT_DIR . '/vendor/roots/wp-password-bcrypt/wp-password-bcrypt.php';
 }
 
 /**
