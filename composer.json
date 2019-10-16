@@ -14,6 +14,7 @@
     "johnpbloch/wordpress": "5.2.3",
     "altis/cms-installer": "~0.2.1",
     "10up/simple-local-avatars": "2.2"
+    "roots/wp-password-bcrypt": "1.0.0",
   },
   "autoload": {
     "classmap": [ "inc/" ],
