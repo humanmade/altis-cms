@@ -24,6 +24,7 @@ add_action( 'altis.modules.init', function () {
 		'shared-blocks' => true,
 		'default-theme' => 'base',
 		'remove-emoji'  => true,
+		'xmlrpc'        => true,
 	];
 	register_module( 'cms', __DIR__, 'CMS', $default_settings, __NAMESPACE__ . '\\bootstrap' );
 } );

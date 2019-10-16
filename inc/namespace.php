@@ -29,6 +29,12 @@ function bootstrap() {
 		Block_Editor\bootstrap();
 	}
 
+	if ( $config['xmlrpc'] === false ) {
+		add_filter( 'xmlrpc_enabled', '__return_false' );
+		add_filter( 'xmlrpc_methods', '__return_empty_array' );
+		add_filter( 'xmlrpc_element_limit', __NAMESPACE__ . '\\filter_xmlrpc_element_limit_handler', 999 );
+	}
+
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_plugins', 1 );
 
 	if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {
@@ -138,6 +144,17 @@ function override_fileupload_maxk_option() : int {
  */
 function filter_wp_fatal_handler() : bool {
 	return false;
+}
+
+/**
+ * Filters the number of elements to parse in an XML-RPC response.
+ *
+ * @param int $element_limit Default elements limit.
+ *
+ * @return int
+ */
+function filter_xmlrpc_element_limit_handler( int $element_limit ) : int {
+	return 1;
 }
 
 /**
