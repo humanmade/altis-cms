@@ -11,13 +11,23 @@
   "require": {
     "php": ">=7.1",
     "stuttter/wp-user-signups": "3.1.0",
-    "johnpbloch/wordpress": "5.2.2",
-    "altis/cms-installer": "~0.2.1"
+    "roots/wp-password-bcrypt": "1.0.0",
+    "johnpbloch/wordpress": "5.2.4",
+    "altis/cms-installer": "^0.3.2"
   },
   "autoload": {
-    "classmap": [ "inc/" ],
     "files": [
-      "load.php"
+      "inc/namespace.php",
+      "inc/remove_updates/namespace.php",
+      "inc/branding/namespace.php",
+      "inc/block_editor/namespace.php",
+      "inc/permalinks/namespace.php"
+    ],
+    "classmap": [
+      "inc/"
     ]
+  },
+  "extra": {
+    "altis": {}
   }
 }

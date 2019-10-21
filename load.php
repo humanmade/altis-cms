@@ -4,18 +4,6 @@ namespace Altis\CMS; // @codingStandardsIgnoreLine
 
 use function Altis\register_module;
 
-require_once __DIR__ . '/inc/namespace.php';
-require_once __DIR__ . '/inc/remove_updates/namespace.php';
-require_once __DIR__ . '/inc/branding/namespace.php';
-require_once __DIR__ . '/inc/block_editor/namespace.php';
-require_once __DIR__ . '/inc/permalinks/namespace.php';
-require_once __DIR__ . '/inc/add_site_ui/namespace.php';
-
-// Don't self-initialize if this is not an Altis execution.
-if ( ! function_exists( 'add_action' ) ) {
-	return;
-}
-
 // Register core module.
 add_action( 'altis.modules.init', function () {
 	$default_settings = [
@@ -25,6 +13,7 @@ add_action( 'altis.modules.init', function () {
 		'shared-blocks' => true,
 		'default-theme' => 'base',
 		'remove-emoji'  => true,
+		'xmlrpc'        => true,
 	];
 	register_module( 'cms', __DIR__, 'CMS', $default_settings, __NAMESPACE__ . '\\bootstrap' );
 } );
