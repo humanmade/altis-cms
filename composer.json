@@ -14,7 +14,7 @@
     "johnpbloch/wordpress": "5.2.4",
     "altis/cms-installer": "^0.3.2",
     "roots/wp-password-bcrypt": "1.0.0",
-    "10up/simple-local-avatars": "2.1.1"
+    "10up/simple-local-avatars": "2.2.0"
   },
   "autoload": {
     "files": [
