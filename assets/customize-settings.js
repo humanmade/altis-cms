@@ -6,6 +6,7 @@ const siteSubdomain = document.getElementById( 'site-subdomain' ),
 	siteCustomDomain = document.getElementById( 'site-custom-domain' ),
 	domainTypeRadioBtns = document.getElementsByName( 'domain-type' ),
 	siteAddress = document.getElementById( 'site-address' ),
+	siteAddressDesc = document.getElementById( 'site-address-desc' ),
 	networkAddress = window.location.hostname;
 let domainTextEl = document.createElement( 'span' );
 domainTextEl.className = 'site-address-domain-text';
@@ -21,13 +22,16 @@ function updatedomainText( event ) {
 		case siteSubdomain:
 			domainTextEl.innerHTML = '.' + networkAddress;
 			siteAddress.parentElement.appendChild( domainTextEl );
+			siteAddressDesc.style.visibility = 'visible';
 			break;
 		case siteSubdirectory:
 			domainTextEl.innerHTML = networkAddress + '/ ';
 			siteAddress.parentElement.insertBefore( domainTextEl, siteAddress );
+			siteAddressDesc.style.visibility = 'visible';
 			break;
 		case siteCustomDomain:
 			siteAddress.parentElement.removeChild( domainTextEl );
+			siteAddressDesc.style.visibility = 'hidden';
 			break;
 		default:
 			break;

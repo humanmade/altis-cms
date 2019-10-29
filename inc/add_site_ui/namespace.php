@@ -171,6 +171,8 @@ function output_add_site_page() {
  * Handler function for the Add Site form submission.
  */
 function add_site_form_handler() {
+	global $wpdb;
+
 	if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'altis-add-site' ) ) {
 		return;
 	}
@@ -204,12 +206,13 @@ function add_site_form_handler() {
 		$url = 'https://' . $url;
 	}
 
+	// Check if this is already a valid URL.
 	if ( wp_http_validate_url( $url ) ) {
 		$url_array = wp_parse_url( $url );
 		$domain    = str_replace( $network_url, '', $url_array['host'] );
 		$domain    = trim( $domain, '.' );
 		$path      = trim( $url_array['path'], '/' );
-	} else {
+	} elseif ( 'site-custom-domain' !== $site_type ) {
 		$domain = trim( $url, '.' );
 		$path   = trim( $url, '/' );
 	}
@@ -261,7 +264,9 @@ function add_site_form_handler() {
 		'public' => $public,
 	];
 
+	$wpdb->hide_errors();
 	$blog_id = wpmu_create_blog( $domain, $path, $title, '', $options );
+	$wpdb->show_errors();
 
 	if ( is_wp_error( $blog_id ) ) {
 		// Add URL arg to use for error message.
