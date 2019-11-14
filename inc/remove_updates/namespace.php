@@ -18,6 +18,7 @@ function bootstrap() {
  * to be nagging users about available updates.
  */
 function remove_update_nag() {
+	remove_action( 'admin_notices', 'maintenance_nag', 10 );
 	remove_filter( 'admin_notices', 'update_nag', 3 );
 	remove_filter( 'network_admin_notices', 'update_nag', 3 );
 	remove_filter( 'update_footer', 'core_update_footer' );
