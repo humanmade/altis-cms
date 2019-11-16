@@ -25,7 +25,10 @@ function updatedomainText( event ) {
 			siteAddressDesc.style.visibility = 'visible';
 			break;
 		case siteCustomDomain:
-			siteAddress.parentElement.removeChild( domainTextEl );
+			if ( siteAddress.parentElement.contains( domainTextEl ) ) {
+				siteAddress.parentElement.removeChild( domainTextEl );
+			}
+
 			siteAddressDesc.style.visibility = 'hidden';
 			break;
 		default:
