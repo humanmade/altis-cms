@@ -17,11 +17,13 @@ function updatedomainText( event ) {
 		case siteSubdomain:
 			domainTextEl.innerHTML = '.' + networkAddress;
 			siteAddress.parentElement.appendChild( domainTextEl );
+			siteAddress.placeholder = 'name';
 			siteAddressDesc.style.visibility = 'visible';
 			break;
 		case siteSubdirectory:
 			domainTextEl.innerHTML = networkAddress + '/ ';
 			siteAddress.parentElement.insertBefore( domainTextEl, siteAddress );
+			siteAddress.placeholder = 'name';
 			siteAddressDesc.style.visibility = 'visible';
 			break;
 		case siteCustomDomain:
@@ -29,6 +31,7 @@ function updatedomainText( event ) {
 				siteAddress.parentElement.removeChild( domainTextEl );
 			}
 
+			siteAddress.placeholder = 'example.com';
 			siteAddressDesc.style.visibility = 'hidden';
 			break;
 		default:
