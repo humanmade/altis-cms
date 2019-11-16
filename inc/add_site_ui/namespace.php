@@ -214,6 +214,40 @@ function validate_domain( string $domain ) : bool {
 }
 
 /**
+ * Validate a path name.
+ *
+ * Checks that the path does not include any invalid segments.
+ *
+ * @param string $path Path to validate.
+ * @return bool True if valid, false otherwise.
+ */
+function validate_path( $path ) {
+	if ( $path === '/' ) {
+		return true;
+	}
+
+	$illegal_names = get_site_option( 'illegal_names' );
+	if ( empty( $illegal_names ) ) {
+		$illegal_names = [];
+	}
+	$illegal_paths = array_merge( $illegal_names, get_subdirectory_reserved_names() );
+
+	$segments = explode( '/', trim( $path, '/' ) );
+
+	foreach ( $segments as $segment ) {
+		if ( empty( $segment ) ) {
+			return false;
+		}
+
+		if ( in_array( $segment, $illegal_paths, true ) ) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/**
  * Handler function for the Add Site form submission.
  */
 function add_site_form_handler() {
@@ -284,7 +318,7 @@ function add_site_form_handler() {
 		exit;
 	}
 
-	if ( ! validate_domain( $parts['domain'] ) ) {
+	if ( ! validate_domain( $parts['domain'] ) || ! validate_path( $parts['path'] ) ) {
 		// Add URL arg to use for error message.
 		wp_safe_redirect(
 			add_query_arg(
