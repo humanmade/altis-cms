@@ -2,6 +2,8 @@
 
 namespace Altis\CMS\Add_Site_UI;
 
+const REGEX_DOMAIN_SEGMENT = '(?![0-9]+$)(?!.*-$)(?!-)[a-zA-Z0-9-]{1,63}';
+
 /**
  * Setup the Add Site UI.
  */
@@ -191,31 +193,10 @@ function add_site_form_handler() {
 		$site_type = 'site-subdomain';
 	}
 
-	$network_url = wp_parse_url( network_site_url() );
-	$network_url = $network_url['host'];
 	$form_url    = sanitize_text_field( $_POST['url'] );
-	$url         = $form_url;
 	$title       = sanitize_text_field( $_POST['title'] );
 	$language    = sanitize_text_field( $_POST['language'] ) ?? '';
 	$public      = sanitize_text_field( $_POST['public'] );
-	$domain      = '';
-	$path        = '';
-
-	if ( ( strpos( $url, $network_url ) && strpos( $url, 'http' ) !== 0 )
-		|| ( 'site-custom-domain' === $site_type && strpos( $url, 'http' ) !== 0 ) ) {
-		$url = 'https://' . $url;
-	}
-
-	// Check if this is already a valid URL.
-	if ( wp_http_validate_url( $url ) ) {
-		$url_array = wp_parse_url( $url );
-		$domain    = str_replace( $network_url, '', $url_array['host'] );
-		$domain    = trim( $domain, '.' );
-		$path      = trim( $url_array['path'], '/' );
-	} elseif ( 'site-custom-domain' !== $site_type ) {
-		$domain = trim( $url, '.' );
-		$path   = trim( $url, '/' );
-	}
 
 	if ( '' === $form_url || '' === $title ) {
 		// Add URL arg to use for error message.
@@ -229,8 +210,23 @@ function add_site_form_handler() {
 			)
 		);
 		exit;
-	} elseif ( ( ( 'site-custom-domain' === $site_type || 'site-subdomain' === $site_type ) && '' === $domain )
-		|| ( 'site-subdirectory' === $site_type && '' === $path ) ) {
+	}
+
+	switch ( $site_type ) {
+		case 'site-subdomain':
+			$parts = handle_subdomain( $form_url );
+			break;
+
+		case 'site-subdirectory':
+			$parts = handle_subdirectory( $form_url );
+			break;
+
+		case 'site-custom-domain':
+			$parts = handle_custom_domain( $form_url );
+			break;
+	}
+
+	if ( empty( $parts ) ) {
 		// Add URL arg to use for error message.
 		wp_safe_redirect(
 			add_query_arg(
@@ -244,28 +240,13 @@ function add_site_form_handler() {
 		exit;
 	}
 
-	switch ( $site_type ) {
-		case 'site-subdomain':
-			$domain = $domain . '.' . $network_url;
-			$path   = '/';
-			break;
-		case 'site-subdirectory':
-			$domain = $network_url;
-			$path   = '/' . $path;
-			break;
-		case 'site-custom-domain':
-			$domain = $domain;
-			$path   = '/' . $path;
-			break;
-	}
-
 	$options = [
 		'WPLANG' => $language,
 		'public' => $public,
 	];
 
 	$wpdb->hide_errors();
-	$blog_id = wpmu_create_blog( $domain, $path, $title, '', $options );
+	$blog_id = wpmu_create_blog( $parts['domain'], $parts['path'], $title, '', $options );
 	$wpdb->show_errors();
 
 	if ( is_wp_error( $blog_id ) ) {
@@ -293,4 +274,82 @@ function add_site_form_handler() {
 		)
 	);
 	exit;
+}
+
+/**
+ * Handle a subdomain input value.
+ *
+ * @param string $value Input subdomain value.
+ * @return array|null $value Assoc array with domain and path keys, or null if invalid.
+ */
+function handle_subdomain( string $value ) : ?array {
+	$network_url = wp_parse_url( network_site_url() );
+	$network_host = $network_url['host'];
+
+	return [
+		'domain' => $value . '.' . $network_host,
+		'path' => '/',
+	];
+}
+
+/**
+ * Handle a subdirectory input value.
+ *
+ * @param string $value Input subdirectory value.
+ * @return array|null $value Assoc array with domain and path keys, or null if invalid.
+ */
+function handle_subdirectory( string $value ) : ?array {
+	$network_url = wp_parse_url( network_site_url() );
+	$network_host = $network_url['host'];
+
+	$path = trim( $value, '/' );
+
+	return [
+		'domain' => $network_host,
+		'path' => $path,
+	];
+}
+
+/**
+ * Handle a custom domain input value.
+ *
+ * @param string $value Input custom domain value.
+ * @return array|null $value Assoc array with domain and path keys, or null if invalid.
+ */
+function handle_custom_domain( string $value ) : ?array {
+	if ( strpos( $value, 'http' ) !== 0 ) {
+		$url = 'https://' . $value;
+	}
+
+	$url_array = wp_parse_url( $url );
+
+	// Only allow valid schemes.
+	if ( $url_array['scheme'] !== 'http' && $url_array['scheme'] !== 'https' ) {
+		return null;
+	}
+
+	// Don't allow anything extra.
+	$invalid_parts = [
+		'user',
+		'pass',
+		'port',
+		'fragment',
+	];
+	foreach ( $invalid_parts as $part ) {
+		if ( ! empty( $url_array[ $part ] ) ) {
+			return null;
+		}
+	}
+
+	if ( empty( $url_array['host'] ) ) {
+		return null;
+	}
+
+	$domain = trim( $url_array['host'], '.' );
+	$path = trim( $url_array['path'], '/' );
+
+	return [
+		'domain' => $domain,
+		'path' => '/' . $path,
+	];
 }
