@@ -7,7 +7,7 @@ const siteCustomDomain = document.getElementById( 'site-custom-domain' );
 const siteAddress = document.getElementById( 'site-address' );
 const siteAddressDesc = document.getElementById( 'site-address-desc' );
 const networkAddress = window.location.hostname;
-let domainTextEl = document.createElement( 'span' );
+const domainTextEl = document.createElement( 'span' );
 domainTextEl.className = 'site-address-domain-text';
 
 // Add domain hints around the site address field.
@@ -44,7 +44,7 @@ document.getElementsByName( 'domain-type' ).forEach( function ( element ) {
 
 	// On load, dispatch a change event for the selected radio button.
 	if ( element.checked ) {
-		let changeEvent = new Event( 'change' );
+		const changeEvent = new Event( 'change' );
 		element.dispatchEvent( changeEvent );
 	}
 } );
