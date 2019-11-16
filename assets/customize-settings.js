@@ -11,11 +11,6 @@ const siteSubdomain = document.getElementById( 'site-subdomain' ),
 let domainTextEl = document.createElement( 'span' );
 domainTextEl.className = 'site-address-domain-text';
 
-// Add an event listener to each radio button.
-domainTypeRadioBtns.forEach( function ( element ) {
-	element.addEventListener( 'change', updatedomainText );
-} );
-
 // Add domain hints around the site address field.
 function updatedomainText( event ) {
 	switch ( event.target ) {
@@ -38,6 +33,13 @@ function updatedomainText( event ) {
 	}
 }
 
-// On load, dispatch a change event for the first radio button.
-let changeEvent = new Event( 'change' );
-domainTypeRadioBtns[0].dispatchEvent( changeEvent );
+// Add an event listener to each radio button.
+domainTypeRadioBtns.forEach( function ( element ) {
+	element.addEventListener( 'change', updatedomainText );
+
+	// On load, dispatch a change event for the selected radio button.
+	if ( element.checked ) {
+		let changeEvent = new Event( 'change' );
+		element.dispatchEvent( changeEvent );
+	}
+} );
