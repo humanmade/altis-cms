@@ -170,6 +170,50 @@ function output_add_site_page() {
 }
 
 /**
+ * Validate a domain segment.
+ *
+ * Check that a string is allowed as a segment in a custom domain, i.e. as a
+ * TLD or subdomain name.
+ *
+ * @param string $segment Segment to validate.
+ * @return bool True if valid, false otherwise.
+ */
+function validate_domain_segment( string $segment ) : bool {
+	return (bool) preg_match( '/^' . REGEX_DOMAIN_SEGMENT . '$/', $segment );
+}
+
+/**
+ * Validate a domain name.
+ *
+ * Checks that the domain name has 2+ valid DNS segments.
+ *
+ * @param string $domain Domain to validate.
+ * @return bool True if valid, false otherwise.
+ */
+function validate_domain( string $domain ) : bool {
+	$segments = explode( '.', $domain );
+
+	// Domains must have multiple segments.
+	if ( count( $segments ) < 2 ) {
+		return false;
+	}
+
+	foreach ( $segments as $segment ) {
+		// Segments may not be empty.
+		if ( empty( $segment ) ) {
+			return false;
+		}
+
+		// Each segment must be valid.
+		if ( ! validate_domain_segment( $segment ) ) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/**
  * Handler function for the Add Site form submission.
  */
 function add_site_form_handler() {
@@ -227,6 +271,20 @@ function add_site_form_handler() {
 	}
 
 	if ( empty( $parts ) ) {
+		// Add URL arg to use for error message.
+		wp_safe_redirect(
+			add_query_arg(
+				[
+					'message' => 'error',
+					'error'   => 'mismatched_values',
+				],
+				network_admin_url( 'site-new.php' )
+			)
+		);
+		exit;
+	}
+
+	if ( ! validate_domain( $parts['domain'] ) ) {
 		// Add URL arg to use for error message.
 		wp_safe_redirect(
 			add_query_arg(
