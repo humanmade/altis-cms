@@ -18,6 +18,8 @@ function bootstrap() {
 function output_add_site_page() {
 	$GLOBALS['title'] = __( 'Add New Site', 'altis' );
 
+	wp_enqueue_script( 'customize-settings', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/customize-settings.js', [], false, true );
+
 	require ABSPATH . 'wp-admin/admin-header.php';
 	?>
 	<div class="wrap">
