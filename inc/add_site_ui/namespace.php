@@ -378,6 +378,16 @@ function handle_subdomain( string $value ) : ?array {
 	$network_url = wp_parse_url( network_site_url() );
 	$network_host = $network_url['host'];
 
+	// Check the segment is allowed.
+	$illegal_names = get_site_option( 'illegal_names' );
+	if ( empty( $illegal_names ) ) {
+		$illegal_names = [ 'www', 'web', 'root', 'admin', 'main', 'invite', 'administrator' ];
+	}
+
+	if ( in_array( $value, $illegal_names, true ) ) {
+		return null;
+	}
+
 	return [
 		'domain' => $value . '.' . $network_host,
 		'path' => '/',
