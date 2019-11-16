@@ -273,8 +273,6 @@ function add_site_form_handler() {
 
 	$form_url    = sanitize_text_field( $_POST['url'] );
 	$title       = sanitize_text_field( $_POST['title'] );
-	$language    = sanitize_text_field( $_POST['language'] ) ?? '';
-	$public      = sanitize_text_field( $_POST['public'] );
 
 	if ( '' === $form_url || '' === $title ) {
 		// Add URL arg to use for error message.
@@ -332,6 +330,8 @@ function add_site_form_handler() {
 		exit;
 	}
 
+	$language = sanitize_text_field( $_POST['language'] ?? '' );
+	$public = sanitize_text_field( $_POST['public'] ?? '' );
 	$options = [
 		'WPLANG' => $language,
 		'public' => $public,
