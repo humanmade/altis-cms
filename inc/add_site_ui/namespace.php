@@ -165,7 +165,7 @@ function output_add_site_page() {
 
 	require ABSPATH . 'wp-admin/admin-footer.php';
 
-	// Exit before we attempt to render WordPress' about page.
+	// Exit before we attempt to render WordPress' built-in page.
 	exit;
 }
 
