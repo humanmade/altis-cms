@@ -271,10 +271,10 @@ function add_site_form_handler() {
 		$site_type = 'site-subdomain';
 	}
 
-	$form_url    = sanitize_text_field( $_POST['url'] );
-	$title       = sanitize_text_field( $_POST['title'] );
+	$value = sanitize_text_field( $_POST['url'] ?? '' );
+	$title = sanitize_text_field( $_POST['title'] ?? '' );
 
-	if ( '' === $form_url || '' === $title ) {
+	if ( empty( $value ) || empty( $title ) ) {
 		// Add URL arg to use for error message.
 		wp_safe_redirect(
 			add_query_arg(
@@ -290,15 +290,15 @@ function add_site_form_handler() {
 
 	switch ( $site_type ) {
 		case 'site-subdomain':
-			$parts = handle_subdomain( $form_url );
+			$parts = handle_subdomain( $value );
 			break;
 
 		case 'site-subdirectory':
-			$parts = handle_subdirectory( $form_url );
+			$parts = handle_subdirectory( $value );
 			break;
 
 		case 'site-custom-domain':
-			$parts = handle_custom_domain( $form_url );
+			$parts = handle_custom_domain( $value );
 			break;
 	}
 
