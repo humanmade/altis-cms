@@ -73,6 +73,11 @@ input[type="radio"]:checked:before {
 	color: #e5f8ff;
 }
 
+.wp-core-ui .input-description,
+.wp-core-ui .site-address-domain-text {
+	color: #666;
+}
+
 /* List tables */
 .wrap .add-new-h2:hover,
 .wrap .page-title-action:hover,

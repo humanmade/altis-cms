@@ -21,7 +21,8 @@
       "inc/remove_updates/namespace.php",
       "inc/branding/namespace.php",
       "inc/block_editor/namespace.php",
-      "inc/permalinks/namespace.php"
+      "inc/permalinks/namespace.php",
+      "inc/add_site_ui/namespace.php"
     ],
     "classmap": [
       "inc/"
