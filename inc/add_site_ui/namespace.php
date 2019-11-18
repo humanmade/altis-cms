@@ -2,6 +2,8 @@
 
 namespace Altis\CMS\Add_Site_UI;
 
+const REGEX_DOMAIN_SEGMENT = '(?![0-9]+$)(?!.*-$)(?!-)[a-zA-Z0-9-]{1,63}';
+
 /**
  * Setup the Add Site UI.
  */
@@ -15,6 +17,8 @@ function bootstrap() {
  */
 function output_add_site_page() {
 	$GLOBALS['title'] = __( 'Add New Site', 'altis' );
+
+	wp_enqueue_script( 'altis-customize-settings', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/customize-settings.js', [], false, true );
 
 	require ABSPATH . 'wp-admin/admin-header.php';
 	?>
@@ -163,8 +167,86 @@ function output_add_site_page() {
 
 	require ABSPATH . 'wp-admin/admin-footer.php';
 
-	// Exit before we attempt to render WordPress' about page.
+	// Exit before we attempt to render WordPress' built-in page.
 	exit;
+}
+
+/**
+ * Validate a domain segment.
+ *
+ * Check that a string is allowed as a segment in a custom domain, i.e. as a
+ * TLD or subdomain name.
+ *
+ * @param string $segment Segment to validate.
+ * @return bool True if valid, false otherwise.
+ */
+function validate_domain_segment( string $segment ) : bool {
+	return (bool) preg_match( '/^' . REGEX_DOMAIN_SEGMENT . '$/', $segment );
+}
+
+/**
+ * Validate a domain name.
+ *
+ * Checks that the domain name has 2+ valid DNS segments.
+ *
+ * @param string $domain Domain to validate.
+ * @return bool True if valid, false otherwise.
+ */
+function validate_domain( string $domain ) : bool {
+	$segments = explode( '.', $domain );
+
+	// Domains must have multiple segments.
+	if ( count( $segments ) < 2 ) {
+		return false;
+	}
+
+	foreach ( $segments as $segment ) {
+		// Segments may not be empty.
+		if ( empty( $segment ) ) {
+			return false;
+		}
+
+		// Each segment must be valid.
+		if ( ! validate_domain_segment( $segment ) ) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/**
+ * Validate a path name.
+ *
+ * Checks that the path does not include any invalid segments.
+ *
+ * @param string $path Path to validate.
+ * @return bool True if valid, false otherwise.
+ */
+function validate_path( $path ) {
+	if ( $path === '/' ) {
+		return true;
+	}
+
+	$illegal_names = get_site_option( 'illegal_names' );
+	if ( empty( $illegal_names ) ) {
+		$illegal_names = [];
+	}
+	$illegal_paths = array_merge( $illegal_names, get_subdirectory_reserved_names() );
+
+	$segments = explode( '/', trim( $path, '/' ) );
+
+	foreach ( $segments as $segment ) {
+		if ( empty( $segment ) ) {
+			return false;
+		}
+
+		if ( in_array( $segment, $illegal_paths, true ) ) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 /**
@@ -191,33 +273,10 @@ function add_site_form_handler() {
 		$site_type = 'site-subdomain';
 	}
 
-	$network_url = wp_parse_url( network_site_url() );
-	$network_url = $network_url['host'];
-	$form_url    = sanitize_text_field( $_POST['url'] );
-	$url         = $form_url;
-	$title       = sanitize_text_field( $_POST['title'] );
-	$language    = sanitize_text_field( $_POST['language'] ) ?? '';
-	$public      = sanitize_text_field( $_POST['public'] );
-	$domain      = '';
-	$path        = '';
+	$value = sanitize_text_field( $_POST['url'] ?? '' );
+	$title = sanitize_text_field( $_POST['title'] ?? '' );
 
-	if ( ( strpos( $url, $network_url ) && strpos( $url, 'http' ) !== 0 )
-		|| ( 'site-custom-domain' === $site_type && strpos( $url, 'http' ) !== 0 ) ) {
-		$url = 'https://' . $url;
-	}
-
-	// Check if this is already a valid URL.
-	if ( wp_http_validate_url( $url ) ) {
-		$url_array = wp_parse_url( $url );
-		$domain    = str_replace( $network_url, '', $url_array['host'] );
-		$domain    = trim( $domain, '.' );
-		$path      = trim( $url_array['path'], '/' );
-	} elseif ( 'site-custom-domain' !== $site_type ) {
-		$domain = trim( $url, '.' );
-		$path   = trim( $url, '/' );
-	}
-
-	if ( '' === $form_url || '' === $title ) {
+	if ( empty( $value ) || empty( $title ) ) {
 		// Add URL arg to use for error message.
 		wp_safe_redirect(
 			add_query_arg(
@@ -229,8 +288,23 @@ function add_site_form_handler() {
 			)
 		);
 		exit;
-	} elseif ( ( ( 'site-custom-domain' === $site_type || 'site-subdomain' === $site_type ) && '' === $domain )
-		|| ( 'site-subdirectory' === $site_type && '' === $path ) ) {
+	}
+
+	switch ( $site_type ) {
+		case 'site-subdomain':
+			$parts = handle_subdomain( $value );
+			break;
+
+		case 'site-subdirectory':
+			$parts = handle_subdirectory( $value );
+			break;
+
+		case 'site-custom-domain':
+			$parts = handle_custom_domain( $value );
+			break;
+	}
+
+	if ( empty( $parts ) ) {
 		// Add URL arg to use for error message.
 		wp_safe_redirect(
 			add_query_arg(
@@ -244,28 +318,29 @@ function add_site_form_handler() {
 		exit;
 	}
 
-	switch ( $site_type ) {
-		case 'site-subdomain':
-			$domain = $domain . '.' . $network_url;
-			$path   = '/';
-			break;
-		case 'site-subdirectory':
-			$domain = $network_url;
-			$path   = '/' . $path;
-			break;
-		case 'site-custom-domain':
-			$domain = $domain;
-			$path   = '/' . $path;
-			break;
+	if ( ! validate_domain( $parts['domain'] ) || ! validate_path( $parts['path'] ) ) {
+		// Add URL arg to use for error message.
+		wp_safe_redirect(
+			add_query_arg(
+				[
+					'message' => 'error',
+					'error'   => 'mismatched_values',
+				],
+				network_admin_url( 'site-new.php' )
+			)
+		);
+		exit;
 	}
 
+	$language = sanitize_text_field( $_POST['language'] ?? '' );
+	$public = sanitize_text_field( $_POST['public'] ?? '' );
 	$options = [
 		'WPLANG' => $language,
 		'public' => $public,
 	];
 
 	$wpdb->hide_errors();
-	$blog_id = wpmu_create_blog( $domain, $path, $title, '', $options );
+	$blog_id = wpmu_create_blog( $parts['domain'], $parts['path'], $title, '', $options );
 	$wpdb->show_errors();
 
 	if ( is_wp_error( $blog_id ) ) {
@@ -293,4 +368,92 @@ function add_site_form_handler() {
 		)
 	);
 	exit;
+}
+
+/**
+ * Handle a subdomain input value.
+ *
+ * @param string $value Input subdomain value.
+ * @return array|null $value Assoc array with domain and path keys, or null if invalid.
+ */
+function handle_subdomain( string $value ) : ?array {
+	$network_url = wp_parse_url( network_site_url() );
+	$network_host = $network_url['host'];
+
+	// Check the segment is allowed.
+	$illegal_names = get_site_option( 'illegal_names' );
+	if ( empty( $illegal_names ) ) {
+		$illegal_names = [ 'www', 'web', 'root', 'admin', 'main', 'invite', 'administrator' ];
+	}
+
+	if ( in_array( $value, $illegal_names, true ) ) {
+		return null;
+	}
+
+	return [
+		'domain' => $value . '.' . $network_host,
+		'path' => '/',
+	];
+}
+
+/**
+ * Handle a subdirectory input value.
+ *
+ * @param string $value Input subdirectory value.
+ * @return array|null $value Assoc array with domain and path keys, or null if invalid.
+ */
+function handle_subdirectory( string $value ) : ?array {
+	$network_url = wp_parse_url( network_site_url() );
+	$network_host = $network_url['host'];
+
+	$path = trim( $value, '/' );
+
+	return [
+		'domain' => $network_host,
+		'path' => $path,
+	];
+}
+
+/**
+ * Handle a custom domain input value.
+ *
+ * @param string $value Input custom domain value.
+ * @return array|null $value Assoc array with domain and path keys, or null if invalid.
+ */
+function handle_custom_domain( string $value ) : ?array {
+	if ( strpos( $value, 'http' ) !== 0 ) {
+		$url = 'https://' . $value;
+	}
+
+	$url_array = wp_parse_url( $url );
+
+	// Only allow valid schemes.
+	if ( $url_array['scheme'] !== 'http' && $url_array['scheme'] !== 'https' ) {
+		return null;
+	}
+
+	// Don't allow anything extra.
+	$invalid_parts = [
+		'user',
+		'pass',
+		'port',
+		'fragment',
+	];
+	foreach ( $invalid_parts as $part ) {
+		if ( ! empty( $url_array[ $part ] ) ) {
+			return null;
+		}
+	}
+
+	if ( empty( $url_array['host'] ) ) {
+		return null;
+	}
+
+	$domain = trim( $url_array['host'], '.' );
+	$path = trim( $url_array['path'], '/' );
+
+	return [
+		'domain' => $domain,
+		'path' => '/' . $path,
+	];
 }

@@ -17,7 +17,7 @@ const COLOR_OFFWHITE = '#f3f5f9';
  */
 function bootstrap() {
 	add_action( 'add_admin_bar_menus', __NAMESPACE__ . '\\remove_wordpress_admin_bar_item' );
-	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\enqueue_admin_scripts' );
+	add_action( 'admin_bar_init', __NAMESPACE__ . '\\enqueue_admin_scripts' );
 	add_action( 'admin_bar_menu', __NAMESPACE__ . '\\admin_bar_menu' );
 	add_filter( 'admin_footer_text', '__return_empty_string' );
 	add_action( 'wp_network_dashboard_setup', __NAMESPACE__ . '\\remove_dashboard_widgets' );
@@ -77,16 +77,9 @@ function add_color_scheme() {
 
 /**
  * Enqueue the branding scripts and styles
- *
- * @param string $hook
  */
-function enqueue_admin_scripts( string $hook ) {
-
+function enqueue_admin_scripts() {
 	wp_enqueue_style( 'altis-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2019-04-24-1' );
-
-	if ( $hook === 'site-new.php' ) {
-		wp_enqueue_script( 'customize-settings', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/customize-settings.js', [], false, true );
-	}
 }
 
 /**
@@ -235,7 +228,7 @@ function wordpress_to_altis( string $text ) : string {
  */
 function override_generator( string $gen, string $type ) : string {
 	$wp_version = get_bloginfo( 'version' );
-	$wp_version_rss = convert_chars( wp_strip_all_tags( $wp_version ) );
+	$wp_version_rss = convert_chars( strip_tags( $wp_version ) );
 	switch ( $type ) {
 		case 'html':
 			return sprintf(
