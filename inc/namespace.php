@@ -220,5 +220,5 @@ function hide_welcome_panel( $value, int $user_id, string $meta_key ) {
 		return $value;
 	}
 
-	return 0;
+	return [ 0 ];
 }
