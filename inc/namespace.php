@@ -14,6 +14,7 @@ use WP_DB_Table_Signups;
 function bootstrap() {
 	$config = get_config()['modules']['cms'];
 
+	CLI\bootstrap();
 	Remove_Updates\bootstrap();
 	Permalinks\bootstrap();
 	Add_Site_UI\bootstrap();
