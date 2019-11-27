@@ -14,6 +14,10 @@ use WP_DB_Table_Signups;
 function bootstrap() {
 	$config = get_config()['modules']['cms'];
 
+	// Prevent web access to wp-admin/install.php.
+	add_action( 'wp_loaded', __NAMESPACE__ . '\\prevent_web_install' );
+
+	CLI\bootstrap();
 	Remove_Updates\bootstrap();
 	Permalinks\bootstrap();
 	Add_Site_UI\bootstrap();
@@ -221,4 +225,18 @@ function hide_welcome_panel( $value, int $user_id, string $meta_key ) {
 	}
 
 	return [ 0 ];
+}
+
+/**
+ * Prevent direct web access to wp-admin/install.php.
+ */
+function prevent_web_install() {
+	if ( $_SERVER['REQUEST_URI'] !== '/wp-admin/install.php' ) {
+		return;
+	}
+
+	// Return 200 status for healthcheck.
+	status_header( 200 );
+	echo 'This site is currently unavailable';
+	exit;
 }
