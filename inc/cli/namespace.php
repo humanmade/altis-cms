@@ -2,14 +2,36 @@
 
 namespace Altis\CMS\CLI;
 
-function bootstrap() {
-	if ( ! defined( 'WP_CLI' ) ) {
-		return;
-	}
+use WP_CLI;
 
-	WP_CLI::add_hook( 'before_invoke:core multisite-install', __NAMESPACE__ . '\\before_install' );
+function bootstrap() {
+	if ( is_initial_install() ) {
+		define( 'WP_INITIAL_INSTALL', true );
+	}
 }
 
-function before_install() {
-	var_dump( func_get_args() );
+/**
+ * Check if the current process is the initial WordPress installation.
+ *
+ * @return boolean
+ */
+function is_initial_install() : bool {
+	if ( ! defined( 'WP_CLI' ) ) {
+		return false;
+	}
+
+	$runner = WP_CLI::get_runner();
+
+	// Check it's the core command.
+	if ( $runner->arguments[0] !== 'core' ) {
+		return false;
+	}
+
+	// Check it's an install command.
+	$commands = [ 'install', 'multisite-install', 'multisite-convert' ];
+	if ( ! in_array( $runner->arguments[1], $commands, true ) ) {
+		return false;
+	}
+
+	return true;
 }
