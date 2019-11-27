@@ -16,6 +16,11 @@ function bootstrap() {
  * @return boolean
  */
 function is_initial_install() : bool {
+	// Support for PHPUnit & direct calls to install.php.
+	if ( php_sapi_name() === 'cli' && basename( $_SERVER['PHP_SELF'] ) === 'install.php' ) {
+		return true;
+	}
+
 	if ( ! defined( 'WP_CLI' ) ) {
 		return false;
 	}
@@ -28,7 +33,7 @@ function is_initial_install() : bool {
 	}
 
 	// Check it's an install command.
-	$commands = [ 'install', 'multisite-install', 'multisite-convert' ];
+	$commands = [ 'is-installed', 'install', 'multisite-install', 'multisite-convert' ];
 	if ( ! in_array( $runner->arguments[1], $commands, true ) ) {
 		return false;
 	}
