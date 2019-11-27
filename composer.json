@@ -17,7 +17,20 @@
   "autoload": {
     "classmap": [ "inc/" ],
     "files": [
+<<<<<<< HEAD
       "load.php"
+=======
+      "inc/namespace.php",
+      "inc/remove_updates/namespace.php",
+      "inc/branding/namespace.php",
+      "inc/block_editor/namespace.php",
+      "inc/permalinks/namespace.php",
+      "inc/add_site_ui/namespace.php",
+      "inc/cli/namespace.php"
+    ],
+    "classmap": [
+      "inc/"
+>>>>>>> ac9ce97... add cli namespace
     ]
   }
 }
