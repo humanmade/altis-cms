@@ -32,7 +32,13 @@ function is_initial_install() : bool {
 		return false;
 	}
 
-	// Check it's an install command.
+	// If it's the is-installed command and --network is set then
+	// allow MULTISITE to be defined.
+	if ( $runner->arguments[1] === 'is-installed' && isset( $runner->assoc_args['network'] ) ) {
+		return false;
+	}
+
+	// Check it's an install related command.
 	$commands = [ 'is-installed', 'install', 'multisite-install', 'multisite-convert' ];
 	if ( ! in_array( $runner->arguments[1], $commands, true ) ) {
 		return false;
