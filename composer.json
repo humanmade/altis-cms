@@ -13,7 +13,7 @@
     "stuttter/wp-user-signups": "3.1.0",
     "roots/wp-password-bcrypt": "1.0.0",
     "johnpbloch/wordpress": "5.3.0",
-    "altis/cms-installer": "^0.3.3"
+    "altis/cms-installer": "^0.4.0"
   },
   "autoload": {
     "files": [
@@ -22,7 +22,8 @@
       "inc/branding/namespace.php",
       "inc/block_editor/namespace.php",
       "inc/permalinks/namespace.php",
-      "inc/add_site_ui/namespace.php"
+      "inc/add_site_ui/namespace.php",
+      "inc/cli/namespace.php"
     ],
     "classmap": [
       "inc/"
