@@ -6,9 +6,23 @@ namespace Altis\CMS\Remove_Updates;
  * Boostrap setup to remove updates from the admin.
  */
 function bootstrap() {
+	add_action( 'admin_init', __NAMESPACE__ . '\\remove_maybe_update_checks', 1 );
 	add_action( 'admin_init', __NAMESPACE__ . '\\remove_update_nag' );
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\remove_update_check_cron' );
 	add_filter( 'map_meta_cap', __NAMESPACE__ . '\\remove_update_core_capability', 10, 2 );
+}
+
+/**
+ * Remove the checks that call out to api.wordpress.org in the admin
+ * to check for updates.
+ *
+ * This prevents WordPress from running blocking synchronous ajax requests
+ * while loading the admin.
+ */
+function remove_maybe_update_checks() {
+	remove_action( 'admin_init', '_maybe_update_core' );
+	remove_action( 'admin_init', '_maybe_update_plugins' );
+	remove_action( 'admin_init', '_maybe_update_themes' );
 }
 
 /**
