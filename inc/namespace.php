@@ -66,6 +66,9 @@ function bootstrap() {
 	if ( $config['remove-emoji'] ) {
 		add_action( 'plugins_loaded', __NAMESPACE__ . '\\remove_emoji' );
 	}
+
+	// Disable the admin_email verification interval.
+	add_filter( 'admin_email_check_interval', '__return_zero' );
 }
 
 /**
