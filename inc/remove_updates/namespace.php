@@ -9,7 +9,7 @@ function bootstrap() {
 	add_action( 'admin_init', __NAMESPACE__ . '\\remove_maybe_update_checks', 1 );
 	add_action( 'admin_init', __NAMESPACE__ . '\\remove_update_nag' );
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\remove_update_check_cron' );
-	add_filter( 'map_meta_cap', __NAMESPACE__ . '\\remove_update_core_capability', 10, 2 );
+	add_filter( 'map_meta_cap', __NAMESPACE__ . '\\remove_update_capabilities', 10, 2 );
 }
 
 /**
@@ -49,15 +49,23 @@ function remove_update_check_cron() {
 }
 
 /**
- * Remove the update_core capability from all users.
+ * Remove the update_* capabilities from all users.
  *
  * This hooks via map_meta_cap.
  *
  * @param bool[]   $allcaps Array of key/value pairs where keys represent a capability name and boolean values
  * @return array
  */
-function remove_update_core_capability( array $caps, string $requested_cap ) : array {
-	if ( $requested_cap !== 'update_core' ) {
+function remove_update_capabilities( array $caps, string $requested_cap ) : array {
+	$caps_to_remove = [
+		'update_core',
+		'update_plugins',
+		'update_themes',
+		'update_languages',
+		'upgrade_network',
+	];
+
+	if ( ! in_array( $requested_cap, $caps_to_remove, true ) ) {
 		return $caps;
 	}
 
