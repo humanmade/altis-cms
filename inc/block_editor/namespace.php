@@ -58,6 +58,10 @@ function show_wp_block_in_menu( array $args, string $post_type ) {
 		return $args;
 	}
 
+	if ( ! current_user_can( 'edit_posts' ) ) {
+		return $args;
+	}
+
 	$args['show_in_menu'] = true;
 	$args['menu_position'] = 24;
 	$args['menu_icon'] = 'dashicons-screenoptions';
