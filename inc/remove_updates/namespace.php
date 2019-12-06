@@ -8,7 +8,7 @@ namespace Altis\CMS\Remove_Updates;
 function bootstrap() {
 	add_action( 'admin_init', __NAMESPACE__ . '\\remove_maybe_update_checks', 1 );
 	add_action( 'admin_init', __NAMESPACE__ . '\\remove_update_nag' );
-	add_action( 'admin_init', __NAMESPACE__ . '\\remove_auto_update' );
+	add_action( 'admin_init', __NAMESPACE__ . '\\remove_auto_updates' );
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\remove_update_check_cron' );
 	add_filter( 'map_meta_cap', __NAMESPACE__ . '\\remove_update_capabilities', 10, 2 );
 }
@@ -40,13 +40,11 @@ function remove_update_nag() {
 }
 
 /**
- * Set auto update core to false.
+ * Remove all automatic updates.
  *
- * Added as a function so that this can be made more specific or added to later.
- * For example if auto updates for themes or plugins should also return false.
  */
-function remove_auto_update() {
-	add_filter( 'auto_update_core', '__return_false' );
+function remove_auto_updates() {
+	define( 'AUTOMATIC_UPDATER_DISABLED', false );
 }
 
 /**
