@@ -8,9 +8,9 @@ namespace Altis\CMS\Remove_Updates;
 function bootstrap() {
 	add_action( 'admin_init', __NAMESPACE__ . '\\remove_maybe_update_checks', 1 );
 	add_action( 'admin_init', __NAMESPACE__ . '\\remove_update_nag' );
-	add_action( 'admin_init', __NAMESPACE__ . '\\remove_auto_updates' );
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\remove_update_check_cron' );
 	add_filter( 'map_meta_cap', __NAMESPACE__ . '\\remove_update_capabilities', 10, 2 );
+	remove_auto_updates();
 }
 
 /**
@@ -41,7 +41,6 @@ function remove_update_nag() {
 
 /**
  * Remove all automatic updates.
- *
  */
 function remove_auto_updates() {
 	define( 'AUTOMATIC_UPDATER_DISABLED', false );
