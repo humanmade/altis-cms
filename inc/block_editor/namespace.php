@@ -58,7 +58,7 @@ function show_wp_block_in_menu( array $args, string $post_type ) {
 		return $args;
 	}
 
-	if ( ! current_user_can( 'edit_posts' ) ) {
+	if ( function_exists( 'wp_get_current_user' ) && ! current_user_can( 'edit_posts' ) ) {
 		return $args;
 	}
 
