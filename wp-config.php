@@ -19,9 +19,6 @@ require_once __DIR__ . '/wordpress/wp-includes/plugin.php';
 // all `autoload.files` from all modules.
 require_once __DIR__ . '/vendor/autoload.php';
 
-// Load all modules.
-require_once __DIR__ . '/vendor/modules.php';
-
 do_action( 'altis.loaded_autoloader' );
 
 if ( ! defined( 'ABSPATH' ) ) {
