@@ -12,7 +12,7 @@
     "php": ">=7.1",
     "stuttter/wp-user-signups": "3.1.0",
     "johnpbloch/wordpress": "5.3.0",
-    "altis/cms-installer": "~0.2.1"
+    "altis/cms-installer": "^0.4.0"
   },
   "autoload": {
     "files": [
