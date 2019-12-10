@@ -16,6 +16,7 @@
   },
   "autoload": {
     "files": [
+      "load.php",
       "inc/namespace.php",
       "inc/remove_updates/namespace.php",
       "inc/branding/namespace.php",
