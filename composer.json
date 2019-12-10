@@ -15,11 +15,8 @@
     "altis/cms-installer": "~0.2.1"
   },
   "autoload": {
-    "classmap": [ "inc/" ],
     "files": [
-<<<<<<< HEAD
-      "load.php"
-=======
+      "load.php",
       "inc/namespace.php",
       "inc/remove_updates/namespace.php",
       "inc/branding/namespace.php",
@@ -30,7 +27,6 @@
     ],
     "classmap": [
       "inc/"
->>>>>>> ac9ce97... add cli namespace
     ]
   }
 }
