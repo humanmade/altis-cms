@@ -16,4 +16,4 @@ add_action( 'altis.modules.init', function () {
 		'xmlrpc'        => true,
 	];
 	register_module( 'cms', __DIR__, 'CMS', $default_settings, __NAMESPACE__ . '\\bootstrap' );
-} );
+}, 5 );
