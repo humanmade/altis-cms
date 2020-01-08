@@ -22,6 +22,12 @@ function bootstrap() {
 		Branding\bootstrap();
 	}
 
+	if ( is_bool( $config['large-network'] ) ) {
+		add_filter( 'wp_is_large_network', function () use ( $config ) {
+			return $config['large-network'];
+		} );
+	}
+
 	if ( $config['login-logo'] ) {
 		add_action( 'login_header', __NAMESPACE__ . '\\add_login_logo' );
 	}
