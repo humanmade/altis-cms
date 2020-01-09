@@ -128,7 +128,6 @@ function add_login_logo() {
  */
 function load_plugins() {
 	require_once ROOT_DIR . '/vendor/stuttter/wp-user-signups/wp-user-signups.php';
-	require_once ROOT_DIR . '/vendor/johnbillion/extended-cpts/extended-cpts.php';
 }
 
 /**
