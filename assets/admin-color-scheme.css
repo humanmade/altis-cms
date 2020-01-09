@@ -21,6 +21,10 @@ a:focus {
 	color: #4667de;
 }
 
+a:focus {
+	box-shadow: 0 0 2px 1px #5596f8;
+}
+
 #media-upload a.del-link:hover,
 div.dashboard-widget-submit input:hover,
 .subsubsub a:hover,
@@ -365,6 +369,11 @@ ul#adminmenu > li.current > a.current:after {
 	color: #e2ecf1;
 }
 
+/* Help tab */
+.contextual-help-tabs .active {
+	border-left-color: #4667de;
+}
+
 /* Pointers */
 .wp-pointer .wp-pointer-content h3 {
 	background-color: #152a4e;
@@ -484,6 +493,7 @@ ul.striped > :nth-child(odd) {
 
 .edit-post-sidebar__panel-tab.is-active {
 	border-bottom-color: #3fcf8e;
+	box-shadow: inset 0 -3px #5596f8;
 }
 
 .editor-block-types-list__item-icon {
