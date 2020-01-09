@@ -164,6 +164,7 @@ function detect_missing_default_theme() {
  */
 function admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
 	$logo_menu_args = [
+		'href'  => admin_url( 'about.php' ),
 		'id'    => 'altis',
 		'title' => '<span class="icon"><img src="' . get_logo_url( 'white' ) . '" /></span>',
 	];
