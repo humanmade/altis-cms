@@ -417,12 +417,12 @@ function handle_subdirectory( string $value ) : ?array {
 /**
  * Handle a custom domain input value.
  *
- * @param string $value Input custom domain value.
- * @return array|null $value Assoc array with domain and path keys, or null if invalid.
+ * @param string $url Input custom domain value.
+ * @return array|null $url Assoc array with domain and path keys, or null if invalid.
  */
-function handle_custom_domain( string $value ) : ?array {
-	if ( strpos( $value, 'http' ) !== 0 ) {
-		$url = 'https://' . $value;
+function handle_custom_domain( string $url ) : ?array {
+	if ( strpos( $url, 'http' ) !== 0 ) {
+		$url = 'https://' . $url;
 	}
 
 	$url_array = wp_parse_url( $url );
