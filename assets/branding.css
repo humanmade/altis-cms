@@ -1,9 +1,5 @@
-#wp-admin-bar-altis {
+body.wp-admin:not(.folded) #wp-admin-bar-altis {
 	width: 160px;
-}
-
-body.folded #wp-admin-bar-altis {
-	width: auto;
 }
 
 #wp-admin-bar-altis .icon {
