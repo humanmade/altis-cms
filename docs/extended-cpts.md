@@ -9,7 +9,7 @@ The `register_extended_post_type()` function is the core of Extended CPTs. It's 
 The function's signature looks like this:
 
 ```php
-function register_extended_post_type( string $post_type, array $args = [], array $names = [] ) : Extended_CPT
+register_extended_post_type( string $post_type, array $args = [], array $names = [] ) : Extended_CPT
 ```
 
 Need a simple post type with no frills? You can register a post type with a single parameter:
@@ -35,29 +35,29 @@ add_action( 'init', function() {
 
 		# Show all posts on the post type archive:
 		'archive' => [
-			'nopaging' => true
+			'nopaging' => true,
 		],
 
 		# Add some custom columns to the admin screen:
 		'admin_cols' => [
 			'featured_image' => [
 				'title'          => 'Illustration',
-				'featured_image' => 'thumbnail'
+				'featured_image' => 'thumbnail',
 			],
 			'published' => [
 				'title'       => 'Published',
 				'meta_key'    => 'published_date',
-				'date_format' => 'd/m/Y'
+				'date_format' => 'd/m/Y',
 			],
 			'genre' => [
-				'taxonomy' => 'genre'
+				'taxonomy' => 'genre',
 			]
 		],
 
 		# Add a dropdown filter to the admin screen:
 		'admin_filters' => [
 			'genre' => [
-				'taxonomy' => 'genre'
+				'taxonomy' => 'genre',
 			]
 		]
 	],
@@ -65,7 +65,7 @@ add_action( 'init', function() {
 		# Override the base names used for labels:
 		'singular' => 'Story',
 		'plural'   => 'Stories',
-		'slug'     => 'stories'
+		'slug'     => 'stories',
 	] );
 
 } );
@@ -73,14 +73,14 @@ add_action( 'init', function() {
 
 And that easily, we have a 'Stories' post type, with correctly generated labels and post updated messages, three custom columns in the admin area (two of which are sortable), stories added to the main RSS feed, and all stories displayed on the post type archive.
 
-## Registering taxonomies
+## Registering Taxonomies
 
-The `register_extended_taxonomy()` is a wrapper for WordPress' own `register_taxonomy()` function, which means that any parameters which are accepted by `register_taxonomy`() are accepted.
+The `register_extended_taxonomy()` is a wrapper for WordPress' own `register_taxonomy()` function, which means that any parameters accepted by `register_taxonomy()` are accepted.
 
 The function's signature looks like this:
 
 ```php
-function register_extended_taxonomy( string $taxonomy, $object_type, array $args = [], array $names = [] ) : Extended_Taxonomy
+register_extended_taxonomy( string $taxonomy, $object_type, array $args = [], array $names = [] ) : Extended_Taxonomy
 ```
 
 Need a simple taxonomy with no frills? You can register a taxonomy with two parameters:
@@ -105,7 +105,7 @@ register_extended_taxonomy( 'story', 'post', [
 		'updated' => [
 			'title'       => 'Updated',
 			'meta_key'    => 'updated_date',
-			'date_format' => 'd/m/Y'
+			'date_format' => 'd/m/Y',
 		],
 	],
 
@@ -113,14 +113,14 @@ register_extended_taxonomy( 'story', 'post', [
 	# Override the base names used for labels:
 	'singular' => 'Story',
 	'plural'   => 'Stories',
-	'slug'     => 'tales'
+	'slug'     => 'tales',
 
 ] );
 ```
 
 And just like that, we have a 'Stories' taxonomy attached to the Post post type, with correctly generated labels and term updated messages, radio buttons in place of the standard meta box for this taxonomy on the post editing screen, a custom column in the admin area (you need to handle the term meta population yourself), and a count of the terms in this taxonomy in the 'At a Glance' dashboard widget.
 
-### Default arguments for custom taxonomies.
+### Default Arguments For Custom Taxonomies.
 Several of these differ from the defaults in WordPress' register_taxonomy() function.
 ```php
 'public'            => true,  
@@ -151,7 +151,7 @@ register_extended_post_type( 'article', [
 		// A featured image column:
 		'featured_image' => [
 			'title'          => 'Illustration',
-			'featured_image' => 'thumbnail'
+			'featured_image' => 'thumbnail',
 		],
 		// The default Title column:
 		'title',
@@ -159,11 +159,11 @@ register_extended_post_type( 'article', [
 		'published' => [
 			'title'       => 'Published',
 			'meta_key'    => 'published_date',
-			'date_format' => 'd/m/Y'
+			'date_format' => 'd/m/Y',
 		],
 		// A taxonomy terms column:
 		'genre' => [
-			'taxonomy' => 'genre'
+			'taxonomy' => 'genre',
 		],
 	],
 
@@ -202,7 +202,7 @@ register_extended_post_type( 'article', [
 
 For more information regarding admin filters and the availabile column types, please see the Extended CPTs wiki page on [admin filters](https://github.com/johnbillion/extended-cpts/wiki/Admin-filters).
 
-## Custom permalink structure
+## Custom Permalink Structure
 
 Custom post types registered with WordPress' `register_post_type()` function don't allow for a custom permalink structure, unless you want to dive into the Rewrite API and pull your hair out in the process.
 
@@ -213,7 +213,7 @@ Extended CPTs allows a custom permalink structure to be specified via the `perma
 ```php
 register_extended_post_type( 'article', [
 	'rewrite' => [
-		'permastruct' => '/foo/%custom_tax%/%article%'
+		'permastruct' => '/foo/%custom_tax%/%article%',
 	],
 ] );
 ```
@@ -221,7 +221,7 @@ register_extended_post_type( 'article', [
 ```php
 register_extended_post_type( 'article', [
 	'rewrite' => [
-		'permastruct' => '/articles/%year%/%monthnum%/%article%'
+		'permastruct' => '/articles/%year%/%monthnum%/%article%',
 	],
 ] );
 ```
@@ -229,7 +229,7 @@ register_extended_post_type( 'article', [
 All of [WordPress' built-in rewrite tags](https://codex.wordpress.org/Using_Permalinks#Structure_Tags) are supported, including dates and custom taxonomies.
 
 
-## Query vars for filtering
+## Query Vars For Filtering
 
 Extended CPTs provides a mechanism for registering public query vars which allow users to filter your post type archives by various fields. This also works in `WP_Query`, although the main advantage is the fact these are _public_ query vars accessible via URL parameters.
 
@@ -243,10 +243,10 @@ The array keys in the `site_filters` array are used as the names of the query va
 register_extended_post_type( 'article', [
 	'site_filters' => [
 		'my_foo' => [
-			'meta_key' => 'foo'
+			'meta_key' => 'foo',
 		],
 		'my_genre' => [
-			'taxonomy' => 'genre'
+			'taxonomy' => 'genre',
 		],
 	],
 ] );
@@ -267,7 +267,7 @@ new WP_Query( [
 
 For more information regarding query vars for filtering and the availabile filter types, please see the Extended CPTs wiki page on [query vars for filtering](https://github.com/johnbillion/extended-cpts/wiki/Query-vars-for-filtering).
 
-## Query vars for sorting
+## Query Vars For Sorting
 
 Extended CPTs provides a mechanism for registering values for the public `orderby` query var, which allows users to sort your post type archives by various fields. This also works in `WP_Query`, which makes ordering custom post type listings very powerful and dead easy.
 
@@ -281,10 +281,10 @@ The array keys in the `site_sortables` array are used for the `orderby` value, w
 register_extended_post_type( 'article', [
 	'site_sortables' => [
 		'my_foo' => [
-			'meta_key' => 'foo'
+			'meta_key' => 'foo',
 		],
 		'my_genre' => [
-			'taxonomy' => 'genre'
+			'taxonomy' => 'genre',
 		],
 	],
 ] );
@@ -307,6 +307,6 @@ new WP_Query( [
 
 For more information regarding query vars for sorting and the availabile sort fields, please see the Extended CPTs wiki page on [query vars for sorting](https://github.com/johnbillion/extended-cpts/wiki/Query-vars-for-sorting).
 
-## Available filters and actions
+## Available Filters and Actions
 
 For more information, please see the Extended CPTs wiki page on [available filters and actions](https://github.com/johnbillion/extended-cpts/wiki/Available-filters-and-actions).
