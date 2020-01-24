@@ -37,6 +37,7 @@ function bootstrap() {
 	add_filter( 'get_the_generator_comment', __NAMESPACE__ . '\\override_generator', 10, 2 );
 	add_filter( 'get_the_generator_export', __NAMESPACE__ . '\\override_generator', 10, 2 );
 	add_filter( 'admin_bar_menu', __NAMESPACE__ . '\\remove_howdy_greeting', 25 );
+	add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\\enqueue_block_editor_branding_assets' );
 }
 
 /**
@@ -288,5 +289,92 @@ function remove_howdy_greeting( WP_Admin_Bar $wp_admin_bar ) {
 	$wp_admin_bar->add_node( [
 		'id' => 'my-account',
 		'title' => $new_text,
+	] );
+}
+
+/**
+ * Enqueue branding script for the post previews.
+ */
+function enqueue_block_editor_branding_assets() {
+	wp_enqueue_script(
+		'altis-branding',
+		plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.js',
+		[
+			'wp-element',
+			'wp-editor',
+			'wp-hooks'
+		],
+		false,
+		true
+	);
+
+	$markup = '<div class="editor-post-preview-button__interstitial-message">
+					<svg version="1.1" id="altis-svg-shape" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 243 226.8" xml:space="preserve">
+						<path class="altis-shape" d="M22.05,38.81,220.44,3.86C218.63,8.77,159.21,169.94,155.18,181c-4.65,12.8-12.37,27.8-28.61,25.79A24.35,24.35,0,0,1,108,195.67a25.23,25.23,0,0,1-3.44-9.14c-2.78-15.74-19-97.66-61.12-134.4,0,0-12.11-10.52-21.4-13.32a40.15,40.15,0,0,0-7.84,3.09C-4.91,53.05,3.3,77.11,17.49,86,32,95,90.11,96.73,133.73,102.58s40.34,27.19,40.34,27.19l-2.51,6.8c-3.27,7.54-20.31,15.69-29.16-2.47S132.06,53.44,87.69,27.24"/>
+					</svg>
+					<div class="loading">Loading the future...</div>
+				</div>
+				<style>
+					body {
+						margin: 0;
+					}
+
+					.editor-post-preview-button__interstitial-message {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: center;
+						height: 100vh;
+						width: 100vw;
+					}
+
+					#altis-svg-shape {
+						display: block;
+						height: 130px;
+						margin: 70px auto 20px;
+						fill: transparent;
+						stroke: #152A4E;
+						stroke-width: 3px;
+					}
+
+					@-webkit-keyframes paint {
+						0% {
+							stroke-dashoffset: 0;
+						}
+					}
+					@-moz-keyframes paint {
+						0% {
+							stroke-dashoffset: 0;
+						}
+					}
+					@-o-keyframes paint {
+						0% {
+							stroke-dashoffset: 0;
+						}
+					}
+					@keyframes paint {
+						0% {
+							stroke-dashoffset: 0;
+						}
+					}
+
+					#altis-svg-shape .altis-shape {
+						stroke-dasharray: 1200;
+						stroke-dashoffset: 1200;
+						-webkit-animation: paint 1.5s ease-in-out infinite alternate;
+						-moz-animation: paint 1.5s ease-in-out infinite alternate;
+						-o-animation: paint 1.5s ease-in-out infinite alternate;
+						animation: paint 1.5s ease-in-out infinite alternate;
+					}
+
+					.loading {
+						font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+						text-align: center;
+						color: #152A4E;
+					}
+				</style>';
+
+	wp_localize_script( 'altis-branding', 'altisPostPreview', [
+		'markup' => $markup,
 	] );
 }
