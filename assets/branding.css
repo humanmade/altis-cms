@@ -2,6 +2,10 @@
 	width: 160px;
 }
 
+#wp-admin-bar-altis a {
+	padding: 0 10px;
+}
+
 body.folded #wp-admin-bar-altis {
 	width: auto;
 }
