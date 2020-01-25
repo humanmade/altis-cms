@@ -302,7 +302,7 @@ function enqueue_block_editor_branding_assets() {
 		[
 			'wp-element',
 			'wp-editor',
-			'wp-hooks'
+			'wp-hooks',
 		],
 		false,
 		true
