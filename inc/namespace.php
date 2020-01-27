@@ -71,7 +71,7 @@ function bootstrap() {
 	add_filter( 'admin_email_check_interval', '__return_zero' );
 
 	/*
-	 * Performance enhancements for comments as best practise.
+	 * Performance enhancements for comments as best practice.
 	 * This is to prevent the CMS generating large HTML pages
 	 * in cases where there may be 1000s of comments,
 	 * as commenters will not see a cached version of the page.
