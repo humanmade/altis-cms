@@ -268,7 +268,7 @@ function prevent_web_install() {
  *
  * @return int Number of comments per page.
  */
-function set_comments_per_page( $value ) {
+function set_comments_per_page( $value ) : int {
 	$value = intval( $value );
 	return $value <= 50 ? $value : 50;
 }
