@@ -257,7 +257,7 @@ function prevent_web_install() {
 }
 
 /**
- * Set comments per page to be 50 max as best practise.
+ * Set comments per page to be 50 max as best practice.
  *
  * This is to prevent the CMS generating large HTML pages
  * in cases where there may be 1000s of comments,
