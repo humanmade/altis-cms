@@ -69,6 +69,16 @@ function bootstrap() {
 
 	// Disable the admin_email verification interval.
 	add_filter( 'admin_email_check_interval', '__return_zero' );
+
+	// Performance enhancements.
+	// Comment pagination is always enabled.
+	add_filter( 'pre_option_page_comments', '__return_true', 999 );
+
+	// Force limit comments per page to 50 max.
+	add_filter( 'pre_update_option_comments_per_page', function( $value ) {
+		$value = intval( $value );
+		return $value <= 50 ? $value : 50;
+	}, 999 );
 }
 
 /**
