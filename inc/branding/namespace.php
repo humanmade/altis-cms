@@ -24,6 +24,7 @@ function bootstrap() {
 	add_action( 'wp_user_dashboard_setup', __NAMESPACE__ . '\\remove_dashboard_widgets' );
 	add_action( 'wp_dashboard_setup', __NAMESPACE__ . '\\remove_dashboard_widgets' );
 	add_action( 'admin_init', __NAMESPACE__ . '\\add_color_scheme' );
+	add_action( 'admin_init', __NAMESPACE__ . '\\remove_wp_admin_color_schemes' );
 	add_filter( 'get_user_option_admin_color', __NAMESPACE__ . '\\override_default_color_scheme' );
 	add_action( 'template_redirect', __NAMESPACE__ . '\\detect_missing_default_theme' );
 	add_filter( 'admin_title', __NAMESPACE__ . '\\override_admin_title' );
@@ -74,6 +75,38 @@ function add_color_scheme() {
 			'current' => 'white',
 		]
 	);
+}
+
+/**
+ * Remove all unused default WP admin color schemes for a user.
+ *
+ * If a user has previously chosen one of the WP default admin color schemes,
+ * leave that scheme as is. Remove all other WP default admin color schemes,
+ * so that they can't be selected.
+ */
+function remove_wp_admin_color_schemes() {
+	global $_wp_admin_css_colors;
+
+	// List of WP default admin colour schemes.
+	$admin_color_schemes = [
+		'fresh',
+		'light',
+		'blue',
+		'midnight',
+		'sunrise',
+		'ectoplasm',
+		'ocean',
+		'coffee',
+	];
+
+	$user_admin_color = get_user_option( 'admin_color', get_current_user_id() );
+
+	// Remove all WP default admin color schemes, except the one that's selected for a user if any.
+	foreach ( $admin_color_schemes as $color_slug ) {
+		if ( $color_slug !== $user_admin_color ) {
+			unset( $_wp_admin_css_colors[ $color_slug ] );
+		}
+	}
 }
 
 /**
