@@ -22,7 +22,7 @@ function register_block_categories() {
 			'singular_name'              => _x( 'Block Category', 'taxonomy singular name', 'altis' ),
 			'search_items'               => __( 'Search Block Categories', 'altis' ),
 			'popular_items'              => __( 'Popular Block Categories', 'altis' ),
-			'all_items'                  => __( 'All Writers', 'altis' ),
+			'all_items'                  => __( 'All Block Categories', 'altis' ),
 			'parent_item'                => null,
 			'parent_item_colon'          => null,
 			'edit_item'                  => __( 'Edit Block Category', 'altis' ),
