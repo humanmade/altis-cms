@@ -22,7 +22,7 @@ You can change the logo shown on the CMS login screen using the `login-logo` con
 
 ## Custom Admin Colour Scheme
 
-If the default colour scheme does not meet the accessibility needs of your staff you can register custom schemes to provide high contrast alternatives. To register a custom admin colour scheme add the following function on `admin_init` action.
+If the default colour scheme does not meet the accessibility needs of your staff you can register custom schemes to provide high contrast alternatives. To register a custom admin colour scheme add the following function on the `admin_init` action.
 
 ```php
 wp_admin_css_color( string $key, string $name, string $url, array $colors = [], array $icons = [] );
