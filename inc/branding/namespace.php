@@ -87,22 +87,22 @@ function add_color_scheme() {
 function remove_wp_admin_color_schemes() {
 	global $_wp_admin_css_colors;
 
-	// Use color slugs as keys for a quick access.
+	// List of WP default admin colour schemes.
 	$admin_color_schemes = [
-		'fresh' => true,
-		'light' => true,
-		'blue' => true,
-		'midnight' => true,
-		'sunrise' => true,
-		'ectoplasm' => true,
-		'ocean' => true,
-		'coffee' => true,
+		'fresh',
+		'light',
+		'blue',
+		'midnight',
+		'sunrise',
+		'ectoplasm',
+		'ocean',
+		'coffee',
 	];
 
 	$user_admin_color = get_user_option( 'admin_color', get_current_user_id() );
 
 	// Remove all WP default admin color schemes, except the one that's selected for a user if any.
-	foreach ( $admin_color_schemes as $color_slug => $color_scheme ) {
+	foreach ( $admin_color_schemes as $color_slug ) {
 		if ( $color_slug !== $user_admin_color ) {
 			unset( $_wp_admin_css_colors[ $color_slug ] );
 		}
