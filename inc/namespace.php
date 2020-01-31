@@ -90,6 +90,10 @@ function bootstrap() {
 
 	// Remove WP-Sign-Ups admin menu.
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_wp_signups_admin_menu' );
+
+	// Move the Sign Ups menu into the Users menu.
+	add_action( 'custom_menu_order', __NAMESPACE__ . '\\move_wp_signups_submenu' );
+
 }
 
 /**
@@ -198,6 +202,22 @@ function remove_site_healthcheck_admin_menu() {
  */
 function remove_wp_signups_admin_menu() {
 	remove_menu_page( 'signups' );
+}
+
+/**
+ * Move the Sign Ups list page into the Users menu and rename it to Invitations.
+ */
+function move_wp_signups_submenu() {
+	global $submenu;
+
+	$submenu['signups'][0] = [
+		__( 'Invitations', 'altis' ),
+		'manage_signups',
+		'signups',
+		__( 'Invitations', 'altis' ),
+	];
+
+	$submenu['users.php'][] = $submenu['signups'][0];
 }
 /**
  * Disable access to the site health check admin page.
