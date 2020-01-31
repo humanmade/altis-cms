@@ -87,6 +87,9 @@ function bootstrap() {
 
 	// Force limit comments per page to 50 max.
 	add_filter( 'pre_update_option_comments_per_page', __NAMESPACE__ . '\\set_comments_per_page' );
+
+	// Remove WP-Sign-Ups admin menu.
+	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_wp_signups_admin_menu' );
 }
 
 /**
@@ -190,6 +193,12 @@ function remove_site_healthcheck_admin_menu() {
 	remove_submenu_page( 'tools.php', 'site-health.php' );
 }
 
+/**
+ * Remove the signups menu.
+ */
+function remove_wp_signups_admin_menu() {
+	remove_menu_page( 'signups' );
+}
 /**
  * Disable access to the site health check admin page.
  *
