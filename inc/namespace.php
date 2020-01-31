@@ -94,6 +94,8 @@ function bootstrap() {
 	// Move the Sign Ups menu into the Users menu.
 	add_action( 'custom_menu_order', __NAMESPACE__ . '\\move_wp_signups_submenu' );
 
+	// Change the admin title to Invitations.
+	add_filter( 'admin_title', __NAMESPACE__ . '\\filter_wp_signups_title' );
 }
 
 /**
@@ -219,6 +221,16 @@ function move_wp_signups_submenu() {
 
 	$submenu['users.php'][] = $submenu['signups'][0];
 }
+
+/**
+ * Rename Sign ups to Invitations
+ *
+ * @param string $title The original admin title.
+ */
+function wp_signups_title( $title ) {
+	return str_replace( 'sign ups', __( 'Invitations', 'altis' ), strtolower( $title ) );
+}
+
 /**
  * Disable access to the site health check admin page.
  *
