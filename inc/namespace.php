@@ -26,6 +26,12 @@ function bootstrap() {
 		Branding\bootstrap();
 	}
 
+	if ( is_bool( $config['large-network'] ) ) {
+		add_filter( 'wp_is_large_network', function () use ( $config ) {
+			return $config['large-network'];
+		} );
+	}
+
 	if ( $config['login-logo'] ) {
 		add_action( 'login_header', __NAMESPACE__ . '\\add_login_logo' );
 	}
@@ -69,6 +75,18 @@ function bootstrap() {
 
 	// Disable the admin_email verification interval.
 	add_filter( 'admin_email_check_interval', '__return_zero' );
+
+	/*
+	 * Performance enhancements for comments as best practice.
+	 * This is to prevent the CMS generating large HTML pages
+	 * in cases where there may be 1000s of comments,
+	 * as commenters will not see a cached version of the page.
+	 */
+	// Comment pagination is always enabled.
+	add_filter( 'pre_option_page_comments', '__return_true' );
+
+	// Force limit comments per page to 50 max.
+	add_filter( 'pre_update_option_comments_per_page', __NAMESPACE__ . '\\set_comments_per_page' );
 }
 
 /**
@@ -242,4 +260,21 @@ function prevent_web_install() {
 	status_header( 200 );
 	echo 'This site is currently unavailable';
 	exit;
+}
+
+/**
+ * Set comments per page to be 50 max as best practice.
+ *
+ * This is to prevent the CMS generating large HTML pages
+ * in cases where there may be 1000s of comments,
+ * as commenters will not see a cached version of the page.
+ *
+ * @param mixed $value Option value for the 'comments_per_page' option,
+ *                     it's set in WP Admin under Settings -> Discussion -> Other comment settings.
+ *
+ * @return int Number of comments per page.
+ */
+function set_comments_per_page( $value ) : int {
+	$value = intval( $value );
+	return $value <= 50 ? $value : 50;
 }
