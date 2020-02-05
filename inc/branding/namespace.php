@@ -113,7 +113,7 @@ function remove_wp_admin_color_schemes() {
  * Enqueue the branding scripts and styles
  */
 function enqueue_admin_scripts() {
-	wp_enqueue_style( 'altis-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2020-01-10-1' );
+	wp_enqueue_style( 'altis-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2020-02-05-4' );
 }
 
 /**
@@ -198,6 +198,7 @@ function detect_missing_default_theme() {
  */
 function admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
 	$logo_menu_args = [
+		'href'  => admin_url(),
 		'id'    => 'altis',
 		'title' => '<span class="icon"><img src="' . get_logo_url( 'white' ) . '" /></span>',
 	];
