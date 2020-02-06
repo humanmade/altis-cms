@@ -87,6 +87,15 @@ function bootstrap() {
 
 	// Force limit comments per page to 50 max.
 	add_filter( 'pre_update_option_comments_per_page', __NAMESPACE__ . '\\set_comments_per_page' );
+
+	// Remove WP-Sign-Ups admin menu.
+	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_wp_signups_admin_menu' );
+
+	// Move the Sign Ups menu into the Users menu.
+	add_action( 'custom_menu_order', __NAMESPACE__ . '\\move_wp_signups_submenu' );
+
+	// Change the admin title to Invitations.
+	add_filter( 'admin_title', __NAMESPACE__ . '\\filter_wp_signups_title' );
 }
 
 /**
@@ -188,6 +197,38 @@ function filter_xmlrpc_element_limit_handler( int $element_limit ) : int {
  */
 function remove_site_healthcheck_admin_menu() {
 	remove_submenu_page( 'tools.php', 'site-health.php' );
+}
+
+/**
+ * Remove the signups menu.
+ */
+function remove_wp_signups_admin_menu() {
+	remove_menu_page( 'signups' );
+}
+
+/**
+ * Move the Sign Ups list page into the Users menu and rename it to Invitations.
+ */
+function move_wp_signups_submenu() {
+	global $submenu;
+
+	$submenu['signups'][0] = [
+		__( 'Invitations', 'altis' ),
+		'manage_signups',
+		'signups',
+		__( 'Invitations', 'altis' ),
+	];
+
+	$submenu['users.php'][] = $submenu['signups'][0];
+}
+
+/**
+ * Rename Sign ups to Invitations
+ *
+ * @param string $title The original admin title.
+ */
+function wp_signups_title( $title ) {
+	return str_replace( 'sign ups', __( 'Invitations', 'altis' ), strtolower( $title ) );
 }
 
 /**
