@@ -87,6 +87,12 @@ function bootstrap() {
 
 	// Force limit comments per page to 50 max.
 	add_filter( 'pre_update_option_comments_per_page', __NAMESPACE__ . '\\set_comments_per_page' );
+
+	/**
+	 * Handle relative URLs in script & style tags.
+	 */
+	add_filter( 'script_loader_src', __NAMESPACE__ . '\\real_url_path', -10, 2 );
+	add_filter( 'style_loader_src', __NAMESPACE__ . '\\real_url_path', -10, 2 );
 }
 
 /**
@@ -277,4 +283,51 @@ function prevent_web_install() {
 function set_comments_per_page( $value ) : int {
 	$value = intval( $value );
 	return $value <= 50 ? $value : 50;
+}
+
+/**
+ * Ensure URLs do not contain any relative paths.
+ *
+ * @param string $url
+ * @return string
+ */
+function real_url_path( string $url, string $handle ) : string {
+	global $wp_scripts, $wp_styles;
+
+	// Skip if there are no /./ or /../ patterns.
+	if ( strpos( $url, '/.' ) === false ) {
+		return $url;
+	}
+
+	$path = parse_url( $url, PHP_URL_PATH );
+	$path_parts = explode( '/', $path );
+
+	foreach ( $path_parts as $index => $part ) {
+		// Remove if current directory indicator.
+		if ( $part === '.' ) {
+			unset( $path_parts[ $index ] );
+		}
+		// Remove parent directory placeholder if present and the item before it.
+		if ( $part === '..' ) {
+			unset( $path_parts[ $index ] );
+			if ( isset( $path_parts[ $index - 1 ] ) ) {
+				unset( $path_parts[ $index - 1 ] );
+			}
+		}
+	}
+
+	$real_path = implode( '/', $path_parts );
+	$url = str_replace( $path, $real_path, $url );
+
+	// Get & update the dependency object if available.
+	if ( pathinfo( $path, PATHINFO_EXTENSION ) === 'js' ) {
+		$asset = $wp_scripts->query( $handle );
+	} else {
+		$asset = $wp_styles->query( $handle );
+	}
+	if ( $asset ) {
+		$asset->src = $url;
+	}
+
+	return $url;
 }
