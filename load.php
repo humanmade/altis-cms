@@ -10,13 +10,7 @@ require_once __DIR__ . '/inc/branding/namespace.php';
 require_once __DIR__ . '/inc/block_editor/namespace.php';
 require_once __DIR__ . '/inc/permalinks/namespace.php';
 
-// Don't self-initialize if this is not an Altis execution.
-if ( ! function_exists( 'add_action' ) ) {
-	return;
-}
-
-// Register core module.
-add_action( 'altis.modules.init', function () {
+function register() {
 	$default_settings = [
 		'enabled'       => true,
 		'branding'      => true,
@@ -26,4 +20,12 @@ add_action( 'altis.modules.init', function () {
 		'remove-emoji'  => true,
 	];
 	register_module( 'cms', __DIR__, 'CMS', $default_settings, __NAMESPACE__ . '\\bootstrap' );
-} );
+}
+
+// Don't self-initialize if this is not an Altis execution.
+if ( ! function_exists( 'add_action' ) ) {
+	return;
+}
+
+// Register core module.
+add_action( 'altis.modules.init', __NAMESPACE__ . '\\register' );
