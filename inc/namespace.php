@@ -299,6 +299,11 @@ function real_url_path( string $url, string $handle ) : string {
 		return $url;
 	}
 
+	// Show a warning about using bad asset URL practices when in debug mode.
+	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		trigger_error( sprintf( 'Asset URLs should not contain relative paths. Handle: %s, URL: %s', $handle, $url ), E_USER_WARNING );
+	}
+
 	$path = parse_url( $url, PHP_URL_PATH );
 	$path_parts = explode( '/', $path );
 
