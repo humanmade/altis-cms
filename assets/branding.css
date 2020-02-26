@@ -6,17 +6,20 @@ body.folded #wp-admin-bar-altis {
 	width: auto;
 }
 
-#wp-admin-bar-altis .icon {
+#wp-admin-bar-altis .altis-logo-wrapper {
 	display: block;
 	height: auto;
+	flex: 1;
 }
 
-#wp-admin-bar-altis .icon img {
+#wp-admin-bar-altis .altis-logo-wrapper img {
 	height: 20px;
 	width: auto;
-	margin-top: 4px;
+	margin: 4px 10px 0 3px;
+	display: block;
 }
 
 #wpadminbar #wp-admin-bar-altis-logo .ab-item {
 	padding-top: 2px;
+	display: flex;
 }
