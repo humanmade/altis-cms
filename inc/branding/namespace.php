@@ -113,7 +113,7 @@ function remove_wp_admin_color_schemes() {
  * Enqueue the branding scripts and styles
  */
 function enqueue_admin_scripts() {
-	wp_enqueue_style( 'altis-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2020-02-05-4' );
+	wp_enqueue_style( 'altis-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2020-02-27-1' );
 }
 
 /**

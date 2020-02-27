@@ -2,7 +2,7 @@ body.wp-admin:not(.folded) #wp-admin-bar-altis {
 	width: 160px;
 }
 
-#wp-admin-bar-altis a {
+#wpadminbar #wp-admin-bar-altis .ab-item {
 	padding: 0 10px;
 }
 
@@ -25,13 +25,16 @@ body.folded #wp-admin-bar-altis {
 #wp-admin-bar-altis .altis-logo-wrapper img {
 	height: 20px;
 	width: auto;
-	margin: 4px 10px 0 3px;
+	margin: 4px 10px 0 0;
 	display: block;
 }
 
-#wpadminbar #wp-admin-bar-altis-logo .ab-item {
-	padding-top: 2px;
+#wpadminbar #wp-admin-bar-altis > .ab-item {
 	display: flex;
+}
+
+#wpadminbar #wp-admin-bar-altis > .ab-item * {
+	word-break: keep-all;
 }
 
 /* Hide WordPress version and update button from At a Glance dashboard widget. */
