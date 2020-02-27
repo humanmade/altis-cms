@@ -70,7 +70,7 @@ function add_color_scheme() {
  * Enqueue the branding scripts and styles
  */
 function enqueue_admin_scripts() {
-	wp_enqueue_style( 'altis-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2019-04-24-1' );
+	wp_enqueue_style( 'altis-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2020-02-27-1' );
 }
 
 /**
