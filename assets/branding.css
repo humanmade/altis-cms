@@ -2,6 +2,16 @@
 	width: 160px;
 }
 
+#wpadminbar #wp-admin-bar-altis .ab-item {
+	padding: 0 10px;
+}
+
+#wpadminbar:not(.mobile) #wp-admin-bar-altis:hover > .ab-item,
+#wpadminbar:not(.mobile) #wp-admin-bar-altis:focus > .ab-item,
+#wpadminbar:not(.mobile) #wp-admin-bar-altis.hover > .ab-item {
+	color: #fff;
+}
+
 body.folded #wp-admin-bar-altis {
 	width: auto;
 }
@@ -15,11 +25,19 @@ body.folded #wp-admin-bar-altis {
 #wp-admin-bar-altis .altis-logo-wrapper img {
 	height: 20px;
 	width: auto;
-	margin: 4px 10px 0 3px;
+	margin: 4px 10px 0 0;
 	display: block;
 }
 
-#wpadminbar #wp-admin-bar-altis-logo .ab-item {
-	padding-top: 2px;
+#wpadminbar #wp-admin-bar-altis > .ab-item {
 	display: flex;
+}
+
+#wpadminbar #wp-admin-bar-altis > .ab-item * {
+	word-break: keep-all;
+}
+
+/* Hide WordPress version and update button from At a Glance dashboard widget. */
+#dashboard_right_now #wp-version-message {
+	display: none;
 }
