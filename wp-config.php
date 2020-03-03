@@ -51,7 +51,7 @@ if ( ! defined( 'WP_INITIAL_INSTALL' ) || ! WP_INITIAL_INSTALL ) {
 }
 
 if ( ! isset( $table_prefix ) ) {
-	$table_prefix = 'wp_';
+	$table_prefix = getenv( 'TABLE_PREFIX' ) ?: 'wp_';
 }
 
 /*
