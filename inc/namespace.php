@@ -58,8 +58,8 @@ function bootstrap() {
 		add_action( 'do_feed_atom',	__NAMESPACE__ . '\\disable_feed', 1 );
 
 		// Disable comment feeds.
-		add_action( 'do_feed_rss2_comments',	'disable_feeds', 1 );
-		add_action( 'do_feed_atom_comments',	'disable_feeds', 1 );
+		add_action( 'do_feed_rss2_comments', __NAMESPACE__ . '\\disable_feed', 1 );
+		add_action( 'do_feed_atom_comments', __NAMESPACE__ . '\\disable_feed', 1 );
 
 		// Prevent feed links from being inserted in the <head> of the page.
 		add_action( 'feed_links_show_posts_feed',		'__return_false', -1 );
