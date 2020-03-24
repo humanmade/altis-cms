@@ -64,7 +64,7 @@ function bootstrap() {
 		// Prevent feed links from being inserted in the <head> of the page.
 		add_action( 'feed_links_show_posts_feed', '__return_false', -1 );
 		add_action( 'feed_links_show_comments_feed', '__return_false', -1 );
-		remove_action( 'wp_head', 'feed_links',	2 );
+		remove_action( 'wp_head', 'feed_links', 2 );
 		remove_action( 'wp_head', 'feed_links_extra', 3 );
 	}
 
