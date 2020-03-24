@@ -50,27 +50,22 @@ function bootstrap() {
 		add_filter( 'xmlrpc_element_limit', __NAMESPACE__ . '\\filter_xmlrpc_element_limit_handler', 999 );
 	}
 
-	function disable_feed() {
-		wp_redirect( home_url() );
-		die();
-	}
-
 	if ( $config['rss'] === false ) {
-		add_action('do_feed',	   __NAMESPACE__ . '\\disable_feed', 1);
-		add_action('do_feed_rdf',  __NAMESPACE__ . '\\disable_feed', 1);
-		add_action('do_feed_rss',  __NAMESPACE__ . '\\disable_feed', 1);
-		add_action('do_feed_rss2', __NAMESPACE__ . '\\disable_feed', 1);
-		add_action('do_feed_atom', __NAMESPACE__ . '\\disable_feed', 1);
+		add_action( 'do_feed',		__NAMESPACE__ . '\\disable_feed', 1 );
+		add_action( 'do_feed_rdf',	__NAMESPACE__ . '\\disable_feed', 1 );
+		add_action( 'do_feed_rss',	__NAMESPACE__ . '\\disable_feed', 1 );
+		add_action( 'do_feed_rss2',	__NAMESPACE__ . '\\disable_feed', 1 );
+		add_action( 'do_feed_atom',	__NAMESPACE__ . '\\disable_feed', 1 );
 
 		// Disable comment feeds.
-		add_action( 'do_feed_rss2_comments', 'disable_feeds', 1 );
-		add_action( 'do_feed_atom_comments', 'disable_feeds', 1 );
+		add_action( 'do_feed_rss2_comments',	'disable_feeds', 1 );
+		add_action( 'do_feed_atom_comments',	'disable_feeds', 1 );
 
 		// Prevent feed links from being inserted in the <head> of the page.
-		add_action( 'feed_links_show_posts_feed',    '__return_false', -1 );
-		add_action( 'feed_links_show_comments_feed', '__return_false', -1 );
-		remove_action( 'wp_head', 'feed_links',       2 );
-		remove_action( 'wp_head', 'feed_links_extra', 3 );
+		add_action( 'feed_links_show_posts_feed',		'__return_false', -1 );
+		add_action( 'feed_links_show_comments_feed',	'__return_false', -1 );
+		remove_action( 'wp_head', 'feed_links',			2 );
+		remove_action( 'wp_head', 'feed_links_extra',	3 );
 	}
 
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_plugins', 1 );
@@ -123,6 +118,14 @@ function bootstrap() {
 	 */
 	add_filter( 'script_loader_src', __NAMESPACE__ . '\\real_url_path', -10, 2 );
 	add_filter( 'style_loader_src', __NAMESPACE__ . '\\real_url_path', -10, 2 );
+}
+
+/**
+ * Remove the RSS feed and redirect to the home page.
+ */
+function disable_feed() {
+	wp_redirect( home_url() );
+	die();
 }
 
 /**
