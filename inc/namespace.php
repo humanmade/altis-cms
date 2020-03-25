@@ -50,7 +50,7 @@ function bootstrap() {
 		add_filter( 'xmlrpc_element_limit', __NAMESPACE__ . '\\filter_xmlrpc_element_limit_handler', 999 );
 	}
 
-	if ( $config['rss'] === false ) {
+	if ( $config['feeds'] === false ) {
 		add_action( 'do_feed', __NAMESPACE__ . '\\disable_feed', 1 );
 		add_action( 'do_feed_rdf', __NAMESPACE__ . '\\disable_feed', 1 );
 		add_action( 'do_feed_rss', __NAMESPACE__ . '\\disable_feed', 1 );
@@ -124,7 +124,9 @@ function bootstrap() {
  * Remove the RSS feed and redirect to the home page.
  */
 function disable_feed() {
-	wp_redirect( home_url() );
+	global $wp_query;
+	$wp_query->set_404();
+	status_header( 404 );
 	die();
 }
 
