@@ -20,7 +20,7 @@ add_action( 'altis.modules.init', function () {
 		'default-theme' => 'base',
 		'remove-emoji'  => true,
 		'xmlrpc'        => true,
-		'feeds'           => true,
+		'feeds'         => true,
 	];
 	Altis\register_module( 'cms', __DIR__, 'CMS', $default_settings, __NAMESPACE__ . '\\bootstrap' );
 }, 5 );
