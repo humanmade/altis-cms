@@ -1,6 +1,6 @@
 ## Helper Functions
 
-**`whitelist_html( string $text, array $allowedtags = [], string $context = '' ) : string`**
+### `whitelist_html( string $text, array $allowedtags = [], string $context = '' ) : string`
 
 When translating strings in WordPress, the most common functions to use are `__()` (translate and return) or `_e()` (translate and output). Where possible, these need to be escaped too, to ensure that translations don't accidentally break your output. For this reason, `esc_html_e()`, `esc_attr_e()`, etc are offered by WordPress as convenience functions.
 
