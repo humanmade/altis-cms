@@ -49,3 +49,61 @@ $text = whitelist_html(
 	]
 );
 ```
+
+### `wp_hash_password( string $password )`
+
+Hash password using bcrypt. This function calls `password_hash` instead of WP's default password hasher.
+
+The `wp_hash_password_options` filter is available to set the [options](http://php.net/manual/en/function.password-hash.php) that `password_hash` can accept.
+
+#### Parameters
+
+**`$password`**
+
+_(string)(required)_ Plaintext password
+
+#### Return
+_(bool|string)_
+
+### `wp_check_password( string $password, string $hash, int|string $userId )`
+
+Check if user has entered correct password, supports bcrypt and pHash.
+
+At its core, this function just calls `password_verify` instead of the default.
+However, it also checks if a user's password was *previously* hashed with the old MD5-based hasher and re-hashes it with bcrypt. This means you can still install this plugin on an existing site and everything will work seamlessly.
+
+The `check_password` filter is available just like the default WP function.
+
+#### Parameters
+
+**`$password`**
+
+_(string)(required)_ Plaintext password
+
+**`$hash`**
+
+_(string)(required)_ Hash of password
+
+**`$userId`**
+
+_(int|string)_ ID of user to whom the password belongs
+
+#### Return
+_(mixed|void)_
+
+### `wp_set_password( string $password, int $userId )`
+
+Set password using bcrypt.
+
+This function is included here verbatim but with the addition of returning the hash. The default WP function does not return anything which means you end up hashing it twice for no reason.
+
+#### Parameters
+
+**`$password`**
+_(string)(required)_ Plaintext password
+
+**`$userId`**
+_(int)(required)_ ID of user to whom password belongs
+
+#### Return
+_(bool|string)_
