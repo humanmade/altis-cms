@@ -8,6 +8,25 @@ However, this falls down when you need to have HTML in the translation.
 
 This function provides a nice, easy, performant way to perform sanitization on translated strings. Rather than requiring you to work with the internals of kses, it's much closer to functions like `esc_html()`.
 
+#### Parameters
+
+**`$text`**
+
+_(string)(required)_ Content to escape
+
+**`$allowedtags`**
+
+_(array)_ Allowed tags, see examples.
+
+**`$context`**
+
+_(string)_ kses context to use (see [wp_kses_allowed_html](http://developer.wordpress.org/reference/functions/wp_kses_allowed_html/))
+
+#### Return
+_(string)_ Escaped string for output into HTML context.
+
+#### Example usage
+
 For the most part, `whitelist_html()` can be used in exactly the same way developers are used to using other escaping functions.
 
 To allow `a` tags only in a translated string:
