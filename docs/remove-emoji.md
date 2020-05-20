@@ -1,4 +1,4 @@
-# Remove Emoji
+# Remove Emoji Image Replacement
 
 Remove all the emoji scripts that are included with WordPress. By default, this module is active. To allow emojis, toggle the `remove-emoji` module in the Altis config.
 
