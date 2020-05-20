@@ -10,7 +10,7 @@
   ],
   "require": {
     "php": ">=7.1",
-    "stuttter/wp-user-signups": "3.1.0",
+    "stuttter/wp-user-signups": "^5.0.0",
     "roots/wp-password-bcrypt": "1.0.0",
     "johnpbloch/wordpress": "5.3.2",
     "altis/cms-installer": "^0.4.2",
