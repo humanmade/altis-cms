@@ -6,8 +6,8 @@
 	}
 
 	// Get user ID from utils localization data.
-	var settingsKey = 'WP_DATA_USER_' + altisDefaultEditorSettings.uid;
-	var settings = JSON.parse( localStorage.getItem( settingsKey ) || '{}' );
+	const settingsKey = 'WP_DATA_USER_' + window.altisDefaultEditorSettings.uid;
+	let settings = JSON.parse( localStorage.getItem( settingsKey ) || '{}' );
 
 	// If this isn't an object then bail.
 	if ( typeof settings !== 'object' ) {
