@@ -263,7 +263,7 @@ function wordpress_to_altis( string $text ) : string {
  */
 function override_generator( string $gen, string $type ) : string {
 	$wp_version = get_bloginfo( 'version' );
-	$wp_version_rss = convert_chars( strip_tags( $wp_version ) );
+	$wp_version_rss = convert_chars( wp_strip_all_tags( $wp_version ) );
 	switch ( $type ) {
 		case 'html':
 			return sprintf(

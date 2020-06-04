@@ -304,7 +304,7 @@ function real_url_path( string $url, string $handle ) : string {
 		trigger_error( sprintf( 'Asset URLs should not contain relative paths. Handle: %s, URL: %s', $handle, $url ), E_USER_WARNING );
 	}
 
-	$path = parse_url( $url, PHP_URL_PATH );
+	$path = wp_parse_url( $url, PHP_URL_PATH );
 	$path_parts = explode( '/', $path );
 
 	foreach ( $path_parts as $index => $part ) {
