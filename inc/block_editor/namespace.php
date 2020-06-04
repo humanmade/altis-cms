@@ -9,6 +9,7 @@ function bootstrap() {
 	add_action( 'init', __NAMESPACE__ . '\\register_block_categories' );
 	add_action( 'admin_menu', __NAMESPACE__ . '\\admin_menu', 9 );
 	add_filter( 'register_post_type_args', __NAMESPACE__ . '\\show_wp_block_in_menu', 10, 2 );
+	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\set_default_editor_preferences' );
 }
 
 /**
@@ -128,4 +129,31 @@ function admin_menu() {
 
 		$submenu[ $ptype_file ][ $i++ ] = [ esc_attr( $tax->labels->menu_name ), $tax->cap->manage_terms, sprintf( $edit_tags_file, $tax->name ) ];
 	}
+}
+
+/**
+ * Queue scripts for setting default block editor preferences in WP 5.4.
+ *
+ * Disables default fullscreen mode and welcome guide.
+ */
+function set_default_editor_preferences() {
+	global $wp_scripts;
+
+	wp_register_script(
+		'altis-default-editor-settings',
+		plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/editor-settings.js',
+		[],
+		'2020-06-04-1',
+		false
+	);
+	wp_localize_script(
+		'altis-default-editor-settings',
+		'altisDefaultEditorSettings',
+		[
+			'uid' => get_current_user_id(),
+		]
+	);
+
+	// Add default settings as a dependency of wp-data.
+	$wp_scripts->registered['wp-data']->deps[] = 'altis-default-editor-settings';
 }
