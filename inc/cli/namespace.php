@@ -2,7 +2,7 @@
 /**
  * Altis CMS CLI.
  *
- * @package altis-cms
+ * @package altis/cms
  */
 
 namespace Altis\CMS\CLI;

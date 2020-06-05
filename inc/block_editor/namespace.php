@@ -2,7 +2,7 @@
 /**
  * Altis CMS Block Editor Additions.
  *
- * @package altis-cms
+ * @package altis/cms
  */
 
 namespace Altis\CMS\Block_Editor;

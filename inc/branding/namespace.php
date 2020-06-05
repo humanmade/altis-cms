@@ -2,7 +2,7 @@
 /**
  * Altis CMS Branding.
  *
- * @package altis-cms
+ * @package altis/cms
  */
 
 namespace Altis\CMS\Branding;

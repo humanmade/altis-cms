@@ -2,7 +2,7 @@
 /**
  * Altis CMS Module.
  *
- * @package altis-cms
+ * @package altis/cms
  */
 
 namespace Altis\CMS; // phpcs:ignore

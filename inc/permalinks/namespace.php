@@ -2,7 +2,7 @@
 /**
  * Altis CMS Permalink Settings.
  *
- * @package altis-cms
+ * @package altis/cms
  */
 
 namespace Altis\CMS\Permalinks;

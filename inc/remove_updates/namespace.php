@@ -2,7 +2,7 @@
 /**
  * Altis CMS Update Checks.
  *
- * @package altis-cms
+ * @package altis/cms
  */
 
 namespace Altis\CMS\Remove_Updates;

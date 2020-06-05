@@ -9,7 +9,7 @@
  *
  * phpcs:disable PSR1.Files.SideEffects
  *
- * @package altis-cms
+ * @package altis/cms
  */
 
 // Provide a reference to the app root directory early.

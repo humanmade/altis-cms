@@ -2,7 +2,7 @@
 /**
  * Altis CMS Add Site UI.
  *
- * @package altis-cms
+ * @package altis/cms
  */
 
 namespace Altis\CMS\Add_Site_UI;
