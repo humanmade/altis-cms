@@ -1,4 +1,9 @@
 <?php
+/**
+ * Altis CMS Block Editor Additions.
+ *
+ * @package altis/cms
+ */
 
 namespace Altis\CMS\Block_Editor;
 
@@ -113,7 +118,7 @@ function admin_menu() {
 		* by a hard-coded value below, increment the position.
 		*/
 	$core_menu_positions = [ 59, 60, 65, 70, 75, 80, 85, 99 ];
-	while ( isset( $menu[ $ptype_menu_position ] ) || in_array( $ptype_menu_position, $core_menu_positions ) ) {
+	while ( isset( $menu[ $ptype_menu_position ] ) || in_array( $ptype_menu_position, $core_menu_positions, true ) ) {
 		$ptype_menu_position++;
 	}
 

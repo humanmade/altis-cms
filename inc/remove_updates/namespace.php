@@ -1,4 +1,9 @@
 <?php
+/**
+ * Altis CMS Update Checks.
+ *
+ * @package altis/cms
+ */
 
 namespace Altis\CMS\Remove_Updates;
 
@@ -61,7 +66,8 @@ function remove_update_check_cron() {
  *
  * This hooks via map_meta_cap.
  *
- * @param bool[]   $allcaps Array of key/value pairs where keys represent a capability name and boolean values
+ * @param array $caps Array of key/value pairs where keys represent a capability name and boolean values.
+ * @param string $requested_cap The capability being checked.
  * @return array
  */
 function remove_update_capabilities( array $caps, string $requested_cap ) : array {

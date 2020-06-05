@@ -6,6 +6,10 @@
  *
  * All configuration should be done either in your project's composer.json or `config/`
  * directory.
+ *
+ * phpcs:disable PSR1.Files.SideEffects
+ *
+ * @package altis/cms
  */
 
 // Provide a reference to the app root directory early.
@@ -67,6 +71,7 @@ $required_constants = [
 
 foreach ( $required_constants as $constant ) {
 	if ( ! defined( $constant ) ) {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		die( "$constant constant is not defined." );
 	}
 }

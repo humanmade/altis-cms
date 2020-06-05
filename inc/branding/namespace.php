@@ -1,8 +1,13 @@
 <?php
+/**
+ * Altis CMS Branding.
+ *
+ * @package altis/cms
+ */
 
 namespace Altis\CMS\Branding;
 
-use function Altis\get_environment_type;
+use Altis;
 use WP_Admin_Bar;
 use WP_Http;
 use WP_Theme;
@@ -122,7 +127,7 @@ function enqueue_admin_scripts() {
  * This is hooked into "get_user_option_admin_color" so we have to
  * make sure to return the value if it's already set.
  *
- * @param string|false $value
+ * @param string|false $value Color scheme name.
  * @return string
  */
 function override_default_color_scheme( $value ) : string {
@@ -136,9 +141,9 @@ function override_default_color_scheme( $value ) : string {
 /**
  * Filter meta for new users to set admin_color to HM theme.
  *
- * @param array    $meta
- * @param \WP_User $user
- * @param bool     $update
+ * @param array $meta The user meta array.
+ * @param \WP_User $user The current user object.
+ * @param bool $update Whether the meta data is being updated or created.
  * @return array
  */
 function insert_user_meta( array $meta, $user, $update ) : array {
@@ -158,7 +163,7 @@ function insert_user_meta( array $meta, $user, $update ) : array {
  * custom splash page.
  */
 function detect_missing_default_theme() {
-	$env = get_environment_type();
+	$env = Altis\get_environment_type();
 	if ( ! in_array( $env, [ 'development', 'local' ], true ) ) {
 		return;
 	}
@@ -187,14 +192,13 @@ function detect_missing_default_theme() {
 		__( 'You‘re seeing this page because debug mode is enabled, and the default theme directory is missing.', 'altis' )
 	);
 
-	wp_die( $message, $title, [ 'response' => WP_Http::NOT_FOUND ] );
+	wp_die( wp_kses_post( $message ), esc_html( $title ), [ 'response' => intval( WP_Http::NOT_FOUND ) ] );
 }
-
 
 /**
  * Add the Altis logo menu.
  *
- * @param WP_Admin_Bar $wp_admin_bar
+ * @param WP_Admin_Bar $wp_admin_bar The admin bar manager class.
  */
 function admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
 	$logo_menu_args = [
@@ -229,7 +233,7 @@ function get_logo_url( $variant = null ) {
  * @return void Outputs the logo directly to the page.
  */
 function render_logo( $variant = null ) {
-	printf( '<img class="altis-logo" alt="Altis" src="%s" />', get_logo_url( $variant ) );
+	printf( '<img class="altis-logo" alt="Altis" src="%s" />', esc_attr( get_logo_url( $variant ) ) );
 }
 
 /**
@@ -237,7 +241,7 @@ function render_logo( $variant = null ) {
  *
  * WordPress puts a '> WordPress' after all the <title>.
  *
- * @param string $admin_title
+ * @param string $admin_title The admin area title tag text.
  * @return string
  */
 function override_admin_title( string $admin_title ) : string {
@@ -263,7 +267,7 @@ function wordpress_to_altis( string $text ) : string {
  */
 function override_generator( string $gen, string $type ) : string {
 	$wp_version = get_bloginfo( 'version' );
-	$wp_version_rss = convert_chars( strip_tags( $wp_version ) );
+	$wp_version_rss = convert_chars( wp_strip_all_tags( $wp_version ) );
 	switch ( $type ) {
 		case 'html':
 			return sprintf(
@@ -305,7 +309,7 @@ function override_generator( string $gen, string $type ) : string {
 			return sprintf(
 				'<!-- generator="Altis (WordPress/%s)" created="%s" -->',
 				$wp_version_rss,
-				date( 'Y-m-d H:i' )
+				gmdate( 'Y-m-d H:i' )
 			);
 	}
 }
@@ -313,7 +317,7 @@ function override_generator( string $gen, string $type ) : string {
 /**
  * Remove the 'Howdy <name>' greeting in the admin bar.
  *
- * @param WP_Admin_Bar Admin bar object.
+ * @param WP_Admin_Bar $wp_admin_bar Admin bar object.
  */
 function remove_howdy_greeting( WP_Admin_Bar $wp_admin_bar ) {
 	$acct_bar = $wp_admin_bar->get_node( 'my-account' );
