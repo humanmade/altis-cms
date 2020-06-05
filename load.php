@@ -1,8 +1,13 @@
 <?php
+/**
+ * Altis CMS Module.
+ *
+ * @package altis-cms
+ */
 
-namespace Altis\CMS; // @codingStandardsIgnoreLine
+namespace Altis\CMS; // phpcs:ignore
 
-use function Altis\register_module;
+use Altis;
 
 // Register core module.
 add_action( 'altis.modules.init', function () {
@@ -16,5 +21,5 @@ add_action( 'altis.modules.init', function () {
 		'remove-emoji'  => true,
 		'xmlrpc'        => true,
 	];
-	register_module( 'cms', __DIR__, 'CMS', $default_settings, __NAMESPACE__ . '\\bootstrap' );
+	Altis\register_module( 'cms', __DIR__, 'CMS', $default_settings, __NAMESPACE__ . '\\bootstrap' );
 }, 5 );

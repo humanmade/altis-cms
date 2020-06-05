@@ -1,9 +1,19 @@
 <?php
+/**
+ * Altis CMS CLI.
+ *
+ * @package altis-cms
+ */
 
 namespace Altis\CMS\CLI;
 
 use WP_CLI;
 
+/**
+ * Define initial install constant.
+ *
+ * @return void
+ */
 function bootstrap() {
 	if ( is_initial_install() ) {
 		define( 'WP_INITIAL_INSTALL', true );

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Altis CMS Permalink Settings.
+ *
+ * @package altis-cms
+ */
 
 namespace Altis\CMS\Permalinks;
 

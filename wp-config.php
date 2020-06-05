@@ -8,6 +8,8 @@
  * directory.
  *
  * phpcs:disable PSR1.Files.SideEffects
+ *
+ * @package altis-cms
  */
 
 // Provide a reference to the app root directory early.
@@ -69,6 +71,7 @@ $required_constants = [
 
 foreach ( $required_constants as $constant ) {
 	if ( ! defined( $constant ) ) {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		die( "$constant constant is not defined." );
 	}
 }

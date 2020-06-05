@@ -1,4 +1,9 @@
 <?php
+/**
+ * Altis CMS Add Site UI.
+ *
+ * @package altis-cms
+ */
 
 namespace Altis\CMS\Add_Site_UI;
 
@@ -23,7 +28,7 @@ function output_add_site_page() {
 	require ABSPATH . 'wp-admin/admin-header.php';
 	?>
 	<div class="wrap">
-		<h1 id="add-new-site"><?php _e( 'Add New Site', 'altis' ); ?></h1>
+		<h1 id="add-new-site"><?php esc_html_e( 'Add New Site', 'altis' ); ?></h1>
 
 		<?php
 		// Add message if a new site was just added or had an error.
@@ -37,7 +42,7 @@ function output_add_site_page() {
 					esc_url( get_admin_url( absint( $_GET['id'] ) ) ),
 					network_admin_url( 'site-info.php?id=' . absint( $_GET['id'] ) )
 				);
-				echo '<div id="message" class="updated notice is-dismissible"><p>' . $notice . '</p></div>';
+				echo '<div id="message" class="updated notice is-dismissible"><p>' . wp_kses( $notice, [ 'a' => [ 'href' => [] ] ] ) . '</p></div>';
 
 			} elseif ( 'error' === $message ) {
 				$error = $_GET['error'];
@@ -52,7 +57,7 @@ function output_add_site_page() {
 				} elseif ( 'mismatched_values' === $error ) {
 					$notice = __( 'Sorry, we were unable to create your site. Please check the Site Address field to be sure that what you enter matches the Site Type selected.', 'altis' );
 				}
-				echo '<div id="message" class="error notice is-dismissible"><p>' . $notice . '</p></div>';
+				echo '<div id="message" class="error notice is-dismissible"><p>' . wp_kses( $notice, [ 'a' => [ 'href' => [] ] ] ) . '</p></div>';
 			}
 		}
 		?>
@@ -61,52 +66,52 @@ function output_add_site_page() {
 			<?php
 			printf(
 				/* translators: %s: asterisk to mark required form fields. */
-				__( 'Required fields are marked %s' ),
+				esc_html__( 'Required fields are marked %s' ),
 				'<span class="required">*</span>'
 			);
 			?>
 		</p>
-		<form method="post" action="<?php echo network_admin_url( 'site-new.php' ); ?>" novalidate="novalidate">
+		<form method="post" action="<?php echo esc_attr( network_admin_url( 'site-new.php' ) ); ?>" novalidate="novalidate">
 			<?php wp_nonce_field( 'altis-add-site' ); ?>
 			<table class="form-table">
 				<tr class="form-field form-required">
 					<th scope="row">
-						<?php _e( 'Site Type', 'altis' ); ?> <span class="required">*</span>
+						<?php esc_html_e( 'Site Type', 'altis' ); ?> <span class="required">*</span>
 					</th>
 					<td>
 						<fieldset>
-							<legend class="screen-reader-text"><?php _e( 'Site domain settings', 'altis' ); ?></legend>
+							<legend class="screen-reader-text"><?php esc_html_e( 'Site domain settings', 'altis' ); ?></legend>
 							<label>
 								<input name="domain-type" type="radio" id="site-subdomain" value="site-subdomain" aria-describedby="site-subdomain-desc" checked />
-								<strong><?php _e( 'Subdomain', 'altis' ); ?>: </strong>
-								<span class="input-description" id="site-subdomain-desc"><?php _e( 'recommended for related sites', 'altis' ) ?></span>
+								<strong><?php esc_html_e( 'Subdomain', 'altis' ); ?>: </strong>
+								<span class="input-description" id="site-subdomain-desc"><?php esc_html_e( 'recommended for related sites', 'altis' ) ?></span>
 							</label>
 							<br />
 							<label>
 								<input name="domain-type" type="radio" id="site-subdirectory" value="site-subdirectory" aria-describedby="site-subdirectory-desc" />
-								<strong><?php _e( 'Subdirectory', 'altis' ); ?>: </strong>
-								<span class="input-description" id="site-subdirectory-desc"><?php _e( 'recommended for regional or multilingual sites', 'altis' ) ?></span>
+								<strong><?php esc_html_e( 'Subdirectory', 'altis' ); ?>: </strong>
+								<span class="input-description" id="site-subdirectory-desc"><?php esc_html_e( 'recommended for regional or multilingual sites', 'altis' ) ?></span>
 							</label>
 							<br />
 							<label>
 								<input name="domain-type" type="radio" id="site-custom-domain" value="site-custom-domain" aria-describedby="site-custom-domain-desc" />
-								<strong><?php _e( 'Custom domain', 'altis' ); ?>: </strong>
-								<span class="input-description" id="site-custom-domain-desc"><?php _e( 'recommended for microsites', 'altis' ) ?></span>
+								<strong><?php esc_html_e( 'Custom domain', 'altis' ); ?>: </strong>
+								<span class="input-description" id="site-custom-domain-desc"><?php esc_html_e( 'recommended for microsites', 'altis' ) ?></span>
 							</label>
 						</fieldset>
 					</td>
 				</tr>
 				<tr class="form-field form-required">
-					<th scope="row"><label for="site-address"><?php _e( 'Site Address (URL)', 'altis' ); ?> <span class="required">*</span></label></th>
+					<th scope="row"><label for="site-address"><?php esc_html_e( 'Site Address (URL)', 'altis' ); ?> <span class="required">*</span></label></th>
 					<td>
 						<div class="site-address-wrapper">
 							<input name="url" type="text" class="regular-text" id="site-address" aria-describedby="site-address-desc" autocapitalize="none" autocorrect="off" required />
 						</div>
-						<p class="description" id="site-address-desc"><?php _e( 'Only lowercase letters (a-z), numbers, and hyphens are allowed.', 'altis' ) ?></p>
+						<p class="description" id="site-address-desc"><?php esc_html_e( 'Only lowercase letters (a-z), numbers, and hyphens are allowed.', 'altis' ) ?></p>
 					</td>
 				</tr>
 				<tr class="form-field form-required">
-					<th scope="row"><label for="site-title"><?php _e( 'Site Title', 'altis' ); ?> <span class="required">*</span></label></th>
+					<th scope="row"><label for="site-title"><?php esc_html_e( 'Site Title', 'altis' ); ?> <span class="required">*</span></label></th>
 					<td><input name="title" type="text" class="regular-text" id="site-title" required /></td>
 				</tr>
 				<?php
@@ -114,14 +119,14 @@ function output_add_site_page() {
 				if ( ! empty( $languages ) ) :
 					?>
 					<tr class="form-field form-required">
-						<th scope="row"><label for="site-language"><?php _e( 'Site Language', 'altis' ); ?></label></th>
+						<th scope="row"><label for="site-language"><?php esc_html_e( 'Site Language', 'altis' ); ?></label></th>
 						<td>
 							<?php
 							// Network default.
 							$lang = get_site_option( 'WPLANG' );
 
 							// Use English if the default isn't available.
-							if ( ! in_array( $lang, $languages ) ) {
+							if ( ! in_array( $lang, $languages, true ) ) {
 								$lang = '';
 							}
 
@@ -140,12 +145,12 @@ function output_add_site_page() {
 					</tr>
 				<?php endif; // Languages. ?>
 				<tr class="form-field">
-					<th scope="row"><?php _e( 'Public', 'altis' ); ?></th>
+					<th scope="row"><?php esc_html_e( 'Public', 'altis' ); ?></th>
 					<td>
 						<label>
 							<input name="public" type="checkbox" id="public" value="1" aria-describedby="public-desc" checked />
-							<strong><?php _e( 'Should this site be public?', 'altis' ); ?> </strong>
-							<span class="input-description" id="public-desc"><?php _e( 'Uncheck to require login.', 'altis' ) ?></span>
+							<strong><?php esc_html_e( 'Should this site be public?', 'altis' ); ?> </strong>
+							<span class="input-description" id="public-desc"><?php esc_html_e( 'Uncheck to require login.', 'altis' ) ?></span>
 						</label>
 					</td>
 				</tr>
@@ -267,7 +272,7 @@ function add_site_form_handler() {
 
 	$site_type_value = sanitize_text_field( $_POST['domain-type'] );
 
-	if ( in_array( $site_type_value, $site_type_valid_values ) ) {
+	if ( in_array( $site_type_value, $site_type_valid_values, true ) ) {
 		$site_type = $site_type_value;
 	} else {
 		$site_type = 'site-subdomain';

@@ -1,9 +1,13 @@
 <?php
+/**
+ * Altis CMS.
+ *
+ * @package altis-cms
+ */
 
 namespace Altis\CMS;
 
-use const Altis\ROOT_DIR;
-use function Altis\get_config;
+use Altis;
 use WP_CLI;
 use WP_DB_Table_Signupmeta;
 use WP_DB_Table_Signups;
@@ -12,7 +16,7 @@ use WP_DB_Table_Signups;
  * Main bootstrap / entry point for the CMS module.
  */
 function bootstrap() {
-	$config = get_config()['modules']['cms'];
+	$config = Altis\get_config()['modules']['cms'];
 
 	// Prevent web access to wp-admin/install.php.
 	add_action( 'wp_loaded', __NAMESPACE__ . '\\prevent_web_install' );
@@ -121,7 +125,7 @@ function disable_emojis_remove_dns_prefetch( array $urls, string $relation_type 
 		return $urls;
 	}
 
-	// Strip out any URLs referencing the WordPress.org emoji location
+	// Strip out any URLs referencing the WordPress.org emoji location.
 	$emoji_svg_url_bit = 'https://s.w.org/images/core/emoji/';
 	foreach ( $urls as $key => $url ) {
 		if ( strpos( $url, $emoji_svg_url_bit ) !== false ) {
@@ -135,11 +139,11 @@ function disable_emojis_remove_dns_prefetch( array $urls, string $relation_type 
  * Add the custom login logo to the login page.
  */
 function add_login_logo() {
-	$logo = get_config()['modules']['cms']['login-logo'];
+	$logo = Altis\get_config()['modules']['cms']['login-logo'];
 	?>
 	<style>
 		.login h1 a {
-			background-image: url('<?php echo site_url( $logo ) ?>');
+			background-image: url('<?php echo esc_url( site_url( $logo ) ); ?>');
 			background-size: contain;
 			width: auto;
 		}
@@ -151,7 +155,7 @@ function add_login_logo() {
  * Load plugins that are bundled with the CMS module.
  */
 function load_plugins() {
-	require_once ROOT_DIR . '/vendor/stuttter/wp-user-signups/wp-user-signups.php';
+	require_once Altis\ROOT_DIR . '/vendor/stuttter/wp-user-signups/wp-user-signups.php';
 }
 
 /**
@@ -288,7 +292,8 @@ function set_comments_per_page( $value ) : int {
 /**
  * Ensure URLs do not contain any relative paths.
  *
- * @param string $url
+ * @param string $url The dependency URL.
+ * @param string $handle The dependency handle.
  * @return string
  */
 function real_url_path( string $url, string $handle ) : string {
@@ -301,6 +306,7 @@ function real_url_path( string $url, string $handle ) : string {
 
 	// Show a warning about using bad asset URL practices when in debug mode.
 	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		trigger_error( sprintf( 'Asset URLs should not contain relative paths. Handle: %s, URL: %s', $handle, $url ), E_USER_WARNING );
 	}
 
