@@ -1,6 +1,6 @@
 ## Helper Functions
 
-### `whitelist_html( string $text, array $allowedtags = [], string $context = '' ) : string`
+### `clean_html( string $text, array $allowedtags = [], string $context = '' ) : string`
 
 When translating strings in WordPress, the most common functions to use are `__()` (translate and return) or `_e()` (translate and output). Where possible, these need to be escaped too, to ensure that translations don't accidentally break your output. For this reason, `esc_html_e()`, `esc_attr_e()`, etc are offered by WordPress as convenience functions.
 
@@ -27,12 +27,12 @@ _(string)_ Escaped string for output into HTML context.
 
 #### Example usage
 
-For the most part, `whitelist_html()` can be used in exactly the same way developers are used to using other escaping functions.
+For the most part, `clean_html()` can be used in exactly the same way developers are used to using other escaping functions.
 
 To allow `a` tags only in a translated string:
 
 ```php
-$text = whitelist_html(
+$text = clean_html(
 	sprintf(
 		__( 'This is some text <a href="%1$s">with a link</a>'),
 		'http://example.com/'
@@ -43,7 +43,7 @@ $text = whitelist_html(
 It works with multiple elements as well, using a comma-separated string or list of elements:
 
 ```php
-$text = whitelist_html(
+$text = clean_html(
 	sprintf(
 		__( 'This is <code>some</code> text <a href="%1$s">with a link</a>'),
 		'http://example.com/'
@@ -55,7 +55,7 @@ If you need custom attributes, you can use kses-style attribute specifiers.
 These can be mixed too:
 
 ```php
-$text = whitelist_html(
+$text = clean_html(
 	sprintf(
 		__( 'This is <span class="x">some</span> text <a href="%1$s">with a link</a>'),
 		'http://example.com/'
@@ -68,6 +68,27 @@ $text = whitelist_html(
 	]
 );
 ```
+
+### `print_clean_html( string $text, array $allowedtags = [], string $context = '' ) : void`
+
+Equivalent of `clean_html()` which echoes output directly rather than returning.
+
+#### Parameters
+
+**`$text`**
+
+_(string)(required)_ Content to escape
+
+**`$allowedtags`**
+
+_(array)_ Allowed tags, see examples under `clean_html`.
+
+**`$context`**
+
+_(string)_ kses context to use (see [wp_kses_allowed_html](http://developer.wordpress.org/reference/functions/wp_kses_allowed_html/))
+
+#### Return
+_(void)_ Escaped string is echoed to the browser directly.
 
 ### `wp_hash_password( string $password )`
 
