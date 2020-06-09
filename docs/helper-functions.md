@@ -69,6 +69,27 @@ $text = clean_html(
 );
 ```
 
+### `print_clean_html( string $text, array $allowedtags = [], string $context = '' ) : void`
+
+Equivalent of `clean_html()` which echoes output directly rather than returning.
+
+#### Parameters
+
+**`$text`**
+
+_(string)(required)_ Content to escape
+
+**`$allowedtags`**
+
+_(array)_ Allowed tags, see examples under `clean_html`.
+
+**`$context`**
+
+_(string)_ kses context to use (see [wp_kses_allowed_html](http://developer.wordpress.org/reference/functions/wp_kses_allowed_html/))
+
+#### Return
+_(void)_ Escaped string is echoed to the browser directly.
+
 ### `wp_hash_password( string $password )`
 
 Hash password using bcrypt. This function calls `password_hash` instead of WP's default password hasher.
