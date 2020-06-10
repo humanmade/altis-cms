@@ -51,21 +51,16 @@ function bootstrap() {
 	}
 
 	if ( $config['feeds'] === false ) {
-		add_action( 'do_feed', __NAMESPACE__ . '\\disable_feed', 1 );
-		add_action( 'do_feed_rdf', __NAMESPACE__ . '\\disable_feed', 1 );
-		add_action( 'do_feed_rss', __NAMESPACE__ . '\\disable_feed', 1 );
-		add_action( 'do_feed_rss2', __NAMESPACE__ . '\\disable_feed', 1 );
-		add_action( 'do_feed_atom', __NAMESPACE__ . '\\disable_feed', 1 );
-
-		// Disable comment feeds.
-		add_action( 'do_feed_rss2_comments', __NAMESPACE__ . '\\disable_feed', 1 );
-		add_action( 'do_feed_atom_comments', __NAMESPACE__ . '\\disable_feed', 1 );
-
 		// Prevent feed links from being inserted in the <head> of the page.
 		add_action( 'feed_links_show_posts_feed', '__return_false', -1 );
 		add_action( 'feed_links_show_comments_feed', '__return_false', -1 );
-		remove_action( 'wp_head', 'feed_links', 2 );
-		remove_action( 'wp_head', 'feed_links_extra', 3 );
+		add_action( 'wp_head', function () {
+			remove_action( 'wp_head', 'feed_links', 2 );
+			remove_action( 'wp_head', 'feed_links_extra', 3 );
+		}, 1 );
+
+		// Show the 404 page on feed URLs.
+		add_action( 'template_redirect', __NAMESPACE__ . '\\disable_feed_redirect' );
 	}
 
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_plugins', 1 );
@@ -121,13 +116,20 @@ function bootstrap() {
 }
 
 /**
- * Remove the RSS feed and redirect to the home page.
+ * Show 404 template on feeds.
  */
-function disable_feed() {
+function disable_feed_redirect() {
 	global $wp_query;
+	if ( ! is_feed() ) {
+		return;
+	}
+
 	$wp_query->set_404();
+	$wp_query->is_feed = false;
 	status_header( 404 );
-	die();
+
+	// Ensure feed content type header is overridden.
+	header( 'Content-type: text/html; charset=UTF-8' );
 }
 
 /**
