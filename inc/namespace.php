@@ -1,9 +1,13 @@
 <?php
+/**
+ * Altis CMS.
+ *
+ * @package altis/cms
+ */
 
 namespace Altis\CMS;
 
-use const Altis\ROOT_DIR;
-use function Altis\get_config;
+use Altis;
 use WP_CLI;
 use WP_DB_Table_Signupmeta;
 use WP_DB_Table_Signups;
@@ -12,13 +16,24 @@ use WP_DB_Table_Signups;
  * Main bootstrap / entry point for the CMS module.
  */
 function bootstrap() {
-	$config = get_config()['modules']['cms'];
+	$config = Altis\get_config()['modules']['cms'];
 
+	// Prevent web access to wp-admin/install.php.
+	add_action( 'wp_loaded', __NAMESPACE__ . '\\prevent_web_install' );
+
+	CLI\bootstrap();
 	Remove_Updates\bootstrap();
 	Permalinks\bootstrap();
+	Add_Site_UI\bootstrap();
 
 	if ( $config['branding'] ) {
 		Branding\bootstrap();
+	}
+
+	if ( is_bool( $config['large-network'] ) ) {
+		add_filter( 'wp_is_large_network', function () use ( $config ) {
+			return $config['large-network'];
+		} );
 	}
 
 	if ( $config['login-logo'] ) {
@@ -46,8 +61,11 @@ function bootstrap() {
 
 	add_filter( 'pre_site_option_fileupload_maxk', __NAMESPACE__ . '\\override_fileupload_maxk_option' );
 	add_filter( 'wp_fatal_error_handler_enabled', __NAMESPACE__ . '\\filter_wp_fatal_handler' );
+
+	// Hide Healthcheck UI.
 	add_action( 'admin_menu', __NAMESPACE__ . '\\remove_site_healthcheck_admin_menu' );
 	add_action( 'admin_init', __NAMESPACE__ . '\\disable_site_healthcheck_access' );
+	add_action( 'wp_dashboard_setup', __NAMESPACE__ . '\\remove_site_healthcheck_dashboard_widget' );
 
 	add_filter( 'login_headerurl', __NAMESPACE__ . '\\login_header_url' );
 
@@ -61,6 +79,27 @@ function bootstrap() {
 	if ( $config['remove-emoji'] ) {
 		add_action( 'plugins_loaded', __NAMESPACE__ . '\\remove_emoji' );
 	}
+
+	// Disable the admin_email verification interval.
+	add_filter( 'admin_email_check_interval', '__return_zero' );
+
+	/*
+	 * Performance enhancements for comments as best practice.
+	 * This is to prevent the CMS generating large HTML pages
+	 * in cases where there may be 1000s of comments,
+	 * as commenters will not see a cached version of the page.
+	 */
+	// Comment pagination is always enabled.
+	add_filter( 'pre_option_page_comments', '__return_true' );
+
+	// Force limit comments per page to 50 max.
+	add_filter( 'pre_update_option_comments_per_page', __NAMESPACE__ . '\\set_comments_per_page' );
+
+	/**
+	 * Handle relative URLs in script & style tags.
+	 */
+	add_filter( 'script_loader_src', __NAMESPACE__ . '\\real_url_path', -10, 2 );
+	add_filter( 'style_loader_src', __NAMESPACE__ . '\\real_url_path', -10, 2 );
 }
 
 /**
@@ -89,7 +128,7 @@ function disable_emojis_remove_dns_prefetch( array $urls, string $relation_type 
 		return $urls;
 	}
 
-	// Strip out any URLs referencing the WordPress.org emoji location
+	// Strip out any URLs referencing the WordPress.org emoji location.
 	$emoji_svg_url_bit = 'https://s.w.org/images/core/emoji/';
 	foreach ( $urls as $key => $url ) {
 		if ( strpos( $url, $emoji_svg_url_bit ) !== false ) {
@@ -103,11 +142,11 @@ function disable_emojis_remove_dns_prefetch( array $urls, string $relation_type 
  * Add the custom login logo to the login page.
  */
 function add_login_logo() {
-	$logo = get_config()['modules']['cms']['login-logo'];
+	$logo = Altis\get_config()['modules']['cms']['login-logo'];
 	?>
 	<style>
 		.login h1 a {
-			background-image: url('<?php echo site_url( $logo ) ?>');
+			background-image: url('<?php echo esc_url( site_url( $logo ) ); ?>');
 			background-size: contain;
 			width: auto;
 		}
@@ -119,8 +158,8 @@ function add_login_logo() {
  * Load plugins that are bundled with the CMS module.
  */
 function load_plugins() {
-	require_once ROOT_DIR . '/vendor/stuttter/wp-user-signups/wp-user-signups.php';
-	require_once ROOT_DIR . '/vendor/10up/simple-local-avatars/simple-local-avatars.php';
+	require_once Altis\ROOT_DIR . '/vendor/10up/simple-local-avatars/simple-local-avatars.php';
+	require_once Altis\ROOT_DIR . '/vendor/stuttter/wp-user-signups/wp-user-signups.php';
 }
 
 /**
@@ -187,6 +226,15 @@ function disable_site_healthcheck_access() {
 }
 
 /**
+ * Remove the healthcheck dashboard widget.
+ *
+ * @return void
+ */
+function remove_site_healthcheck_dashboard_widget() {
+	remove_meta_box( 'dashboard_site_health', 'dashboard', 'normal' );
+}
+
+/**
  * When WordPress is installed via WP-CLI, run the user-signups setup.
  */
 function setup_user_signups_on_install() {
@@ -220,5 +268,90 @@ function hide_welcome_panel( $value, int $user_id, string $meta_key ) {
 		return $value;
 	}
 
-	return 0;
+	return [ 0 ];
+}
+
+/**
+ * Prevent direct web access to wp-admin/install.php.
+ */
+function prevent_web_install() {
+	if ( $_SERVER['REQUEST_URI'] !== '/wp-admin/install.php' ) {
+		return;
+	}
+
+	// Return 200 status for healthcheck.
+	status_header( 200 );
+	echo 'This site is currently unavailable';
+	exit;
+}
+
+/**
+ * Set comments per page to be 50 max as best practice.
+ *
+ * This is to prevent the CMS generating large HTML pages
+ * in cases where there may be 1000s of comments,
+ * as commenters will not see a cached version of the page.
+ *
+ * @param mixed $value Option value for the 'comments_per_page' option,
+ *                     it's set in WP Admin under Settings -> Discussion -> Other comment settings.
+ *
+ * @return int Number of comments per page.
+ */
+function set_comments_per_page( $value ) : int {
+	$value = intval( $value );
+	return $value <= 50 ? $value : 50;
+}
+
+/**
+ * Ensure URLs do not contain any relative paths.
+ *
+ * @param string $url The dependency URL.
+ * @param string $handle The dependency handle.
+ * @return string
+ */
+function real_url_path( string $url, string $handle ) : string {
+	global $wp_scripts, $wp_styles;
+
+	// Skip if there are no /./ or /../ patterns.
+	if ( strpos( $url, '/.' ) === false ) {
+		return $url;
+	}
+
+	// Show a warning about using bad asset URL practices when in debug mode.
+	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		trigger_error( sprintf( 'Asset URLs should not contain relative paths. Handle: %s, URL: %s', $handle, $url ), E_USER_WARNING );
+	}
+
+	$path = wp_parse_url( $url, PHP_URL_PATH );
+	$path_parts = explode( '/', $path );
+
+	foreach ( $path_parts as $index => $part ) {
+		// Remove if current directory indicator.
+		if ( $part === '.' ) {
+			unset( $path_parts[ $index ] );
+		}
+		// Remove parent directory placeholder if present and the item before it.
+		if ( $part === '..' ) {
+			unset( $path_parts[ $index ] );
+			if ( isset( $path_parts[ $index - 1 ] ) ) {
+				unset( $path_parts[ $index - 1 ] );
+			}
+		}
+	}
+
+	$real_path = implode( '/', $path_parts );
+	$url = str_replace( $path, $real_path, $url );
+
+	// Get & update the dependency object if available.
+	if ( pathinfo( $path, PATHINFO_EXTENSION ) === 'js' ) {
+		$asset = $wp_scripts->query( $handle );
+	} else {
+		$asset = $wp_styles->query( $handle );
+	}
+	if ( $asset ) {
+		$asset->src = $url;
+	}
+
+	return $url;
 }

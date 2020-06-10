@@ -10,10 +10,12 @@
   ],
   "require": {
     "php": ">=7.1",
-    "stuttter/wp-user-signups": "3.1.0",
-    "johnpbloch/wordpress": "5.2.4",
-    "altis/cms-installer": "^0.3.2",
+    "stuttter/wp-user-signups": "^5.0.0",
     "roots/wp-password-bcrypt": "1.0.0",
+    "johnpbloch/wordpress": "5.4.1",
+    "altis/cms-installer": "^0.4.2",
+    "johnbillion/extended-cpts": "^4.3.3",
+    "humanmade/clean-html": "^2.0.0",
     "10up/simple-local-avatars": "2.2.0"
   },
   "autoload": {
@@ -22,7 +24,9 @@
       "inc/remove_updates/namespace.php",
       "inc/branding/namespace.php",
       "inc/block_editor/namespace.php",
-      "inc/permalinks/namespace.php"
+      "inc/permalinks/namespace.php",
+      "inc/add_site_ui/namespace.php",
+      "inc/cli/namespace.php"
     ],
     "classmap": [
       "inc/"

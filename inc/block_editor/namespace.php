@@ -1,4 +1,9 @@
 <?php
+/**
+ * Altis CMS Block Editor Additions.
+ *
+ * @package altis/cms
+ */
 
 namespace Altis\CMS\Block_Editor;
 
@@ -9,6 +14,7 @@ function bootstrap() {
 	add_action( 'init', __NAMESPACE__ . '\\register_block_categories' );
 	add_action( 'admin_menu', __NAMESPACE__ . '\\admin_menu', 9 );
 	add_filter( 'register_post_type_args', __NAMESPACE__ . '\\show_wp_block_in_menu', 10, 2 );
+	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\set_default_editor_preferences' );
 }
 
 /**
@@ -22,7 +28,7 @@ function register_block_categories() {
 			'singular_name'              => _x( 'Block Category', 'taxonomy singular name', 'altis' ),
 			'search_items'               => __( 'Search Block Categories', 'altis' ),
 			'popular_items'              => __( 'Popular Block Categories', 'altis' ),
-			'all_items'                  => __( 'All Writers', 'altis' ),
+			'all_items'                  => __( 'All Block Categories', 'altis' ),
 			'parent_item'                => null,
 			'parent_item_colon'          => null,
 			'edit_item'                  => __( 'Edit Block Category', 'altis' ),
@@ -55,6 +61,10 @@ function register_block_categories() {
  */
 function show_wp_block_in_menu( array $args, string $post_type ) {
 	if ( $post_type !== 'wp_block' ) {
+		return $args;
+	}
+
+	if ( function_exists( 'wp_get_current_user' ) && ! current_user_can( 'edit_posts' ) ) {
 		return $args;
 	}
 
@@ -108,7 +118,7 @@ function admin_menu() {
 		* by a hard-coded value below, increment the position.
 		*/
 	$core_menu_positions = [ 59, 60, 65, 70, 75, 80, 85, 99 ];
-	while ( isset( $menu[ $ptype_menu_position ] ) || in_array( $ptype_menu_position, $core_menu_positions ) ) {
+	while ( isset( $menu[ $ptype_menu_position ] ) || in_array( $ptype_menu_position, $core_menu_positions, true ) ) {
 		$ptype_menu_position++;
 	}
 
@@ -124,4 +134,31 @@ function admin_menu() {
 
 		$submenu[ $ptype_file ][ $i++ ] = [ esc_attr( $tax->labels->menu_name ), $tax->cap->manage_terms, sprintf( $edit_tags_file, $tax->name ) ];
 	}
+}
+
+/**
+ * Queue scripts for setting default block editor preferences in WP 5.4.
+ *
+ * Disables default fullscreen mode and welcome guide.
+ */
+function set_default_editor_preferences() {
+	global $wp_scripts;
+
+	wp_register_script(
+		'altis-default-editor-settings',
+		plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/editor-settings.js',
+		[],
+		'2020-06-04-1',
+		false
+	);
+	wp_localize_script(
+		'altis-default-editor-settings',
+		'altisDefaultEditorSettings',
+		[
+			'uid' => get_current_user_id(),
+		]
+	);
+
+	// Add default settings as a dependency of wp-data.
+	$wp_scripts->registered['wp-data']->deps[] = 'altis-default-editor-settings';
 }

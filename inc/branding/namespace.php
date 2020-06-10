@@ -1,8 +1,13 @@
 <?php
+/**
+ * Altis CMS Branding.
+ *
+ * @package altis/cms
+ */
 
 namespace Altis\CMS\Branding;
 
-use function Altis\get_environment_type;
+use Altis;
 use WP_Admin_Bar;
 use WP_Http;
 use WP_Theme;
@@ -24,6 +29,7 @@ function bootstrap() {
 	add_action( 'wp_user_dashboard_setup', __NAMESPACE__ . '\\remove_dashboard_widgets' );
 	add_action( 'wp_dashboard_setup', __NAMESPACE__ . '\\remove_dashboard_widgets' );
 	add_action( 'admin_init', __NAMESPACE__ . '\\add_color_scheme' );
+	add_action( 'admin_init', __NAMESPACE__ . '\\remove_wp_admin_color_schemes' );
 	add_filter( 'get_user_option_admin_color', __NAMESPACE__ . '\\override_default_color_scheme' );
 	add_action( 'template_redirect', __NAMESPACE__ . '\\detect_missing_default_theme' );
 	add_filter( 'admin_title', __NAMESPACE__ . '\\override_admin_title' );
@@ -37,6 +43,7 @@ function bootstrap() {
 	add_filter( 'get_the_generator_comment', __NAMESPACE__ . '\\override_generator', 10, 2 );
 	add_filter( 'get_the_generator_export', __NAMESPACE__ . '\\override_generator', 10, 2 );
 	add_filter( 'admin_bar_menu', __NAMESPACE__ . '\\remove_howdy_greeting', 25 );
+	add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\\enqueue_block_editor_branding_assets' );
 }
 
 /**
@@ -76,10 +83,42 @@ function add_color_scheme() {
 }
 
 /**
+ * Remove all unused default WP admin color schemes for a user.
+ *
+ * If a user has previously chosen one of the WP default admin color schemes,
+ * leave that scheme as is. Remove all other WP default admin color schemes,
+ * so that they can't be selected.
+ */
+function remove_wp_admin_color_schemes() {
+	global $_wp_admin_css_colors;
+
+	// List of WP default admin colour schemes.
+	$admin_color_schemes = [
+		'fresh',
+		'light',
+		'blue',
+		'midnight',
+		'sunrise',
+		'ectoplasm',
+		'ocean',
+		'coffee',
+	];
+
+	$user_admin_color = get_user_option( 'admin_color', get_current_user_id() );
+
+	// Remove all WP default admin color schemes, except the one that's selected for a user if any.
+	foreach ( $admin_color_schemes as $color_slug ) {
+		if ( $color_slug !== $user_admin_color ) {
+			unset( $_wp_admin_css_colors[ $color_slug ] );
+		}
+	}
+}
+
+/**
  * Enqueue the branding scripts and styles
  */
 function enqueue_admin_scripts() {
-	wp_enqueue_style( 'altis-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2019-04-24-1' );
+	wp_enqueue_style( 'altis-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2020-02-27-1' );
 }
 
 /**
@@ -88,7 +127,7 @@ function enqueue_admin_scripts() {
  * This is hooked into "get_user_option_admin_color" so we have to
  * make sure to return the value if it's already set.
  *
- * @param string|false $value
+ * @param string|false $value Color scheme name.
  * @return string
  */
 function override_default_color_scheme( $value ) : string {
@@ -102,9 +141,9 @@ function override_default_color_scheme( $value ) : string {
 /**
  * Filter meta for new users to set admin_color to HM theme.
  *
- * @param array    $meta
- * @param \WP_User $user
- * @param bool     $update
+ * @param array $meta The user meta array.
+ * @param \WP_User $user The current user object.
+ * @param bool $update Whether the meta data is being updated or created.
  * @return array
  */
 function insert_user_meta( array $meta, $user, $update ) : array {
@@ -124,7 +163,7 @@ function insert_user_meta( array $meta, $user, $update ) : array {
  * custom splash page.
  */
 function detect_missing_default_theme() {
-	$env = get_environment_type();
+	$env = Altis\get_environment_type();
 	if ( ! in_array( $env, [ 'development', 'local' ], true ) ) {
 		return;
 	}
@@ -153,19 +192,19 @@ function detect_missing_default_theme() {
 		__( 'You‘re seeing this page because debug mode is enabled, and the default theme directory is missing.', 'altis' )
 	);
 
-	wp_die( $message, $title, [ 'response' => WP_Http::NOT_FOUND ] );
+	wp_die( wp_kses_post( $message ), esc_html( $title ), [ 'response' => intval( WP_Http::NOT_FOUND ) ] );
 }
-
 
 /**
  * Add the Altis logo menu.
  *
- * @param WP_Admin_Bar $wp_admin_bar
+ * @param WP_Admin_Bar $wp_admin_bar The admin bar manager class.
  */
 function admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
 	$logo_menu_args = [
+		'href'  => admin_url(),
 		'id'    => 'altis',
-		'title' => '<span class="icon"><img src="' . get_logo_url( 'white' ) . '" /></span>',
+		'title' => '<span class="altis-logo-wrapper"><img src="' . get_logo_url( 'white' ) . '" /></span>',
 	];
 
 	// Set tabindex="0" to make sub menus accessible when no URL is available.
@@ -194,7 +233,7 @@ function get_logo_url( $variant = null ) {
  * @return void Outputs the logo directly to the page.
  */
 function render_logo( $variant = null ) {
-	printf( '<img class="altis-logo" alt="Altis" src="%s" />', get_logo_url( $variant ) );
+	printf( '<img class="altis-logo" alt="Altis" src="%s" />', esc_attr( get_logo_url( $variant ) ) );
 }
 
 /**
@@ -202,7 +241,7 @@ function render_logo( $variant = null ) {
  *
  * WordPress puts a '> WordPress' after all the <title>.
  *
- * @param string $admin_title
+ * @param string $admin_title The admin area title tag text.
  * @return string
  */
 function override_admin_title( string $admin_title ) : string {
@@ -228,7 +267,7 @@ function wordpress_to_altis( string $text ) : string {
  */
 function override_generator( string $gen, string $type ) : string {
 	$wp_version = get_bloginfo( 'version' );
-	$wp_version_rss = convert_chars( strip_tags( $wp_version ) );
+	$wp_version_rss = convert_chars( wp_strip_all_tags( $wp_version ) );
 	switch ( $type ) {
 		case 'html':
 			return sprintf(
@@ -270,7 +309,7 @@ function override_generator( string $gen, string $type ) : string {
 			return sprintf(
 				'<!-- generator="Altis (WordPress/%s)" created="%s" -->',
 				$wp_version_rss,
-				date( 'Y-m-d H:i' )
+				gmdate( 'Y-m-d H:i' )
 			);
 	}
 }
@@ -278,7 +317,7 @@ function override_generator( string $gen, string $type ) : string {
 /**
  * Remove the 'Howdy <name>' greeting in the admin bar.
  *
- * @param WP_Admin_Bar Admin bar object.
+ * @param WP_Admin_Bar $wp_admin_bar Admin bar object.
  */
 function remove_howdy_greeting( WP_Admin_Bar $wp_admin_bar ) {
 	$acct_bar = $wp_admin_bar->get_node( 'my-account' );
@@ -288,5 +327,94 @@ function remove_howdy_greeting( WP_Admin_Bar $wp_admin_bar ) {
 	$wp_admin_bar->add_node( [
 		'id' => 'my-account',
 		'title' => $new_text,
+	] );
+}
+
+/**
+ * Enqueue branding script for the post previews.
+ */
+function enqueue_block_editor_branding_assets() {
+	wp_enqueue_script(
+		'altis-branding',
+		plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.js',
+		[
+			'wp-element',
+			'wp-editor',
+			'wp-hooks',
+		],
+		false,
+		true
+	);
+
+	$markup = '
+		<div class="editor-post-preview-button__interstitial-message">
+			<svg version="1.1" id="altis-svg-shape" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 243 226.8" xml:space="preserve">
+				<path class="altis-shape" d="M22.05,38.81,220.44,3.86C218.63,8.77,159.21,169.94,155.18,181c-4.65,12.8-12.37,27.8-28.61,25.79A24.35,24.35,0,0,1,108,195.67a25.23,25.23,0,0,1-3.44-9.14c-2.78-15.74-19-97.66-61.12-134.4,0,0-12.11-10.52-21.4-13.32a40.15,40.15,0,0,0-7.84,3.09C-4.91,53.05,3.3,77.11,17.49,86,32,95,90.11,96.73,133.73,102.58s40.34,27.19,40.34,27.19l-2.51,6.8c-3.27,7.54-20.31,15.69-29.16-2.47S132.06,53.44,87.69,27.24"/>
+			</svg>
+			<div class="loading">' . esc_html__( 'Loading the future...', 'altis' ) . '</div>
+		</div>
+		<style>
+			body {
+				margin: 0;
+			}
+
+			.editor-post-preview-button__interstitial-message {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				height: 100vh;
+				width: 100vw;
+			}
+
+			#altis-svg-shape {
+				display: block;
+				height: 130px;
+				margin: 70px auto 20px;
+				fill: transparent;
+				stroke: #152A4E;
+				stroke-width: 3px;
+			}
+
+			@-webkit-keyframes paint {
+				0% {
+					stroke-dashoffset: 0;
+				}
+			}
+			@-moz-keyframes paint {
+				0% {
+					stroke-dashoffset: 0;
+				}
+			}
+			@-o-keyframes paint {
+				0% {
+					stroke-dashoffset: 0;
+				}
+			}
+			@keyframes paint {
+				0% {
+					stroke-dashoffset: 0;
+				}
+			}
+
+			#altis-svg-shape .altis-shape {
+				stroke-dasharray: 1200;
+				stroke-dashoffset: 1200;
+				-webkit-animation: paint 1.5s ease-in-out infinite alternate;
+				-moz-animation: paint 1.5s ease-in-out infinite alternate;
+				-o-animation: paint 1.5s ease-in-out infinite alternate;
+				animation: paint 1.5s ease-in-out infinite alternate;
+			}
+
+			.loading {
+				font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+				text-align: center;
+				color: #152A4E;
+			}
+		</style>
+	';
+
+	wp_localize_script( 'altis-branding', 'altisPostPreview', [
+		'markup' => $markup,
 	] );
 }
