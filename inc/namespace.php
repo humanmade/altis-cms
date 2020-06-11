@@ -50,6 +50,19 @@ function bootstrap() {
 		add_filter( 'xmlrpc_element_limit', __NAMESPACE__ . '\\filter_xmlrpc_element_limit_handler', 999 );
 	}
 
+	if ( $config['feeds'] === false ) {
+		// Prevent feed links from being inserted in the <head> of the page.
+		add_action( 'feed_links_show_posts_feed', '__return_false', -1 );
+		add_action( 'feed_links_show_comments_feed', '__return_false', -1 );
+		add_action( 'wp_head', function () {
+			remove_action( 'wp_head', 'feed_links', 2 );
+			remove_action( 'wp_head', 'feed_links_extra', 3 );
+		}, 1 );
+
+		// Show the 404 page on feed URLs.
+		add_action( 'template_redirect', __NAMESPACE__ . '\\disable_feed_redirect' );
+	}
+
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_plugins', 1 );
 
 	if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {
@@ -100,6 +113,23 @@ function bootstrap() {
 	 */
 	add_filter( 'script_loader_src', __NAMESPACE__ . '\\real_url_path', -10, 2 );
 	add_filter( 'style_loader_src', __NAMESPACE__ . '\\real_url_path', -10, 2 );
+}
+
+/**
+ * Show 404 template on feeds.
+ */
+function disable_feed_redirect() {
+	global $wp_query;
+	if ( ! is_feed() ) {
+		return;
+	}
+
+	$wp_query->set_404();
+	$wp_query->is_feed = false;
+	status_header( 404 );
+
+	// Ensure feed content type header is overridden.
+	header( 'Content-type: text/html; charset=UTF-8' );
 }
 
 /**
