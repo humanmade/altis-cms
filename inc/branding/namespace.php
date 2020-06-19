@@ -118,6 +118,12 @@ function remove_wp_admin_color_schemes() {
  * Enqueue the branding scripts and styles
  */
 function enqueue_admin_scripts() {
+	global $wp_styles;
+
+	// Ensure wp-components is always included before the Altis color
+	// scheme to maintain cascade specificity.
+	$wp_styles->registered['colors']->deps[] = 'wp-components';
+
 	wp_enqueue_style( 'altis-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2020-02-27-1' );
 }
 
