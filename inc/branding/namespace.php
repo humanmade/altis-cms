@@ -124,7 +124,7 @@ function enqueue_admin_scripts() {
 	// scheme to maintain cascade specificity.
 	$wp_styles->registered['colors']->deps[] = 'wp-components';
 
-	wp_enqueue_style( 'altis-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2020-02-27-1' );
+	wp_enqueue_style( 'altis-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2020-06-22-1' );
 }
 
 /**
