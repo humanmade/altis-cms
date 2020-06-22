@@ -657,11 +657,14 @@ a,
 
 .components-button.is-link:hover:not(:disabled):not([aria-disabled="true"]),
 .wp-core-ui .button-link:hover:not(:disabled):not([aria-disabled="true"]),
+.components-button.is-link:active:not(:disabled):not([aria-disabled="true"]),
+.wp-core-ui .button-link:active:not(:disabled):not([aria-disabled="true"]),
 .components-button.is-tertiary:hover:not(:disabled):not([aria-disabled="true"]),
 a:hover:not(:disabled):not([aria-disabled="true"]),
 .media-frame a:hover:not(:disabled):not([aria-disabled="true"]),
 .components-button.is-tertiary:not(:disabled):not([aria-disabled="true"]):not(.is-default):hover {
 	color: #2142ba;
+	background: none;
 }
 
 .components-button.is-tertiary:hover:not(:disabled):not([aria-disabled="true"]) {
@@ -920,6 +923,29 @@ textarea:focus {
 	color: #152a4e;
 }
 
+.wp-core-ui input[type="checkbox"]:focus,
+.wp-core-ui input[type="color"]:focus,
+.wp-core-ui input[type="date"]:focus,
+.wp-core-ui input[type="datetime-local"]:focus,
+.wp-core-ui input[type="datetime"]:focus,
+.wp-core-ui input[type="email"]:focus,
+.wp-core-ui input[type="month"]:focus,
+.wp-core-ui input[type="number"]:focus,
+.wp-core-ui input[type="password"]:focus,
+.wp-core-ui input[type="radio"]:focus,
+.wp-core-ui input[type="search"]:focus,
+.wp-core-ui input[type="tel"]:focus,
+.wp-core-ui input[type="text"]:focus,
+.wp-core-ui input[type="time"]:focus,
+.wp-core-ui input[type="url"]:focus,
+.wp-core-ui input[type="week"]:focus,
+.wp-core-ui select:focus,
+.wp-core-ui textarea:focus {
+	border-color: #4667de;
+	color: #152a4e;
+	box-shadow: 0 0 0 1px #4667de;
+}
+
 .components-modal__content input[type="checkbox"]:checked,
 .components-modal__content input[type="radio"]:checked,
 .components-popover input[type="checkbox"]:checked,
@@ -972,7 +998,7 @@ textarea:focus {
 }
 
 .audience-estimate__totals polyline:first-of-type {
-	fill: rgba( 70, 103, 222, .1 ) !important;
+	fill: rgba( 70, 103, 222, .3 ) !important;
 }
 
 #query-monitor-main #qm-wrapper #qm-panel-menu li button[aria-selected="true"],
