@@ -72,7 +72,7 @@ function output_add_site_page() {
 			?>
 		</p>
 		<form method="post" action="<?php echo esc_attr( network_admin_url( 'site-new.php' ) ); ?>" novalidate="novalidate">
-			<?php wp_nonce_field( 'altis-add-site' ); ?>
+			<?php wp_nonce_field( 'altis-add-site', '_altis_add_site_nonce' ); ?>
 			<table class="form-table">
 				<tr class="form-field form-required">
 					<th scope="row">
@@ -260,7 +260,7 @@ function validate_path( $path ) {
 function add_site_form_handler() {
 	global $wpdb;
 
-	if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'altis-add-site' ) ) {
+	if ( ! isset( $_POST['_altis_add_site_nonce'] ) || ! wp_verify_nonce( $_POST['_altis_add_site_nonce'], 'altis-add-site' ) ) {
 		return;
 	}
 
