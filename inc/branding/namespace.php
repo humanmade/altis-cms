@@ -44,6 +44,7 @@ function bootstrap() {
 	add_filter( 'get_the_generator_export', __NAMESPACE__ . '\\override_generator', 10, 2 );
 	add_filter( 'admin_bar_menu', __NAMESPACE__ . '\\remove_howdy_greeting', 25 );
 	add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\\enqueue_block_editor_branding_assets' );
+	add_action( 'do_faviconico', __NAMESPACE__ . '\\override_default_favicon' );
 }
 
 /**
@@ -423,4 +424,20 @@ function enqueue_block_editor_branding_assets() {
 	wp_localize_script( 'altis-branding', 'altisPostPreview', [
 		'markup' => $markup,
 	] );
+}
+
+/**
+ * Override the default favicon.
+ *
+ * By default, WordPress will send its own logo for favicon requests.
+ * favicon.ico is blocked by our Cloud servers, but local installs will
+ * incorrectly show the WordPress logo due to this fallback.
+ *
+ * This function replaces the fallback with a zero-byte icon file, which was
+ * the fallback prior to WordPress 5.4. (Sites can continue to use the site
+ * icon functionality to set their own icons instead.)
+ */
+function override_default_favicon() {
+	header( 'Content-Type: image/vnd.microsoft.icon' );
+	exit;
 }
