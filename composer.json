@@ -14,7 +14,7 @@
     "roots/wp-password-bcrypt": "1.0.0",
     "johnpbloch/wordpress": "5.4.2",
     "altis/cms-installer": "^0.4.2",
-    "johnbillion/extended-cpts": "^4.3.3",
+    "johnbillion/extended-cpts": "^4.4.0",
     "humanmade/clean-html": "^2.0.0"
   },
   "autoload": {
