@@ -25,7 +25,8 @@
       "inc/block_editor/namespace.php",
       "inc/permalinks/namespace.php",
       "inc/add_site_ui/namespace.php",
-      "inc/cli/namespace.php"
+      "inc/cli/namespace.php",
+      "inc/real_guids/namespace.php"
     ],
     "classmap": [
       "inc/"

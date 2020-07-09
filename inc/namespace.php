@@ -25,6 +25,7 @@ function bootstrap() {
 	Remove_Updates\bootstrap();
 	Permalinks\bootstrap();
 	Add_Site_UI\bootstrap();
+	RealGUIDs\bootstrap();
 
 	if ( $config['branding'] ) {
 		Branding\bootstrap();
