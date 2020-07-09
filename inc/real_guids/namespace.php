@@ -1,6 +1,6 @@
 <?php
 
-namespace Altis\CMS\RealGUIDs;
+namespace Altis\CMS\Real_GUIDs;
 
 function bootstrap() {
 	add_filter( 'kses_allowed_protocols', __NAMESPACE__ . '\\add_urn_protocol' );
