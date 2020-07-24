@@ -30,6 +30,7 @@ function bootstrap() {
 	add_action( 'wp_dashboard_setup', __NAMESPACE__ . '\\remove_dashboard_widgets' );
 	add_action( 'admin_init', __NAMESPACE__ . '\\add_color_scheme' );
 	add_action( 'admin_init', __NAMESPACE__ . '\\remove_wp_admin_color_schemes' );
+	add_action( 'personal_options', __NAMESPACE__ . '\\add_default_color_scheme_input' );
 	add_filter( 'get_user_option_admin_color', __NAMESPACE__ . '\\override_default_color_scheme' );
 	add_action( 'template_redirect', __NAMESPACE__ . '\\detect_missing_default_theme' );
 	add_filter( 'admin_title', __NAMESPACE__ . '\\override_admin_title' );
@@ -143,6 +144,26 @@ function override_default_color_scheme( $value ) : string {
 	}
 
 	return 'altis';
+}
+
+/**
+ * Add hidden input for default color scheme.
+ *
+ * This ensures that if the user is on the Altis color scheme, the handler
+ * doesn't accidentally wipe out the setting and default it back to "fresh".
+ *
+ * This is output at the top of the form so that the later radio control
+ * overrides it.
+ *
+ * @return void Renders directly to the browser.
+ */
+function add_default_color_scheme_input() : void {
+	$schemes = $GLOBALS['_wp_admin_css_colors'];
+
+	// Replicate the UI check from wp-admin/user-edit.php
+	if ( count( $schemes ) <= 1 || ! has_action( 'admin_color_scheme_picker' ) ) {
+		echo '<input type="hidden" name="admin_color" value="altis" />';
+	}
 }
 
 /**
