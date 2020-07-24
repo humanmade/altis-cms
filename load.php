@@ -21,6 +21,9 @@ add_action( 'altis.modules.init', function () {
 		'remove-emoji'  => true,
 		'xmlrpc'        => true,
 		'feeds'         => true,
+		'network_ui'    => [
+			'disable_spam' => true,
+		],
 	];
 	Altis\register_module( 'cms', __DIR__, 'CMS', $default_settings, __NAMESPACE__ . '\\bootstrap' );
 }, 5 );
