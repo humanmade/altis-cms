@@ -1,20 +1,12 @@
 ---
 name: Feature request
 about: Suggest an idea for this module
-title: ":thought_balloon: "
+title:
 labels: enhancement
-assignees: ''
+assignees:
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+<!-- Please describe what issues you would like Altis to address. This should include enough detail to describe to someone who doesn't know the specifics of your project. -->
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
-
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
+<!-- If you have any specific suggestions on ways that we could address this issue, please outline those: -->
