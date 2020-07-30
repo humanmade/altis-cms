@@ -44,7 +44,7 @@ Allows modifying the denylist of keys of metadata that should not be passed thro
 
 **`post_cloner_meta_patterns_to_remove: (array) $patterns Regex patterns to look for when cleaning meta keys.`**
 
-Allows overriding the regex patterns to look for when cleaning meta keys.
+Allows cleaning meta keys that match a regular expression.
 
 **`post_cloner_meta_data: (array) $post_meta All post meta to assign to the new post.`**
 
@@ -54,7 +54,7 @@ Allows overriding the post meta data assigned to the new post.
 
 Allows overriding the keys of post object data that should not be passed through to the new post.
 
-**`post_cloner_override_single_post: (bool) $clonable, (int)  $post_id ID of post that we're checking. `**
+**`post_cloner_override_single_post: (bool) $clonable Current clonable status, (int)  $post_id ID of post that we're checking. `**
 
 Allows overriding the clonable status of a single post if desired.
 
