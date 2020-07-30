@@ -68,4 +68,4 @@ Allows overriding the allowlist of post statuses that are eligible for cloning.
 
 **`post_cloner_permission_level: (string) 'publish_posts'`**
 
-Allows overriding of minimum capability that a user must have to clone a post.
+Allows overriding the minimum capability that a user must have to clone a post.
