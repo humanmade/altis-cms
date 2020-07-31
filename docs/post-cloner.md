@@ -26,46 +26,46 @@ Fires when post meta has been copied to cloned post.
 
 ## Filters
 
-**`post_cloner_cloned_parent: (int) $parent Parent - defaults to original post ID.`**
+**`post_cloner_cloned_parent: (int) $parent - defaults to original post ID`**
 
 Allows overriding the parent that the new post should have.
 
-**`post_cloner_cloned_status: (string) $status Status - defaults to draft.`**
+**`post_cloner_cloned_status: (string) $status - defaults to 'draft'`**
 
 Allows overriding the status that the new post should have.
 
-**`post_cloner_name_append: (string) $suffix String to append to the end of a cloned post's name. - defaults to '-cloned'`**
+**`post_cloner_name_append: (string) $suffix - defaults to '-cloned'`**
 
 Allows overriding the string to append onto the end of post name to prevent collisions.
 
-**`post_cloner_meta_keys_to_remove: (array) $keys_to_remove Metadata keys.`**
+**`post_cloner_meta_keys_to_remove: (array) $keys_to_remove - defaults to ['_edit_lock, '_edit_last']`**
 
 Allows modifying the denylist of keys of metadata that should not be passed through to the new post.
 
-**`post_cloner_meta_patterns_to_remove: (array) $patterns Regex patterns to look for when cleaning meta keys.`**
+**`post_cloner_meta_patterns_to_remove: (array) $patterns - default is empty array`**
 
 Allows cleaning meta keys that match a regular expression.
 
-**`post_cloner_meta_data: (array) $post_meta All post meta to assign to the new post.`**
+**`post_cloner_meta_data: (array) $post_meta - defaults to assoc array with keys 'post_cloned' and 'post_cloned_from'`**
 
 Allows overriding the post meta data assigned to the new post.
 
-**`post_cloner_post_keys_to_remove: (array) $keys_to_remove WP_Post array keys.`**
+**`post_cloner_post_keys_to_remove: (array) $keys_to_remove - defaults to ['ID','guid','post_date_gmt','post_modified','post_modified_gmt']`**
 
 Allows overriding the keys of post object data that should not be passed through to the new post.
 
-**`post_cloner_override_single_post: (bool) $clonable Current clonable status, (int)  $post_id ID of post that we're checking. `**
+**`post_cloner_override_single_post: (bool) $clonable, (int)  $post_id`**
 
 Allows overriding the clonable status of a single post if desired.
 
-**`post_cloner_clonable_post_types: (array) $types Post types that are eligible for cloning. - defaults to ['post']`**
+**`post_cloner_clonable_post_types: (array) $types - defaults to ['post']`**
 
 Allows overriding the allowlist of post types that are eligible for cloning.
 
-**`post_cloner_clonable_statuses: (array) $statuses Post statuses that are eligible for cloning.- defaults to [ 'publish', 'draft', 'pending' ]`**
+**`post_cloner_clonable_statuses: (array) $statuses - defaults to [ 'publish', 'draft', 'pending' ]`**
 
 Allows overriding the allowlist of post statuses that are eligible for cloning.
 
-**`post_cloner_permission_level: (string) $permission_level Minimum capability that a user must have to clone a post. - defaults to 'publish_posts'`**
+**`post_cloner_permission_level: (string) $permission_level - defaults to 'publish_posts'`**
 
 Allows overriding the minimum capability that a user must have to clone a post.
