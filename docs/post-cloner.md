@@ -44,7 +44,8 @@ Allows modifying the denylist of keys of metadata that should not be passed thro
 
 **`post_cloner_meta_patterns_to_remove: (array) $patterns - default is empty array`**
 
-Allows cleaning meta keys that match a regular expression.
+Allows cleaning meta keys that match a regular expression. For example, to remove all post meta related to Apple News,
+use the following regular expression: `/^apple_news/`
 
 **`post_cloner_meta_data: (array) $post_meta - defaults to assoc array with keys 'post_cloned' and 'post_cloned_from'`**
 
