@@ -26,7 +26,7 @@ Fires when post meta has been copied to cloned post.
 
 ## Filters
 
-**`post_cloner_cloned_parent: (int) $parent - defaults to original post ID`**
+**`post_cloner_cloned_parent: (int) $parent - defaults to original post parent ID`**
 
 Allows overriding the parent that the new post should have.
 
