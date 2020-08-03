@@ -26,6 +26,7 @@ function bootstrap() {
 	Permalinks\bootstrap();
 	Add_Site_UI\bootstrap();
 	Real_GUIDs\bootstrap();
+	Signup_Notification\bootstrap();
 
 	if ( $config['branding'] ) {
 		Branding\bootstrap();
