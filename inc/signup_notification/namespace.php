@@ -18,7 +18,7 @@ function bootstrap() {
 /**
  * Send a confirmation request email to a user when they sign up for a new site. The new site will not become active
  * until the confirmation link is clicked.
- * 
+ *
  * NOTE: This is a replacement function for the core wpmu_signup_blog_notification function:
  * https://github.com/WordPress/WordPress/blob/master/wp-includes/ms-functions.php#L900-L1036
  *
@@ -43,7 +43,7 @@ function bootstrap() {
  * @param array  $meta       Optional. Signup meta data. By default, contains the requested privacy setting and lang_id.
  * @return bool
  */
-function altis_signup_blog_notification( $domain, $path, $title, $user_login, $user_email, $key, $meta = array() ) {
+function altis_signup_blog_notification( $domain, $path, $title, $user_login, $user_email, $key, $meta = [] ) {
 	/**
 	 * Filters whether to bypass the new site email notification.
 	 *
