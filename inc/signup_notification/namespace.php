@@ -11,8 +11,15 @@ namespace Altis\CMS\Signup_Notification;
  * Boostrap setup to remove updates from the admin.
  */
 function bootstrap() {
-	remove_action( 'after_signup_site', 'wpmu_signup_blog_notification', 10, 7 );
 	add_action( 'after_signup_site', __NAMESPACE__ . '\\altis_signup_blog_notification', 10, 7 );
+	add_action( 'after_signup_site', __NAMESPACE__ . '\\remove_wpmu_signup_blog_notification', 11 );
+}
+
+/**
+ * Remove the core wpmu_signup_blog_notification function.
+ */
+function remove_wpmu_signup_blog_notification() {
+	remove_action( 'after_signup_site', 'wpmu_signup_blog_notification', 10 );
 }
 
 /**
