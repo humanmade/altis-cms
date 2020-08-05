@@ -57,7 +57,7 @@ function altis_signup_blog_notification( $domain, $path, $title, $user_login, $u
 	 * @param string      $key        Activation key created in wpmu_signup_blog().
 	 * @param array       $meta       Signup meta data. By default, contains the requested privacy setting and lang_id.
 	 */
-	if ( ! apply_filters( 'altis_signup_blog_notification', $domain, $path, $title, $user_login, $user_email, $key, $meta ) ) {
+	if ( ! apply_filters( 'wpmu_signup_blog_notification', $domain, $path, $title, $user_login, $user_email, $key, $meta ) ) {
 		return false;
 	}
 
@@ -65,7 +65,7 @@ function altis_signup_blog_notification( $domain, $path, $title, $user_login, $u
 	if ( ! is_subdomain_install() || get_current_network_id() != 1 ) {
 		$activate_url = network_site_url( "wp-activate.php?key=$key" );
 	} else {
-		$activate_url = "http://{$domain}{$path}wp-activate.php?key=$key"; // @todo Use *_url() API.
+		$activate_url = "http://{$domain}{$path}wp-activate.php?key=$key";
 	}
 
 	$activate_url = esc_url( $activate_url );
@@ -74,7 +74,7 @@ function altis_signup_blog_notification( $domain, $path, $title, $user_login, $u
 
 	$admin_email = apply_filters( 'wp_mail_from', $admin_email );
 
-	$from_name       = ( '' !== get_site_option( 'site_name' ) ) ? esc_html( get_site_option( 'site_name' ) ) : 'WordPress';
+	$from_name       = ( '' !== get_site_option( 'site_name' ) ) ? esc_html( get_site_option( 'site_name' ) ) : 'Altis';
 	$message_headers = "From: \"{$from_name}\" <{$admin_email}>\n" . 'Content-Type: text/plain; charset="' . get_option( 'blog_charset' ) . "\"\n";
 
 	$user            = get_user_by( 'login', $user_login );
