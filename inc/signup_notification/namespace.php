@@ -12,7 +12,7 @@ namespace Altis\CMS\Signup_Notification;
  */
 function bootstrap() {
 	add_action( 'after_signup_site', __NAMESPACE__ . '\\altis_signup_blog_notification', 10, 7 );
-	add_action( 'after_signup_site', __NAMESPACE__ . '\\remove_wpmu_signup_blog_notification', 11 );
+	add_action( 'after_signup_site', __NAMESPACE__ . '\\remove_wpmu_signup_blog_notification', 9 );
 }
 
 /**
