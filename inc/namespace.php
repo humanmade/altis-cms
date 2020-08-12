@@ -116,7 +116,7 @@ function bootstrap() {
 	add_filter( 'style_loader_src', __NAMESPACE__ . '\\real_url_path', -10, 2 );
 
 	// Delete signups object cache before we load the signups page.
-	add_action( 'pre_get_signups', __NAMESPACE__ . '\\altis_pre_get_signups' );
+	add_action( 'after_signup_user', __NAMESPACE__ . '\\clear_signups_cache' );
 }
 
 /**
@@ -395,24 +395,11 @@ function real_url_path( string $url, string $handle ) : string {
 }
 
 /**
- * Delete signups object cache before we load the signups page.
+ * Clear the signups cache.
  *
- * @param object $signup_query The current instance of the WP_Signup_Query object.
+ * This function updates the last changed value on the signups cache group
+ * to ensure new signups are shown in the admin.
  */
-function altis_pre_get_signups( $signup_query ) {
-	// Get the cache key the same way that it's done in the plugin to make sure we get the right value.
-	$key = md5(
-		serialize(
-			wp_array_slice_assoc(
-				$signup_query->query_vars,
-				array_keys( $signup_query->query_var_defaults )
-			)
-		)
-	);
-
-	$last_changed = wp_cache_get_last_changed( 'signups' );
-	$cache_key    = "get_signups:{$key}:{$last_changed}";
-
-	// Delete the signups cache.
-	wp_cache_delete( $cache_key, 'signups' );
+function clear_signups_cache() {
+	wp_cache_set( 'last_changed', microtime(), 'signups' );
 }
