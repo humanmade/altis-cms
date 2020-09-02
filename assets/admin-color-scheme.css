@@ -6,6 +6,18 @@
  * Very limited use of !important, but necessary in some places.
  */
 
+:root {
+	--wp-admin-theme-color: #4667de;
+	--wp-admin-theme-color-darker-10: #2041AB;
+	--wp-admin-theme-color-darker-20: #183080;
+}
+
+body .editor-styles-wrapper {
+	--wp-admin-theme-color: #4667de;
+	--wp-admin-theme-color-darker-10: #2041AB;
+	--wp-admin-theme-color-darker-20: #183080;
+}
+
 body {
 	background: #f3f5f9;
 }
@@ -547,6 +559,10 @@ ul.striped > :nth-child(odd) {
 .components-button:hover,
 .components-button[aria-expanded="true"] {
 	color: #4667de;
+}
+
+.components-button.is-pressed {
+	color: #fff;
 }
 
 .components-button:active:not(:disabled):not([aria-disabled="true"]),
