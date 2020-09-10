@@ -99,7 +99,6 @@ function render_name_column( $id ) : void {
 	// Gather information.
 	switch_to_blog( $blog->id );
 	$name = get_option( 'blogname' );
-	// $edit = ...;
 	if ( $mode !== 'list' ) {
 		$desc = get_option( 'blogdescription' );
 	}
@@ -129,9 +128,6 @@ function render_name_column( $id ) : void {
 function render_site_states( WP_Site $site ) {
 	$site_states = array();
 	$wp_list_table = _get_list_table( 'WP_MS_Sites_List_Table' );
-
-	// $site is still an array, so get the object.
-	$_site = $site;
 
 	if ( is_main_site( $site->id ) ) {
 		$site_states['main'] = __( 'Primary site', 'altis' );
