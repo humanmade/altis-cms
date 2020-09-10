@@ -125,7 +125,13 @@ function render_name_column( $id ) : void {
 	}
 }
 
-function render_site_states( WP_Site $site ) {
+/**
+ * Render the states of a site in the table.
+ *
+ * @param WP_Site $site Site being rendered.
+ * @return void Outputs directly.
+ */
+function render_site_states( WP_Site $site ) : void {
 	$site_states = array();
 	$wp_list_table = _get_list_table( 'WP_MS_Sites_List_Table' );
 
