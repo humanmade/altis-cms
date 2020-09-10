@@ -20,7 +20,7 @@ function bootstrap() {
  * @return array
  */
 function get_config() : array {
-	return Altis\get_config()['modules']['cms']['network_ui'];
+	return Altis\get_config()['modules']['cms']['network-ui'];
 }
 
 /**
@@ -75,7 +75,7 @@ function change_row_actions( array $actions, $id ) {
 	$site = get_site( $id );
 
 	// Hide "Spam", unless the site is marked as spam (i.e. action is "Not Spam")
-	if ( $config['disable_spam'] && ! $site->spam ) {
+	if ( $config['disable-spam'] && ! $site->spam ) {
 		unset( $actions['spam'] );
 	}
 	return $actions;
