@@ -27,6 +27,7 @@ function bootstrap() {
 	Add_Site_UI\bootstrap();
 	Network_UI\bootstrap();
 	Real_GUIDs\bootstrap();
+	Signup_Notification\bootstrap();
 
 	if ( $config['branding'] ) {
 		Branding\bootstrap();
@@ -115,6 +116,9 @@ function bootstrap() {
 	 */
 	add_filter( 'script_loader_src', __NAMESPACE__ . '\\real_url_path', -10, 2 );
 	add_filter( 'style_loader_src', __NAMESPACE__ . '\\real_url_path', -10, 2 );
+
+	// Delete signups object cache before we load the signups page.
+	add_action( 'after_signup_user', __NAMESPACE__ . '\\clear_signups_cache' );
 }
 
 /**
@@ -191,6 +195,11 @@ function add_login_logo() {
  */
 function load_plugins() {
 	require_once Altis\ROOT_DIR . '/vendor/stuttter/wp-user-signups/wp-user-signups.php';
+
+	$config = Altis\get_config()['modules']['cms'];
+	if ( $config['cloner'] ) {
+		require_once Altis\ROOT_DIR . '/vendor/humanmade/post-cloner/post-cloner.php';
+	}
 }
 
 /**
@@ -385,4 +394,14 @@ function real_url_path( string $url, string $handle ) : string {
 	}
 
 	return $url;
+}
+
+/**
+ * Clear the signups cache.
+ *
+ * This function updates the last changed value on the signups cache group
+ * to ensure new signups are shown in the admin.
+ */
+function clear_signups_cache() {
+	wp_cache_set( 'last_changed', microtime(), 'signups' );
 }
