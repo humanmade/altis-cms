@@ -107,7 +107,7 @@ function render_name_column( $id ) : void {
 	printf(
 		'<strong class="altis-site-name"><a href="%s" class="edit" title="%s">%s</a></strong>',
 		esc_url( get_admin_url( $id ) ),
-		__( 'Open site dashboard', 'altis' ),
+		esc_html__( 'Open site dashboard', 'altis' ),
 		esc_html( $name )
 	);
 	printf(
@@ -120,7 +120,7 @@ function render_name_column( $id ) : void {
 	if ( 'list' !== $mode ) {
 		printf(
 			'<p><em>%s</em></p>',
-			$desc
+			esc_html( $desc )
 		);
 	}
 }
@@ -132,7 +132,7 @@ function render_name_column( $id ) : void {
  * @return void Outputs directly.
  */
 function render_site_states( WP_Site $site ) : void {
-	$site_states = array();
+	$site_states = [];
 	$wp_list_table = _get_list_table( 'WP_MS_Sites_List_Table' );
 
 	if ( is_main_site( $site->id ) ) {
@@ -168,8 +168,11 @@ function render_site_states( WP_Site $site ) : void {
 		echo ' <em>(';
 		foreach ( $site_states as $state ) {
 			++$i;
-			( $i == $state_count ) ? $sep = '' : $sep = ', ';
-			echo "<span class='post-state'>{$state}{$sep}</span>";
+			printf(
+				'<span class="post-state">%s%s</span>',
+				esc_html( $state ),
+				$i === $state_count ? '' : ', '
+			);
 		}
 		echo ')</em>';
 	}
