@@ -4,6 +4,9 @@
 # Altis Build Script #
 #====================#
 
+# Ensure build script fails if any steps return a non-zero exit code.
+set -e
+
 # Install composer dependencies
 composer install --no-dev --optimize-autoloader --apcu-autoloader
 
