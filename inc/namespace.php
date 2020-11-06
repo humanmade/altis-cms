@@ -176,7 +176,7 @@ function add_login_logo() {
 	?>
 	<style>
 		.login h1 a {
-			background-image: url('<?php echo esc_url( site_url( $logo ) ); ?>');
+			background-image: url('<?php echo esc_url( get_site_url( get_main_site_id( get_main_network_id() ), $logo ) ); ?>');
 			background-size: contain;
 			width: auto;
 		}
