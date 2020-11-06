@@ -43,7 +43,7 @@ function remove_update_nag() {
  * Remove all automatic updates.
  */
 function remove_auto_updates() {
-	define( 'AUTOMATIC_UPDATER_DISABLED', false );
+	define( 'AUTOMATIC_UPDATER_DISABLED', true );
 }
 
 /**
