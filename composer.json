@@ -12,11 +12,12 @@
     "php": ">=7.1",
     "stuttter/wp-user-signups": "^5.0.0",
     "roots/wp-password-bcrypt": "1.0.0",
-    "johnpbloch/wordpress": "5.4.1",
-    "altis/cms-installer": "^0.4.2",
-    "johnbillion/extended-cpts": "^4.3.3",
+    "johnpbloch/wordpress": "5.5.3",
+    "altis/cms-installer": "^0.4.3",
+    "johnbillion/extended-cpts": "^4.4.0",
     "humanmade/clean-html": "^2.0.0",
-    "10up/simple-local-avatars": "2.2.0"
+    "humanmade/post-cloner": "~1.2.0",
+    "10up/simple-local-avatars": "~2.2.0"
   },
   "autoload": {
     "files": [
@@ -26,7 +27,10 @@
       "inc/block_editor/namespace.php",
       "inc/permalinks/namespace.php",
       "inc/add_site_ui/namespace.php",
-      "inc/cli/namespace.php"
+      "inc/cli/namespace.php",
+      "inc/network_ui/namespace.php",
+      "inc/real_guids/namespace.php",
+      "inc/signup_notification/namespace.php"
     ],
     "classmap": [
       "inc/"

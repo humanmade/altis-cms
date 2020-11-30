@@ -30,6 +30,7 @@ function bootstrap() {
 	add_action( 'wp_dashboard_setup', __NAMESPACE__ . '\\remove_dashboard_widgets' );
 	add_action( 'admin_init', __NAMESPACE__ . '\\add_color_scheme' );
 	add_action( 'admin_init', __NAMESPACE__ . '\\remove_wp_admin_color_schemes' );
+	add_action( 'personal_options', __NAMESPACE__ . '\\add_default_color_scheme_input' );
 	add_filter( 'get_user_option_admin_color', __NAMESPACE__ . '\\override_default_color_scheme' );
 	add_action( 'template_redirect', __NAMESPACE__ . '\\detect_missing_default_theme' );
 	add_filter( 'admin_title', __NAMESPACE__ . '\\override_admin_title' );
@@ -44,6 +45,7 @@ function bootstrap() {
 	add_filter( 'get_the_generator_export', __NAMESPACE__ . '\\override_generator', 10, 2 );
 	add_filter( 'admin_bar_menu', __NAMESPACE__ . '\\remove_howdy_greeting', 25 );
 	add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\\enqueue_block_editor_branding_assets' );
+	add_action( 'do_faviconico', __NAMESPACE__ . '\\override_default_favicon' );
 }
 
 /**
@@ -67,7 +69,7 @@ function add_color_scheme() {
 	wp_admin_css_color(
 		'altis',
 		__( 'Altis', 'altis' ),
-		add_query_arg( 'version', '2019-04-25-1', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/admin-color-scheme.css' ),
+		add_query_arg( 'version', '2020-09-01-1', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/admin-color-scheme.css' ),
 		[
 			COLOR_BLUE,
 			COLOR_DARKBLUE,
@@ -118,7 +120,13 @@ function remove_wp_admin_color_schemes() {
  * Enqueue the branding scripts and styles
  */
 function enqueue_admin_scripts() {
-	wp_enqueue_style( 'altis-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2020-02-27-1' );
+	global $wp_styles;
+
+	// Ensure wp-components is always included before the Altis color
+	// scheme to maintain cascade specificity.
+	$wp_styles->registered['colors']->deps[] = 'wp-components';
+
+	wp_enqueue_style( 'altis-branding', plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.css', [], '2020-06-22-1' );
 }
 
 /**
@@ -136,6 +144,26 @@ function override_default_color_scheme( $value ) : string {
 	}
 
 	return 'altis';
+}
+
+/**
+ * Add hidden input for default color scheme.
+ *
+ * This ensures that if the user is on the Altis color scheme, the handler
+ * doesn't accidentally wipe out the setting and default it back to "fresh".
+ *
+ * This is output at the top of the form so that the later radio control
+ * overrides it.
+ *
+ * @return void Renders directly to the browser.
+ */
+function add_default_color_scheme_input() : void {
+	$schemes = $GLOBALS['_wp_admin_css_colors'];
+
+	// Replicate the UI check from wp-admin/user-edit.php
+	if ( count( $schemes ) <= 1 || ! has_action( 'admin_color_scheme_picker' ) ) {
+		echo '<input type="hidden" name="admin_color" value="altis" />';
+	}
 }
 
 /**
@@ -417,4 +445,20 @@ function enqueue_block_editor_branding_assets() {
 	wp_localize_script( 'altis-branding', 'altisPostPreview', [
 		'markup' => $markup,
 	] );
+}
+
+/**
+ * Override the default favicon.
+ *
+ * By default, WordPress will send its own logo for favicon requests.
+ * favicon.ico is blocked by our Cloud servers, but local installs will
+ * incorrectly show the WordPress logo due to this fallback.
+ *
+ * This function replaces the fallback with a zero-byte icon file, which was
+ * the fallback prior to WordPress 5.4. (Sites can continue to use the site
+ * icon functionality to set their own icons instead.)
+ */
+function override_default_favicon() {
+	header( 'Content-Type: image/vnd.microsoft.icon' );
+	exit;
 }

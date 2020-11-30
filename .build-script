@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/bin/bash -e
 
 #====================#
 # Altis Build Script #
 #====================#
 
 # Install composer dependencies
-composer install --no-dev --optimize-autoloader
+composer install --no-dev --optimize-autoloader --apcu-autoloader
 
 # Edit below this line to add any additional build steps.
 #

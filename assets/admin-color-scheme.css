@@ -6,6 +6,18 @@
  * Very limited use of !important, but necessary in some places.
  */
 
+:root {
+	--wp-admin-theme-color: #4667de;
+	--wp-admin-theme-color-darker-10: #2041AB;
+	--wp-admin-theme-color-darker-20: #183080;
+}
+
+body .editor-styles-wrapper {
+	--wp-admin-theme-color: #4667de;
+	--wp-admin-theme-color-darker-10: #2041AB;
+	--wp-admin-theme-color-darker-20: #183080;
+}
+
 body {
 	background: #f3f5f9;
 }
@@ -83,8 +95,8 @@ input[type="radio"]:checked:before {
 }
 
 /* List tables */
-.wrap .add-new-h2:hover,
-.wrap .page-title-action:hover,
+.wrap .add-new-h2:hover:not(:disabled),
+.wrap .page-title-action:hover:not(:disabled),
 .tablenav .tablenav-pages a:hover,
 .tablenav .tablenav-pages a:focus {
 	color: #fff;
@@ -500,8 +512,8 @@ ul.striped > :nth-child(odd) {
 	color: #9ea3a8;
 }
 
-.editor-block-types-list__item:not(:disabled):hover .editor-block-types-list__item-icon,
-.editor-block-types-list__item:not(:disabled):hover .editor-block-types-list__item-title {
+.editor-block-types-list__item:not(:disabled):not([aria-disabled="true"]):hover .editor-block-types-list__item-icon,
+.editor-block-types-list__item:not(:disabled):not([aria-disabled="true"]):hover .editor-block-types-list__item-title {
 	color: #4667de;
 }
 
@@ -509,16 +521,21 @@ ul.striped > :nth-child(odd) {
 	color: #152a4e;
 }
 
+.block-editor-block-list__layout .block-editor-block-list__block:not([contenteditable]):focus:after {
+	box-shadow: 0 0 0 2px #4667de;
+}
+
 /**
  * Buttons
  */
 
 .components-panel__body-toggle.components-button:focus:not(:disabled):not([aria-disabled="true"]),
-.components-panel__body-toggle.components-button {
+.components-panel__body-toggle.components-button,
+.components-panel__body-toggle.components-button[aria-expanded="true"] {
 	color: #152a4e;
 }
 
-.components-button.is-default,
+.components-button.is-secondary,
 .wp-core-ui .button,
 .wp-core-ui .button-secondary {
 	background: transparent;
@@ -529,9 +546,9 @@ ul.striped > :nth-child(odd) {
 	border-radius: 4px;
 }
 
-.components-button.is-default:hover,
-.wp-core-ui .button:hover,
-.wp-core-ui .button-secondary:hover {
+.components-button.is-secondary:hover:not(:disabled):not([aria-disabled="true"]),
+.wp-core-ui .button:hover:not(:disabled):not([aria-disabled="true"]),
+.wp-core-ui .button-secondary:hover:not(:disabled):not([aria-disabled="true"]) {
 	border-color: #436cff;
 	background: #436cff;
 	color: #fff;
@@ -539,17 +556,28 @@ ul.striped > :nth-child(odd) {
 	transition: 0.3s;
 }
 
-.components-button.is-default:active:enabled,
-.wp-core-ui .button:active:enabled,
-.wp-core-ui .button-secondary:active:enabled {
+.components-button:hover,
+.components-button[aria-expanded="true"] {
+	color: #4667de;
+}
+
+.components-button.is-pressed {
+	color: #fff;
+}
+
+.components-button:active:not(:disabled):not([aria-disabled="true"]),
+.components-button.is-secondary:active:not(:disabled):not([aria-disabled="true"]),
+.wp-core-ui .button:active:not(:disabled):not([aria-disabled="true"]),
+.wp-core-ui .button-secondary:active:not(:disabled):not([aria-disabled="true"]) {
 	border-color: #4667de;
 	color: #fff;
 	background: #4667de;
 }
 
-.components-button.is-default:focus:enabled,
-.wp-core-ui .button:focus:enabled,
-.wp-core-ui .button-secondary:focus:enabled {
+.components-button:focus:not(:disabled):not([aria-disabled="true"]),
+.components-button.is-secondary:focus:not(:disabled):not([aria-disabled="true"]),
+.wp-core-ui .button:focus:not(:disabled):not([aria-disabled="true"]),
+.wp-core-ui .button-secondary:focus:not(:disabled):not([aria-disabled="true"]) {
 	box-shadow: 0px 0px 3px 2px #5596f8;
 }
 
@@ -565,18 +593,18 @@ ul.striped > :nth-child(odd) {
 	box-shadow: none;
 }
 
-.components-button.is-primary:hover,
-.wp-core-ui .button-primary:hover,
-.wrap .add-new-h2:hover,
-.wrap .page-title-action:hover {
+.components-button.is-primary:hover:not(:disabled):not([aria-disabled="true"]),
+.wp-core-ui .button-primary:hover:not(:disabled):not([aria-disabled="true"]),
+.wrap .add-new-h2:hover:not(:disabled):not([aria-disabled="true"]),
+.wrap .page-title-action:hover:not(:disabled):not([aria-disabled="true"]) {
 	background: #436cff;
 	box-shadow: rgba( 21, 42, 78, 0.188 ) 0 3px 4px 0;
 	border: 1px #4667de solid;
 	transition: 0.2s;
 }
 
-.components-button.is-primary:active:enabled,
-.wp-core-ui .button-primary:active:enabled,
+.components-button.is-primary:active:not(:disabled):not([aria-disabled="true"]),
+.wp-core-ui .button-primary:active:not(:disabled):not([aria-disabled="true"]),
 .wrap .add-new-h2:active,
 .wrap .page-title-action:active {
 	background: #436cff;
@@ -585,10 +613,10 @@ ul.striped > :nth-child(odd) {
 	color: #ffffff;
 }
 
-.components-button.is-primary:focus:enabled,
-.wp-core-ui .button-primary:focus:enabled,
-.wrap .add-new-h2:focus:enabled,
-.wrap .add-new-h2:focus:enabled,
+.components-button.is-primary:focus:not(:disabled):not([aria-disabled="true"]),
+.wp-core-ui .button-primary:focus:not(:disabled):not([aria-disabled="true"]),
+.wrap .add-new-h2:focus:not(:disabled):not([aria-disabled="true"]),
+.wrap .add-new-h2:focus:not(:disabled):not([aria-disabled="true"]),
 .wrap .page-title-action:focus,
 .wrap .page-title-action:focus {
 	background: #4667de;
@@ -601,33 +629,37 @@ ul.striped > :nth-child(odd) {
 .wp-core-ui .button-primary-disabled,
 .wp-core-ui .button-primary:disabled,
 .wp-core-ui .button-primary[disabled] {
-	border-color: #bac2d2;
-	color: #647790;
-	background: #f8f8ff;
+	border-color: #bac2d2 !important;
+	color: #647790 !important;
+	background: #f8f8ff !important;
 	cursor: not-allowed;
 }
 
-.editor-post-trash.components-button {
+.components-button.is-link.is-destructive,
+.editor-post-trash.components-button.is-link {
 	border-color: #e2182c;
 	color: #e2182c;
 }
 
-.editor-post-trash.components-button:hover {
-	border-color: #e2182c;
-	color: #fff;
-	background: #e2182c;
-	box-shadow: #e2182c20 0 3px 4px 0;
+.components-button.is-link.is-destructive:hover:not(:disabled):not([aria-disabled="true"]),
+.editor-post-trash.components-button.is-link:hover:not(:disabled):not([aria-disabled="true"]) {
+	border-color: #d00115;
+	color: #d00115;
+	background: none;
+	box-shadow: none;
 	transition: 0.3s;
 }
 
-.editor-post-trash.components-button:active:enabled {
+.components-button.is-link.is-destructive:active:not(:disabled):not([aria-disabled="true"]),
+.editor-post-trash.components-button.is-link:active:not(:disabled):not([aria-disabled="true"]) {
 	border-color: #d00115;
-	background: #d00115;
+	background: none;
 	box-shadow: none;
-	color: #fff;
+	color: #d00115;
 }
 
-.editor-post-trash.components-button:focus:enabled {
+.components-button.is-link.is-destructive:focus:not(:disabled):not([aria-disabled="true"]),
+.editor-post-trash.components-button.is-link:focus:not(:disabled):not([aria-disabled="true"]) {
 	box-shadow: 0px 0px 3px 2px #5596f8;
 }
 
@@ -639,13 +671,20 @@ a,
 	color: #4667de;
 }
 
-.components-button.is-link:hover,
-.wp-core-ui .button-link:hover,
-.components-button.is-tertiary:hover,
-a:hover,
-.media-frame a:hover,
+.components-button.is-link:hover:not(:disabled):not([aria-disabled="true"]),
+.wp-core-ui .button-link:hover:not(:disabled):not([aria-disabled="true"]),
+.components-button.is-link:active:not(:disabled):not([aria-disabled="true"]),
+.wp-core-ui .button-link:active:not(:disabled):not([aria-disabled="true"]),
+.components-button.is-tertiary:hover:not(:disabled):not([aria-disabled="true"]),
+a:hover:not(:disabled):not([aria-disabled="true"]),
+.media-frame a:hover:not(:disabled):not([aria-disabled="true"]),
 .components-button.is-tertiary:not(:disabled):not([aria-disabled="true"]):not(.is-default):hover {
 	color: #2142ba;
+	background: none;
+}
+
+.components-button.is-tertiary:hover:not(:disabled):not([aria-disabled="true"]) {
+	box-shadow: inset 0 0 0 1px #5596f8;
 }
 
 .plugin-update-tr.active td,
@@ -698,6 +737,144 @@ input[type="week"],
 select,
 textarea {
 	color: #152a4e;
+}
+
+.edit-post-header .input-control:focus,
+.edit-post-header input[type="text"]:focus,
+.edit-post-header input[type="search"]:focus,
+.edit-post-header input[type="radio"]:focus,
+.edit-post-header input[type="tel"]:focus,
+.edit-post-header input[type="time"]:focus,
+.edit-post-header input[type="url"]:focus,
+.edit-post-header input[type="week"]:focus,
+.edit-post-header input[type="password"]:focus,
+.edit-post-header input[type="checkbox"]:focus,
+.edit-post-header input[type="color"]:focus,
+.edit-post-header input[type="date"]:focus,
+.edit-post-header input[type="datetime"]:focus,
+.edit-post-header input[type="datetime-local"]:focus,
+.edit-post-header input[type="email"]:focus,
+.edit-post-header input[type="month"]:focus,
+.edit-post-header input[type="number"]:focus,
+.edit-post-header select:focus,
+.edit-post-header textarea:focus,
+.edit-post-visual-editor .input-control:focus,
+.edit-post-visual-editor input[type="text"]:focus,
+.edit-post-visual-editor input[type="search"]:focus,
+.edit-post-visual-editor input[type="radio"]:focus,
+.edit-post-visual-editor input[type="tel"]:focus,
+.edit-post-visual-editor input[type="time"]:focus,
+.edit-post-visual-editor input[type="url"]:focus,
+.edit-post-visual-editor input[type="week"]:focus,
+.edit-post-visual-editor input[type="password"]:focus,
+.edit-post-visual-editor input[type="checkbox"]:focus,
+.edit-post-visual-editor input[type="color"]:focus,
+.edit-post-visual-editor input[type="date"]:focus,
+.edit-post-visual-editor input[type="datetime"]:focus,
+.edit-post-visual-editor input[type="datetime-local"]:focus,
+.edit-post-visual-editor input[type="email"]:focus,
+.edit-post-visual-editor input[type="month"]:focus,
+.edit-post-visual-editor input[type="number"]:focus,
+.edit-post-visual-editor select:focus,
+.edit-post-visual-editor textarea:focus,
+.edit-post-text-editor .input-control:focus,
+.edit-post-text-editor input[type="text"]:focus,
+.edit-post-text-editor input[type="search"]:focus,
+.edit-post-text-editor input[type="radio"]:focus,
+.edit-post-text-editor input[type="tel"]:focus,
+.edit-post-text-editor input[type="time"]:focus,
+.edit-post-text-editor input[type="url"]:focus,
+.edit-post-text-editor input[type="week"]:focus,
+.edit-post-text-editor input[type="password"]:focus,
+.edit-post-text-editor input[type="checkbox"]:focus,
+.edit-post-text-editor input[type="color"]:focus,
+.edit-post-text-editor input[type="date"]:focus,
+.edit-post-text-editor input[type="datetime"]:focus,
+.edit-post-text-editor input[type="datetime-local"]:focus,
+.edit-post-text-editor input[type="email"]:focus,
+.edit-post-text-editor input[type="month"]:focus,
+.edit-post-text-editor input[type="number"]:focus,
+.edit-post-text-editor select:focus,
+.edit-post-text-editor textarea:focus,
+.edit-post-sidebar .input-control:focus,
+.edit-post-sidebar input[type="text"]:focus,
+.edit-post-sidebar input[type="search"]:focus,
+.edit-post-sidebar input[type="radio"]:focus,
+.edit-post-sidebar input[type="tel"]:focus,
+.edit-post-sidebar input[type="time"]:focus,
+.edit-post-sidebar input[type="url"]:focus,
+.edit-post-sidebar input[type="week"]:focus,
+.edit-post-sidebar input[type="password"]:focus,
+.edit-post-sidebar input[type="checkbox"]:focus,
+.edit-post-sidebar input[type="color"]:focus,
+.edit-post-sidebar input[type="date"]:focus,
+.edit-post-sidebar input[type="datetime"]:focus,
+.edit-post-sidebar input[type="datetime-local"]:focus,
+.edit-post-sidebar input[type="email"]:focus,
+.edit-post-sidebar input[type="month"]:focus,
+.edit-post-sidebar input[type="number"]:focus,
+.edit-post-sidebar select:focus,
+.edit-post-sidebar textarea:focus,
+.editor-post-publish-panel .input-control:focus,
+.editor-post-publish-panel input[type="text"]:focus,
+.editor-post-publish-panel input[type="search"]:focus,
+.editor-post-publish-panel input[type="radio"]:focus,
+.editor-post-publish-panel input[type="tel"]:focus,
+.editor-post-publish-panel input[type="time"]:focus,
+.editor-post-publish-panel input[type="url"]:focus,
+.editor-post-publish-panel input[type="week"]:focus,
+.editor-post-publish-panel input[type="password"]:focus,
+.editor-post-publish-panel input[type="checkbox"]:focus,
+.editor-post-publish-panel input[type="color"]:focus,
+.editor-post-publish-panel input[type="date"]:focus,
+.editor-post-publish-panel input[type="datetime"]:focus,
+.editor-post-publish-panel input[type="datetime-local"]:focus,
+.editor-post-publish-panel input[type="email"]:focus,
+.editor-post-publish-panel input[type="month"]:focus,
+.editor-post-publish-panel input[type="number"]:focus,
+.editor-post-publish-panel select:focus,
+.editor-post-publish-panel textarea:focus,
+.components-popover .input-control:focus,
+.components-popover input[type="text"]:focus,
+.components-popover input[type="search"]:focus,
+.components-popover input[type="radio"]:focus,
+.components-popover input[type="tel"]:focus,
+.components-popover input[type="time"]:focus,
+.components-popover input[type="url"]:focus,
+.components-popover input[type="week"]:focus,
+.components-popover input[type="password"]:focus,
+.components-popover input[type="checkbox"]:focus,
+.components-popover input[type="color"]:focus,
+.components-popover input[type="date"]:focus,
+.components-popover input[type="datetime"]:focus,
+.components-popover input[type="datetime-local"]:focus,
+.components-popover input[type="email"]:focus,
+.components-popover input[type="month"]:focus,
+.components-popover input[type="number"]:focus,
+.components-popover select:focus,
+.components-popover textarea:focus,
+.components-modal__frame .input-control:focus,
+.components-modal__frame input[type="text"]:focus,
+.components-modal__frame input[type="search"]:focus,
+.components-modal__frame input[type="radio"]:focus,
+.components-modal__frame input[type="tel"]:focus,
+.components-modal__frame input[type="time"]:focus,
+.components-modal__frame input[type="url"]:focus,
+.components-modal__frame input[type="week"]:focus,
+.components-modal__frame input[type="password"]:focus,
+.components-modal__frame input[type="checkbox"]:focus,
+.components-modal__frame input[type="color"]:focus,
+.components-modal__frame input[type="date"]:focus,
+.components-modal__frame input[type="datetime"]:focus,
+.components-modal__frame input[type="datetime-local"]:focus,
+.components-modal__frame input[type="email"]:focus,
+.components-modal__frame input[type="month"]:focus,
+.components-modal__frame input[type="number"]:focus,
+.components-modal__frame select:focus,
+.components-modal__frame textarea:focus {
+	color: #152a4e;
+    border-color: #4667de;
+    box-shadow: 0 0 0 1px #4667de;
 }
 
 /* Customizer */
@@ -762,6 +939,29 @@ textarea:focus {
 	color: #152a4e;
 }
 
+.wp-core-ui input[type="checkbox"]:focus,
+.wp-core-ui input[type="color"]:focus,
+.wp-core-ui input[type="date"]:focus,
+.wp-core-ui input[type="datetime-local"]:focus,
+.wp-core-ui input[type="datetime"]:focus,
+.wp-core-ui input[type="email"]:focus,
+.wp-core-ui input[type="month"]:focus,
+.wp-core-ui input[type="number"]:focus,
+.wp-core-ui input[type="password"]:focus,
+.wp-core-ui input[type="radio"]:focus,
+.wp-core-ui input[type="search"]:focus,
+.wp-core-ui input[type="tel"]:focus,
+.wp-core-ui input[type="text"]:focus,
+.wp-core-ui input[type="time"]:focus,
+.wp-core-ui input[type="url"]:focus,
+.wp-core-ui input[type="week"]:focus,
+.wp-core-ui select:focus,
+.wp-core-ui textarea:focus {
+	border-color: #4667de;
+	color: #152a4e;
+	box-shadow: 0 0 0 1px #4667de;
+}
+
 .components-modal__content input[type="checkbox"]:checked,
 .components-modal__content input[type="radio"]:checked,
 .components-popover input[type="checkbox"]:checked,
@@ -802,4 +1002,74 @@ textarea:focus {
 #adminmenu a.wp-has-current-submenu:focus + .wp-submenu a,
 #adminmenu .wp-has-current-submenu.opensub .wp-submenu a {
 	color: #a2aabe;
+}
+
+/**
+ * Altis Features
+ */
+
+.audience-estimate__percentage circle,
+.audience-estimate__totals polyline {
+	stroke: #4667de !important;
+}
+
+.audience-estimate__totals polyline:first-of-type {
+	fill: rgba( 70, 103, 222, .3 ) !important;
+}
+
+#query-monitor-main #qm-wrapper #qm-panel-menu li button[aria-selected="true"],
+#query-monitor-main #qm-wrapper #qm-panel-menu li button[aria-selected="true"]:hover,
+#query-monitor-main #qm-wrapper #qm-panel-menu li button[aria-selected="true"]:focus {
+	background: #4667de !important;
+}
+
+#query-monitor-main #qm-wrapper #qm-panel-menu li button:hover,
+#query-monitor-main #qm-wrapper #qm-panel-menu li button:focus {
+	background-color: #e5f8ff !important;
+}
+#query-monitor-main #qm-wrapper #qm-panel-menu li button:active {
+	text-shadow: none !important;
+}
+
+#query-monitor-main #qm-wrapper .qm button.qm-button,
+#query-monitor-main #qm-wrapper .qm .qm-toggle {
+	background-color: #4667de !important;
+	border-color: #4667de !important;
+}
+
+#query-monitor-main #qm-wrapper .qm button.qm-filter-trigger,
+#query-monitor-main #qm-wrapper .qm button.qm-filter-trigger code,
+#query-monitor-main #qm-wrapper .qm tbody .qm-warn a code,
+#query-monitor-main #qm-wrapper .qm a code,
+#query-monitor-main #qm-wrapper .qm a {
+	color: #4667de !important;
+}
+
+#query-monitor-main #qm-wrapper .qm button.qm-filter-trigger:after,
+#query-monitor-main #qm-wrapper .qm button.qm-filter-trigger:focus,
+#query-monitor-main #qm-wrapper .qm button.qm-filter-trigger:hover,
+#query-monitor-main #qm-wrapper .qm button.qm-filter-trigger code:after,
+#query-monitor-main #qm-wrapper .qm button.qm-filter-trigger code:focus,
+#query-monitor-main #qm-wrapper .qm button.qm-filter-trigger code:hover,
+#query-monitor-main #qm-wrapper .qm tbody .qm-warn a code:after,
+#query-monitor-main #qm-wrapper .qm tbody .qm-warn a code:focus,
+#query-monitor-main #qm-wrapper .qm tbody .qm-warn a code:hover,
+#query-monitor-main #qm-wrapper .qm a code:after,
+#query-monitor-main #qm-wrapper .qm a code:focus,
+#query-monitor-main #qm-wrapper .qm a code:hover,
+#query-monitor-main #qm-wrapper .qm a:after,
+#query-monitor-main #qm-wrapper .qm a:focus,
+#query-monitor-main #qm-wrapper .qm a:hover {
+	color: #436cff !important;
+}
+
+#query-monitor-main #qm-wrapper .qm tbody tr.qm-odd.qm-hovered th,
+#query-monitor-main #qm-wrapper .qm tbody tr.qm-odd.qm-hovered td,
+#query-monitor-main #qm-wrapper .qm tbody tr.qm-odd:hover th,
+#query-monitor-main #qm-wrapper .qm tbody tr.qm-odd:hover td,
+#query-monitor-main #qm-wrapper .qm tbody tr.qm-hovered th,
+#query-monitor-main #qm-wrapper .qm tbody tr.qm-hovered td,
+#query-monitor-main #qm-wrapper .qm tbody tr:hover th,
+#query-monitor-main #qm-wrapper .qm tbody tr:hover td {
+	background-color: #e5f8ff !important;
 }
