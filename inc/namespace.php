@@ -334,13 +334,18 @@ function set_comments_per_page( $value ) : int {
 /**
  * Ensure URLs do not contain any relative paths.
  *
- * @param string $url The dependency URL.
+ * @param string|null $url The dependency URL.
  * @param string $handle The dependency handle.
- * @return string
+ * @return string|null
  */
-function real_url_path( string $url, string $handle ) : string {
+function real_url_path( ?string $url, string $handle ) : ?string {
 	global $wp_scripts, $wp_styles;
-
+	
+	// Avoid odd behaviour if null or empty value is passed.
+	if ( empty( $url ) ) {
+		return $url;
+	}
+ 
 	// Skip if there are no /./ or /../ patterns.
 	if ( strpos( $url, '/.' ) === false ) {
 		return $url;
