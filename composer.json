@@ -36,6 +36,12 @@
     ]
   },
   "extra": {
-    "altis": {}
+    "altis": {
+      "install-overrides": [
+        "humanmade/post-cloner",
+        "roots/wp-password-bcrypt",
+        "stuttter/wp-user-signups"
+      ]
+    }
   }
 }
