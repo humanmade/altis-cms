@@ -258,6 +258,8 @@ function remove_site_healthcheck_admin_menu() {
  */
 function disable_site_healthcheck_access() {
 	/**
+	 * The current admin page script name.
+	 *
 	 * @var string
 	 */
 	global $pagenow;
