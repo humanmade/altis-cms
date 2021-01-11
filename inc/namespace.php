@@ -119,6 +119,9 @@ function bootstrap() {
 
 	// Delete signups object cache before we load the signups page.
 	add_action( 'after_signup_user', __NAMESPACE__ . '\\clear_signups_cache' );
+
+	// Fix redirect canonical redirecting on equivalent query strings.
+	add_filter( 'redirect_canonical', __NAMESPACE__ . '\\maybe_redirect', 11, 2 );
 }
 
 /**
@@ -411,4 +414,47 @@ function real_url_path( ?string $url, string $handle ) : ?string {
  */
 function clear_signups_cache() {
 	wp_cache_set( 'last_changed', microtime(), 'signups' );
+}
+
+/**
+ * Determines whether a redirect should actucally occur.
+ *
+ * In some instances redirect_canonical() will rebuild the query string which can change
+ * its formatting by removing trailing = signs and URL encoding keys. This can result in
+ * a redirect that will generate the same Batcache key. Once the redirect is cached then
+ * Batcache will start to redirect endlessly. This filter prevents that behaviour.
+ *
+ * @param string $redirect_url The URL being redirected to.
+ * @param string $requested_url The original URL requested.
+ * @return string The filtered redirect target URL.
+ */
+function maybe_redirect( $redirect_url, $requested_url ) {
+	$redirect_query_string = parse_url( $redirect_url, PHP_URL_QUERY );
+	$requested_query_string = parse_url( $redirect_url, PHP_URL_QUERY );
+
+	// Check we have query strings on both request and redirect.
+	if ( empty( $redirect_query_string ) || empty( $requested_query_string ) ) {
+		return $redirect_url;
+	}
+
+	// If the the base URLs are different then perform the redirect.
+	if ( substr( $redirect_url, 0, strpos( $redirect_url, '?' ) ) !== substr( $requested_url, 0, strpos( $requested_url, '?' ) ) ) {
+		return $redirect_url;
+	}
+
+	// Get the query strings being redirected to as an array.
+	parse_str( $redirect_query_string, $redirect_query );
+	parse_str( $requested_query_string, $requested_query );
+
+	// Ensure query keys are sorted the same way.
+	ksort( $redirect_query );
+	ksort( $requested_query );
+
+	// If the parsed query strings do not match then perform the redirect.
+	if ( serialize( $redirect_query ) !== serialize( $requested_query ) ) {
+		return $redirect_url;
+	}
+
+	// Prevent unecessary redirect from occuring and getting cached by returning the original URL.
+	return $requested_url;
 }
