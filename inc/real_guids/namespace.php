@@ -1,4 +1,9 @@
 <?php
+/**
+ * Enable Real GUIDs for posts.
+ *
+ * @package altis/cms
+ */
 
 namespace Altis\CMS\Real_GUIDs;
 

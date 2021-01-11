@@ -69,7 +69,7 @@ function altis_signup_blog_notification( $domain, $path, $title, $user_login, $u
 	}
 
 	// Send email with activation link.
-	if ( ! is_subdomain_install() || get_current_network_id() != 1 ) {
+	if ( ! is_subdomain_install() || intval( get_current_network_id() ) !== 1 ) {
 		$activate_url = network_site_url( "wp-activate.php?key=$key" );
 	} else {
 		$activate_url = "http://{$domain}{$path}wp-activate.php?key=$key";

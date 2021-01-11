@@ -14,7 +14,9 @@
 		return;
 	}
 
-	// Update the setting with our desired defaults.
+	/**
+	 * Update the setting with our desired defaults.
+	 */
 	function updateSettings() {
 		localStorage.setItem( settingsKey, JSON.stringify( settings ) );
 	}
