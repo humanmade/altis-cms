@@ -11,7 +11,11 @@
 	const domainTextEl = document.createElement( 'span' );
 	domainTextEl.className = 'site-address-domain-text';
 
-	// Add domain hints around the site address field.
+	/**
+	 * Add domain hints around the site address field.
+	 *
+	 * @param {Event} event Event object when domain type changed.
+	 */
 	function updatedomainText( event ) {
 		switch ( event.target ) {
 			case siteSubdomain:
