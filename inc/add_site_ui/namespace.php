@@ -33,9 +33,9 @@ function output_add_site_page() {
 		<?php
 		// Add message if a new site was just added or had an error.
 		if ( isset( $_GET['message'] ) ) {
-			$message = $_GET['message'];
+			$message = sanitize_key( wp_unslash( $_GET['message'] ) );
 
-			if ( 'created' === $message ) {
+			if ( 'created' === $message && isset( $_GET['id'] ) ) {
 				$notice = sprintf(
 					/* translators: 1: dashboard url, 2: network admin edit url */
 					__( 'Site added. <a href="%1$s">Visit Dashboard</a> or <a href="%2$s">Edit Site</a>', 'altis' ),
@@ -44,8 +44,8 @@ function output_add_site_page() {
 				);
 				echo '<div id="message" class="updated notice is-dismissible"><p>' . wp_kses( $notice, [ 'a' => [ 'href' => [] ] ] ) . '</p></div>';
 
-			} elseif ( 'error' === $message ) {
-				$error = $_GET['error'];
+			} elseif ( 'error' === $message && isset( $_GET['error'] ) ) {
+				$error = sanitize_key( wp_unslash( $_GET['error'] ) );
 				if ( 'wp_error' === $error ) {
 					$notice = sprintf(
 						/* translators: network admin all sites url */
@@ -270,7 +270,7 @@ function add_site_form_handler() {
 		'site-custom-domain',
 	];
 
-	$site_type_value = sanitize_text_field( $_POST['domain-type'] );
+	$site_type_value = sanitize_text_field( wp_unslash( $_POST['domain-type'] ?? '' ) );
 
 	if ( in_array( $site_type_value, $site_type_valid_values, true ) ) {
 		$site_type = $site_type_value;
@@ -278,8 +278,8 @@ function add_site_form_handler() {
 		$site_type = 'site-subdomain';
 	}
 
-	$value = sanitize_text_field( $_POST['url'] ?? '' );
-	$title = sanitize_text_field( $_POST['title'] ?? '' );
+	$value = sanitize_text_field( wp_unslash( $_POST['url'] ?? '' ) );
+	$title = sanitize_text_field( wp_unslash( $_POST['title'] ?? '' ) );
 
 	if ( empty( $value ) || empty( $title ) ) {
 		// Add URL arg to use for error message.
@@ -337,8 +337,8 @@ function add_site_form_handler() {
 		exit;
 	}
 
-	$language = sanitize_text_field( $_POST['language'] ?? '' );
-	$public = sanitize_text_field( $_POST['public'] ?? '' );
+	$language = sanitize_text_field( wp_unslash( $_POST['language'] ?? '' ) );
+	$public = sanitize_text_field( wp_unslash( $_POST['public'] ?? '' ) );
 	$options = [
 		'WPLANG' => $language,
 		'public' => $public,

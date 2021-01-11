@@ -255,6 +255,8 @@ function remove_site_healthcheck_admin_menu() {
  */
 function disable_site_healthcheck_access() {
 	/**
+	 * The current admin page script name.
+	 *
 	 * @var string
 	 */
 	global $pagenow;
@@ -351,12 +353,12 @@ function set_comments_per_page( $value ) : int {
  */
 function real_url_path( ?string $url, string $handle ) : ?string {
 	global $wp_scripts, $wp_styles;
-	
+
 	// Avoid odd behaviour if null or empty value is passed.
 	if ( empty( $url ) ) {
 		return $url;
 	}
- 
+
 	// Skip if there are no /./ or /../ patterns.
 	if ( strpos( $url, '/.' ) === false ) {
 		return $url;

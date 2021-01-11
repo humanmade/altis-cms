@@ -1,4 +1,9 @@
 <?php
+/**
+ * Network Admin UI Modifications.
+ *
+ * @package altis/cms
+ */
 
 namespace Altis\CMS\Network_UI;
 
@@ -74,7 +79,7 @@ function change_row_actions( array $actions, $id ) {
 	$config = get_config();
 	$site = get_site( $id );
 
-	// Hide "Spam", unless the site is marked as spam (i.e. action is "Not Spam")
+	// Hide "Spam", unless the site is marked as spam (i.e. action is "Not Spam").
 	if ( $config['disable-spam'] && ! $site->spam ) {
 		unset( $actions['spam'] );
 	}
@@ -144,7 +149,8 @@ function render_site_states( WP_Site $site ) : void {
 
 	reset( $wp_list_table->status_list );
 
-	$site_status = isset( $_REQUEST['status'] ) ? wp_unslash( trim( $_REQUEST['status'] ) ) : '';
+	// phpcs:ignore HM.Security.NonceVerification.Recommended
+	$site_status = isset( $_REQUEST['status'] ) ? trim( sanitize_text_field( wp_unslash( $_REQUEST['status'] ) ) ) : '';
 	foreach ( $wp_list_table->status_list as $status => $col ) {
 		if ( ( 1 === intval( $site->{$status} ) ) && ( $site_status !== $status ) ) {
 			$site_states[ $col[0] ] = $col[1];

@@ -160,7 +160,7 @@ function override_default_color_scheme( $value ) : string {
 function add_default_color_scheme_input() : void {
 	$schemes = $GLOBALS['_wp_admin_css_colors'];
 
-	// Replicate the UI check from wp-admin/user-edit.php
+	// Replicate the UI check from wp-admin/user-edit.php.
 	if ( count( $schemes ) <= 1 || ! has_action( 'admin_color_scheme_picker' ) ) {
 		echo '<input type="hidden" name="admin_color" value="altis" />';
 	}

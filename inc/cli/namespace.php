@@ -27,6 +27,7 @@ function bootstrap() {
  */
 function is_initial_install() : bool {
 	// Support for PHPUnit & direct calls to install.php.
+	// phpcs:ignore -- Ignoring requirement for isset on $_SERVER['PHP_SELF'] and wp_unslash().
 	if ( php_sapi_name() === 'cli' && basename( $_SERVER['PHP_SELF'] ) === 'install.php' ) {
 		return true;
 	}
