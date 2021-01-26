@@ -122,7 +122,7 @@ function bootstrap() {
 }
 
 /**
- * Adds `_wp_http_referer` to confirm action links the in network admin.
+ * Adds `_wp_http_referer` to confirm action links in the network admin.
  *
  * @see https://core.trac.wordpress.org/ticket/52378
  *
