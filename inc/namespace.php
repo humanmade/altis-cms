@@ -86,6 +86,9 @@ function bootstrap() {
 		WP_CLI::add_hook( 'after_invoke:core multisite-install', __NAMESPACE__ . '\\setup_user_signups_on_install' );
 	}
 
+	// Fix network admin site actions.
+	add_filter( 'network_admin_url', __NAMESPACE__ . '\\fix_network_action_confirmation' );
+
 	// Don't show the welcome panel.
 	add_filter( 'get_user_metadata', __NAMESPACE__ . '\\hide_welcome_panel', 10, 3 );
 
@@ -116,6 +119,24 @@ function bootstrap() {
 
 	// Fix redirect canonical redirecting on equivalent query strings.
 	add_filter( 'redirect_canonical', __NAMESPACE__ . '\\maybe_redirect', 11, 2 );
+}
+
+/**
+ * Adds `_wp_http_referer` to confirm action links in the network admin.
+ *
+ * @see https://core.trac.wordpress.org/ticket/52378
+ *
+ * @param string $url The complete network admin URL including scheme and path.
+ * @return string The complete network admin URL including scheme and path.
+ */
+function fix_network_action_confirmation( string $url ) : string {
+	parse_str( wp_parse_url( $url, PHP_URL_QUERY ), $params );
+	if ( isset( $params['action'] ) && $params['action'] === 'confirm' ) {
+		$url = add_query_arg( [
+			'_wp_http_referer' => urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ),
+		], $url );
+	}
+	return $url;
 }
 
 /**
