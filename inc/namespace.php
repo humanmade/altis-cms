@@ -185,6 +185,13 @@ function disable_emojis_remove_dns_prefetch( array $urls, string $relation_type 
 	// Strip out any URLs referencing the WordPress.org emoji location.
 	$emoji_svg_url_bit = 'https://s.w.org/images/core/emoji/';
 	foreach ( $urls as $key => $url ) {
+		if ( is_array( $url ) ) {
+			if ( ! isset( $url['href'] ) ) {
+				continue;
+			}
+
+			$url = $url['href'];
+		}
 		if ( strpos( $url, $emoji_svg_url_bit ) !== false ) {
 			unset( $urls[ $key ] );
 		}
