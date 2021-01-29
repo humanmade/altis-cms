@@ -89,6 +89,9 @@ function bootstrap() {
 	// Fix network admin site actions.
 	add_filter( 'network_admin_url', __NAMESPACE__ . '\\fix_network_action_confirmation' );
 
+	// Fix user signups admin links.
+	add_filter( 'wp_signups_admin_url', __NAMESPACE__ . '\\fix_user_signups_action_links', 10, 3 );
+
 	// Don't show the welcome panel.
 	add_filter( 'get_user_metadata', __NAMESPACE__ . '\\hide_welcome_panel', 10, 3 );
 
@@ -132,6 +135,26 @@ function bootstrap() {
 function fix_network_action_confirmation( string $url ) : string {
 	parse_str( wp_parse_url( $url, PHP_URL_QUERY ), $params );
 	if ( isset( $params['action'] ) && $params['action'] === 'confirm' ) {
+		$url = add_query_arg( [
+			'_wp_http_referer' => urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ),
+		], $url );
+	}
+	return $url;
+}
+
+/**
+ * Filter the WP Signups admin URLs to prevent endless redirects.
+ *
+ * The action handling logic in WP Signups relies on the value of `wp_get_referer()` and so
+ * does not work in cloud environments.
+ *
+ * @param string $url The full URL.
+ * @param string $admin_url The base admin URL.
+ * @param array $args The page query arguments.
+ * @return string
+ */
+function fix_user_signups_action_links( string $url, string $admin_url, array $args ) : string {
+	if ( isset( $args['action'] ) || isset( $args['bulk_action'] ) || isset( $args['bulk_action2'] ) ) {
 		$url = add_query_arg( [
 			'_wp_http_referer' => urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ),
 		], $url );
