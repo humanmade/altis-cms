@@ -186,6 +186,7 @@ function output_add_site_page() {
  * @return bool True if valid, false otherwise.
  */
 function validate_domain_segment( string $segment ) : bool {
+	$segment = sanitize_domain_segment( $segment ); //var_dump( 'segment:', $segment );
 	return (bool) preg_match( '/^' . REGEX_DOMAIN_SEGMENT . '$/', $segment );
 }
 
@@ -422,6 +423,8 @@ function handle_subdomain( string $value ) : ?array {
 	if ( in_array( $value, $illegal_names, true ) ) {
 		return null;
 	}
+
+	$value = sanitize_domain_segment( $value );
 
 	return [
 		'domain' => $value . '.' . $network_host,
