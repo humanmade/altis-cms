@@ -189,6 +189,29 @@ function validate_domain_segment( string $segment ) : bool {
 	return (bool) preg_match( '/^' . REGEX_DOMAIN_SEGMENT . '$/', $segment );
 }
 
+function sanitize_domain_segment( string $segment ) : string {
+	$segment = wp_kses_no_null( $segment );
+	$segment = remove_accents( $segment );
+	$segment = sanitize_title_with_dashes( $segment, null, 'save' );
+
+	if ( strlen( $segment ) < 1 ) {
+		return '';
+	}
+
+	$segment = trim_segment_length( $segment );
+
+	return $segment;
+}
+
+function trim_segment_length( string $segment, int $length = 63 ) : string {
+	if ( strlen( $segment ) > $length ) {
+		$segment = substr( $segment, 0, $length );
+		$segment = rtrim( $segment, '-' );
+	}
+
+	return $segment;
+}
+
 /**
  * Validate a domain name.
  *
