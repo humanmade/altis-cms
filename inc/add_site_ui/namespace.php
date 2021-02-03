@@ -257,9 +257,6 @@ function validate_path( $path ) {
 		return true;
 	}
 
-	// Break out URL query parameters and hashes.
-	$path = preg_split( "/(&+|\?+|#+)/", $path )[0];
-
 	$illegal_names = get_site_option( 'illegal_names' );
 	if ( empty( $illegal_names ) ) {
 		$illegal_names = [];
@@ -445,7 +442,8 @@ function handle_subdirectory( string $value ) : ?array {
 	$network_url = wp_parse_url( network_site_url() );
 	$network_host = $network_url['host'];
 
-	$path = trim( $value, '/' );
+	// Break out URL query parameters and hashes.
+	$path = trim( preg_split( "/(&+|\?+|#+)/", $value )[0], '/' );
 
 	return [
 		'domain' => $network_host,
