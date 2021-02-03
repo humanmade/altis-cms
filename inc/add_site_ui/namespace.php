@@ -242,6 +242,11 @@ function validate_path( $path ) {
 	$segments = explode( '/', trim( $path, '/' ) );
 
 	foreach ( $segments as $segment ) {
+		// Prevent paths with spaces.
+		if ( false !== stripos( $segment, ' ' ) ) {
+			return false;
+		}
+
 		if ( empty( $segment ) ) {
 			return false;
 		}
