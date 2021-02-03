@@ -257,6 +257,9 @@ function validate_path( $path ) {
 		return true;
 	}
 
+	// Break out URL query parameters and hashes.
+	$path = preg_split( "/(&+|\?+|#+)/", $path )[0];
+
 	$illegal_names = get_site_option( 'illegal_names' );
 	if ( empty( $illegal_names ) ) {
 		$illegal_names = [];
