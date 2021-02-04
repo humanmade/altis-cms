@@ -199,17 +199,6 @@ function sanitize_domain_segment( string $segment ) : string {
 		return '';
 	}
 
-	$segment = trim_segment_length( $segment );
-
-	return $segment;
-}
-
-function trim_segment_length( string $segment, int $length = 63 ) : string {
-	if ( strlen( $segment ) > $length ) {
-		$segment = substr( $segment, 0, $length );
-		$segment = rtrim( $segment, '-' );
-	}
-
 	return $segment;
 }
 
