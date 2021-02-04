@@ -190,6 +190,15 @@ function validate_domain_segment( string $segment ) : bool {
 	return (bool) preg_match( '/^' . REGEX_DOMAIN_SEGMENT . '$/', $segment );
 }
 
+/**
+ * Sanitize a domain segment.
+ *
+ * Strips out invalid characters from a URL segment.
+ *
+ * @param string $segment Dirty segment to sanitize.
+ *
+ * @return string The cleaned segment.
+ */
 function sanitize_domain_segment( string $segment ) : string {
 	$segment = wp_kses_no_null( $segment );
 	$segment = remove_accents( $segment );
