@@ -305,7 +305,7 @@ function add_site_form_handler() {
 		$site_type = 'site-subdomain';
 	}
 
-	$value = sanitize_text_field( wp_unslash( $_POST['url'] ) ?? '' );
+	$value = sanitize_text_field( wp_unslash( $_POST['url'] ?? '' ) );
 	$title = sanitize_text_field( wp_unslash( $_POST['title'] ?? '' ) );
 
 	if ( empty( $value ) || empty( $title ) ) {
