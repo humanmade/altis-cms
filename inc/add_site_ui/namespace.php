@@ -441,7 +441,7 @@ function handle_subdirectory( string $value ) : ?array {
 	$network_host = $network_url['host'];
 
 	// Break out URL query parameters and hashes.
-	$path = trim( preg_split( "/(&+|\?+|#+)/", $value )[0], '/' );
+	$path = trim( preg_split( '/(&+|\?+|#+)/', $value )[0], '/' );
 
 	return [
 		'domain' => $network_host,
