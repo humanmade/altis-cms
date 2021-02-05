@@ -15,6 +15,18 @@ const REGEX_DOMAIN_SEGMENT = '(?![0-9]+$)(?!.*-$)(?!-)[a-zA-Z0-9-]{1,63}';
 function bootstrap() {
 	add_action( 'admin_init', __NAMESPACE__ . '\\add_site_form_handler' );
 	add_action( 'load-site-new.php', __NAMESPACE__ . '\\output_add_site_page', 1000 );
+	add_filter( 'site_by_path_segments_count', __NAMESPACE__ . '\\filter_segments_count' );
+}
+
+/**
+ * Override the default segments count.
+ *
+ * Arbitrarily allowing 4 URL segments.
+ *
+ * @return int The number of valid segments.
+ */
+function filter_segments_count() : int {
+	return 4;
 }
 
 /**
