@@ -7,6 +7,8 @@
 
 namespace Altis\CMS\Add_Site_UI;
 
+use Requests_IDNAEncoder;
+
 const REGEX_DOMAIN_SEGMENT = '(?![0-9]+$)(?!.*-$)(?!-)[a-zA-Z0-9-]{1,63}';
 
 /**
