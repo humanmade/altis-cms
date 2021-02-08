@@ -213,6 +213,22 @@ function sanitize_domain_segment( string $segment ) : string {
 }
 
 /**
+ * Encode a URL string with the IDNA encoder
+ *
+ * @see https://developer.wordpress.org/reference/classes/requests_idnaencoder/
+ * @see https://tools.ietf.org/html/rfc3490
+ *
+ * @uses https://developer.wordpress.org/reference/classes/requests_idnaencoder/encode/
+ *
+ * @param string $url A URL domain string to encode.
+ *
+ * @return string The encoded string.
+ */
+function idna_encode( string $url ) : string {
+	return Requests_IDNAEncoder::encode( $url );
+}
+
+/**
  * Validate a domain name.
  *
  * Checks that the domain name has 2+ valid DNS segments.
