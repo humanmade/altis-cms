@@ -442,7 +442,7 @@ function handle_subdomain( string $value ) : ?array {
 	$value = sanitize_domain_segment( $value );
 
 	return [
-		'domain' => $value . '.' . $network_host,
+		'domain' => idna_encode( $value . '.' . $network_host ),
 		'path' => '/',
 	];
 }
@@ -461,7 +461,7 @@ function handle_subdirectory( string $value ) : ?array {
 	$path = trim( preg_split( '/(&+|\?+|#+)/', $value )[0], '/' );
 
 	return [
-		'domain' => $network_host,
+		'domain' => idna_encode( $network_host ),
 		'path' => $path,
 	];
 }
@@ -505,7 +505,7 @@ function handle_custom_domain( string $url ) : ?array {
 	$path = trim( $url_array['path'], '/' );
 
 	return [
-		'domain' => $domain,
+		'domain' => idna_encode( $domain ),
 		'path' => '/' . $path,
 	];
 }
