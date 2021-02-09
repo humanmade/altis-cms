@@ -462,7 +462,7 @@ function handle_subdirectory( string $value ) : ?array {
 
 	return [
 		'domain' => idna_encode( $network_host ),
-		'path' => $path,
+		'path' => urlencode( $path ),
 	];
 }
 
@@ -506,6 +506,6 @@ function handle_custom_domain( string $url ) : ?array {
 
 	return [
 		'domain' => idna_encode( $domain ),
-		'path' => '/' . $path,
+		'path' => '/' . urlencode( $path ),
 	];
 }
