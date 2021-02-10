@@ -188,7 +188,6 @@ function output_add_site_page() {
  * @return bool True if valid, false otherwise.
  */
 function validate_domain_segment( string $segment ) : bool {
-	$segment = sanitize_domain_segment( $segment );
 	return (bool) preg_match( '/^' . REGEX_DOMAIN_SEGMENT . '$/', $segment );
 }
 
