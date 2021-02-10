@@ -203,7 +203,6 @@ function validate_domain_segment( string $segment ) : bool {
  */
 function sanitize_domain_segment( string $segment ) : string {
 	$segment = wp_kses_no_null( $segment );
-	$segment = remove_accents( $segment );
 
 	if ( strlen( $segment ) < 1 ) {
 		return '';
