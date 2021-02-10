@@ -192,25 +192,6 @@ function validate_domain_segment( string $segment ) : bool {
 }
 
 /**
- * Sanitize a domain segment.
- *
- * Strips out invalid characters from a URL segment.
- *
- * @param string $segment Dirty segment to sanitize.
- *
- * @return string The cleaned segment.
- */
-function sanitize_domain_segment( string $segment ) : string {
-	$segment = wp_kses_no_null( $segment );
-
-	if ( strlen( $segment ) < 1 ) {
-		return '';
-	}
-
-	return $segment;
-}
-
-/**
  * Encode a URL string with the IDNA encoder
  *
  * @see https://developer.wordpress.org/reference/classes/requests_idnaencoder/
@@ -437,7 +418,7 @@ function handle_subdomain( string $value ) : ?array {
 		return null;
 	}
 
-	$value = sanitize_domain_segment( $value );
+	$value = wp_kses_no_null( $value );
 
 	return [
 		'domain' => idna_encode( $value . '.' . $network_host ),
