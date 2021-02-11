@@ -7,6 +7,8 @@
 
 namespace Altis\CMS\Add_Site_UI;
 
+use Requests_IDNAEncoder;
+
 const REGEX_DOMAIN_SEGMENT = '(?![0-9]+$)(?!.*-$)(?!-)[a-zA-Z0-9-]{1,63}';
 
 /**
@@ -190,6 +192,22 @@ function validate_domain_segment( string $segment ) : bool {
 }
 
 /**
+ * Encode a URL string with the IDNA encoder
+ *
+ * @see https://developer.wordpress.org/reference/classes/requests_idnaencoder/
+ * @see https://tools.ietf.org/html/rfc3490
+ *
+ * @uses https://developer.wordpress.org/reference/classes/requests_idnaencoder/encode/
+ *
+ * @param string $url A URL domain string to encode.
+ *
+ * @return string The encoded string.
+ */
+function idna_encode( string $url ) : string {
+	return Requests_IDNAEncoder::encode( $url );
+}
+
+/**
  * Validate a domain name.
  *
  * Checks that the domain name has 2+ valid DNS segments.
@@ -242,6 +260,11 @@ function validate_path( $path ) {
 	$segments = explode( '/', trim( $path, '/' ) );
 
 	foreach ( $segments as $segment ) {
+		// Prevent paths with spaces.
+		if ( false !== stripos( $segment, ' ' ) ) {
+			return false;
+		}
+
 		if ( empty( $segment ) ) {
 			return false;
 		}
@@ -395,8 +418,10 @@ function handle_subdomain( string $value ) : ?array {
 		return null;
 	}
 
+	$value = wp_kses_no_null( $value );
+
 	return [
-		'domain' => $value . '.' . $network_host,
+		'domain' => idna_encode( $value . '.' . $network_host ),
 		'path' => '/',
 	];
 }
@@ -411,11 +436,12 @@ function handle_subdirectory( string $value ) : ?array {
 	$network_url = wp_parse_url( network_site_url() );
 	$network_host = $network_url['host'];
 
-	$path = trim( $value, '/' );
+	// Break out URL query parameters and hashes.
+	$path = trim( preg_split( '/[&\?#]/', $value )[0], '/' );
 
 	return [
-		'domain' => $network_host,
-		'path' => $path,
+		'domain' => idna_encode( $network_host ),
+		'path' => '/' . urlencode( $path ),
 	];
 }
 
@@ -458,7 +484,7 @@ function handle_custom_domain( string $url ) : ?array {
 	$path = trim( $url_array['path'], '/' );
 
 	return [
-		'domain' => $domain,
-		'path' => '/' . $path,
+		'domain' => idna_encode( $domain ),
+		'path' => '/' . urlencode( $path ),
 	];
 }
