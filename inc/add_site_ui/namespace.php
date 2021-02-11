@@ -441,7 +441,7 @@ function handle_subdirectory( string $value ) : ?array {
 
 	return [
 		'domain' => idna_encode( $network_host ),
-		'path' => urlencode( $path ),
+		'path' => '/' . urlencode( $path ),
 	];
 }
 
