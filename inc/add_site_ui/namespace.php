@@ -139,13 +139,21 @@ function output_add_site_page() {
 						</td>
 					</tr>
 				<?php endif; // Languages. ?>
+				<?php
+				/**
+				 * Filter the default setting for the public option on new sites.
+				 *
+				 * @param bool $default_public Whether the "public" checkbox should be checked by default. Default true.
+				 */
+				$default_public = apply_filters( 'altis.cms.new_site.public_default', true );
+				?>
 				<tr class="form-field">
 					<th scope="row"><?php _e( 'Public', 'altis' ); ?></th>
 					<td>
 						<label>
-							<input name="public" type="checkbox" id="public" value="1" aria-describedby="public-desc" checked />
-							<strong><?php _e( 'Should this site be public?', 'altis' ); ?> </strong>
-							<span class="input-description" id="public-desc"><?php _e( 'Uncheck to require login.', 'altis' ) ?></span>
+							<input name="public" type="checkbox" id="public" value="1" aria-describedby="public-desc" <?php checked( $default_public ) ?> />
+							<strong><?php esc_html_e( 'Should this site be public?', 'altis' ); ?> </strong>
+							<span class="input-description" id="public-desc"><?php esc_html_e( 'Uncheck to require login.', 'altis' ) ?></span>
 						</label>
 					</td>
 				</tr>
