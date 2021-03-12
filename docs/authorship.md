@@ -24,7 +24,7 @@ By default this feature is not enabled. You can switch on using the following co
 * Guest authors (that can be created in place on the post editing screen)
 * A convenient and user-friendly UI that feels like a part of WordPress
 * Works with the block editor
-* Full CRUD support in the REST API and WP-CLI
+* Full <abbr title="Create, Read, Update, Delete">CRUD</abbr> support in the REST API and WP-CLI
 * Full support in RSS feeds
 * Fine-grained user permission controls
 
