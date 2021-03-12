@@ -254,6 +254,9 @@ function load_plugins() {
 	if ( $config['cloner'] ) {
 		require_once Altis\ROOT_DIR . '/vendor/humanmade/post-cloner/post-cloner.php';
 	}
+	if ( $config['authorship'] ) {
+		require_once Altis\ROOT_DIR . '/vendor/humanmade/authorship/plugin.php';
+	}
 }
 
 /**
