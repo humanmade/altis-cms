@@ -17,7 +17,7 @@
     "johnbillion/extended-cpts": "^4.5.1",
     "humanmade/clean-html": "^2.0.0",
     "humanmade/post-cloner": "~1.2.0",
-    "humanmade/authorship": "~0.2.5"
+    "humanmade/authorship": "~0.2.6"
   },
   "autoload": {
     "files": [
