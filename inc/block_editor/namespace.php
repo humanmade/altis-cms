@@ -13,7 +13,7 @@ use Altis;
  * Set up block editor modifications.
  */
 function bootstrap() {
-	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_plugins', 5 );
+	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_plugins', 1 );
 	add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\\set_default_editor_preferences' );
 }
 
@@ -23,7 +23,7 @@ function bootstrap() {
  * @return void
  */
 function load_plugins() {
-	require_once Altis\ROOT_DIR . '/vendor/humanmade/altis-resuable-blocks/plugin.php';
+	require_once Altis\ROOT_DIR . '/vendor/humanmade/altis-reusable-blocks/plugin.php';
 }
 
 /**
