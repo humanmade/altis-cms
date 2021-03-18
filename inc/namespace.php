@@ -134,6 +134,9 @@ function bootstrap() {
 
 	// Fix redirect canonical redirecting on equivalent query strings.
 	add_filter( 'redirect_canonical', __NAMESPACE__ . '\\maybe_redirect', 11, 2 );
+
+	// Handle incorrect asset loader URLs,
+	add_filter( 'content_url', __NAMESPACE__ . '\\handle_asset_loader_urls', 10, 2 );
 }
 
 /**
@@ -471,6 +474,20 @@ function real_url_path( ?string $url, string $handle ) : ?string {
 	}
 
 	return $url;
+}
+
+/**
+ * Check content_url filtered paths for the Altis Root directory path and strip it if found.
+ *
+ * @param string|null $url The asset URL.
+ * @param string $path The absolute path to the asset.
+ * @return string|null
+ */
+function handle_asset_loader_urls( ?string $url, string $path ) : ?string {
+	if ( strpos( $url, Altis\ROOT_DIR ) === false ) {
+		return $url;
+	}
+	return str_replace( Altis\ROOT_DIR, dirname( WP_CONTENT_URL ), $path );
 }
 
 /**
