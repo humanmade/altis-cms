@@ -17,7 +17,9 @@
     "johnbillion/extended-cpts": "^4.5.1",
     "humanmade/clean-html": "^2.0.0",
     "humanmade/post-cloner": "~1.2.0",
-    "humanmade/authorship": "~0.2.6"
+    "humanmade/authorship": "~0.2.6",
+    "humanmade/altis-reusable-blocks": "~0.1.0",
+    "humanmade/asset-loader": "^0.5.0"
   },
   "autoload": {
     "files": [
@@ -41,7 +43,9 @@
       "install-overrides": [
         "stuttter/wp-user-signups",
         "humanmade/post-cloner",
-        "humanmade/authorship"
+        "humanmade/authorship",
+        "humanmade/altis-reusable-blocks",
+        "humanmade/asset-loader"
       ]
     }
   }

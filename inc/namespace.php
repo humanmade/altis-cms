@@ -43,7 +43,11 @@ function bootstrap() {
 		add_action( 'login_header', __NAMESPACE__ . '\\add_login_logo' );
 	}
 
-	if ( $config['shared-blocks'] ) {
+	// Backwards compat for `shared-blocks` option.
+	if ( isset( $config['shared-blocks'] ) ) {
+		$config['reusable-blocks'] = $config['shared-blocks'];
+	}
+	if ( $config['reusable-blocks'] ) {
 		Block_Editor\bootstrap();
 	}
 
@@ -65,6 +69,8 @@ function bootstrap() {
 		// Show the 404 page on feed URLs.
 		add_action( 'template_redirect', __NAMESPACE__ . '\\disable_feed_redirect' );
 	}
+
+	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_muplugins', 1 );
 
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_plugins', 1 );
 
@@ -128,6 +134,9 @@ function bootstrap() {
 
 	// Fix redirect canonical redirecting on equivalent query strings.
 	add_filter( 'redirect_canonical', __NAMESPACE__ . '\\maybe_redirect', 11, 2 );
+
+	// Handle incorrect asset loader URLs.
+	add_filter( 'content_url', __NAMESPACE__ . '\\handle_asset_loader_urls', 10, 2 );
 }
 
 /**
@@ -242,6 +251,13 @@ function add_login_logo() {
 		}
 	</style>
 	<?php
+}
+
+/**
+ * Load required plugins.
+ */
+function load_muplugins() {
+	require_once Altis\ROOT_DIR . '/vendor/humanmade/asset-loader/asset-loader.php';
 }
 
 /**
@@ -458,6 +474,20 @@ function real_url_path( ?string $url, string $handle ) : ?string {
 	}
 
 	return $url;
+}
+
+/**
+ * Check content_url filtered paths for the Altis Root directory path and strip it if found.
+ *
+ * @param string|null $url The asset URL.
+ * @param string $path The absolute path to the asset.
+ * @return string|null
+ */
+function handle_asset_loader_urls( ?string $url, string $path ) : ?string {
+	if ( strpos( $url, Altis\ROOT_DIR ) === false ) {
+		return $url;
+	}
+	return str_replace( Altis\ROOT_DIR, dirname( WP_CONTENT_URL ), $path );
 }
 
 /**
