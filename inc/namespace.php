@@ -70,6 +70,8 @@ function bootstrap() {
 		add_action( 'template_redirect', __NAMESPACE__ . '\\disable_feed_redirect' );
 	}
 
+	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_muplugins', 1 );
+
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_plugins', 1 );
 
 	if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {
@@ -246,6 +248,13 @@ function add_login_logo() {
 		}
 	</style>
 	<?php
+}
+
+/**
+ * Load required plugins.
+ */
+function load_muplugins() {
+	require_once Altis\ROOT_DIR . '/vendor/humanmade/asset-loader/asset-loader.php';
 }
 
 /**
