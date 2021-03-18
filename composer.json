@@ -43,7 +43,8 @@
         "stuttter/wp-user-signups",
         "humanmade/post-cloner",
         "humanmade/authorship",
-        "humanmade/altis-reusable-blocks"
+        "humanmade/altis-reusable-blocks",
+        "humanmade/asset-loader"
       ]
     }
   }
