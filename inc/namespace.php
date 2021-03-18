@@ -135,7 +135,7 @@ function bootstrap() {
 	// Fix redirect canonical redirecting on equivalent query strings.
 	add_filter( 'redirect_canonical', __NAMESPACE__ . '\\maybe_redirect', 11, 2 );
 
-	// Handle incorrect asset loader URLs,
+	// Handle incorrect asset loader URLs.
 	add_filter( 'content_url', __NAMESPACE__ . '\\handle_asset_loader_urls', 10, 2 );
 }
 

@@ -29,7 +29,7 @@ You can toggle these enhancements on or off in your `composer.json` file by sett
 
 ### Features
 
-Altis Reusable Blocks includes new features and improvements both for the creation and the discovery/usage of reusable blocks.
+Altis Reusable Blocks includes features and improvements both for the creation and the discovery/usage of reusable blocks.
 
 #### Relationship and usage tracking
 
@@ -42,7 +42,7 @@ On the reusable blocks post list table, you can see at a quick glance the usage 
 By default, reusable blocks are somewhat hidden and can only be accessed from a submenu item in the block editor.
 With Altis Reusable Blocks, however, reusable blocks are upgraded to first-party citizens in the admin area.
 
-Like for every other content type, the admin menu on the left now contains a dedicated submenu for reusable blocks, offering shortcuts to see all existing reusable blocks, to create a new reusable block, and to see and manage categories, as well as any other publicly available taxonomy registered for reusable blocks.
+As with every other content type, the admin menu on the left contains a dedicated submenu for reusable blocks, offering shortcuts to see all existing reusable blocks, to create a new reusable block, and to see and manage categories, as well as any other publicly available taxonomy registered for reusable blocks.
 Also, the admin bar at the top now contains a shortcut to create a new reusable block, just like it is possible to do for posts, media, pages or users.
 
 #### Categories
@@ -78,7 +78,7 @@ This filter allows the user to manipulate the post types that can use reusable b
 
 * `$post_types` (`string[]`): List of post type slugs.
 
-**Usage Example:**
+**Example:**
 
 ```php
 // Add the "page" post type.
