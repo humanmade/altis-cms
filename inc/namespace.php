@@ -43,7 +43,11 @@ function bootstrap() {
 		add_action( 'login_header', __NAMESPACE__ . '\\add_login_logo' );
 	}
 
-	if ( $config['shared-blocks'] ) {
+	// Backwards compat for `shared-blocks` option.
+	if ( isset( $config['shared-blocks'] ) ) {
+		$config['reusable-blocks'] = $config['shared-blocks'];
+	}
+	if ( $config['reusable-blocks'] ) {
 		Block_Editor\bootstrap();
 	}
 
