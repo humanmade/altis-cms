@@ -38,6 +38,10 @@ Allows overriding the status that the new post should have. Defaults to `draft`.
 
 Allows overriding the string to append onto the end of post name to prevent collisions. Defaults to `-cloned`.
 
+**`post_cloner_duplicate_post: (array) $post`**
+
+Allows further modification of the duplicated post object data (as an array) before the cloned post is created.
+
 **`post_cloner_meta_keys_to_remove: (array) $keys_to_remove`**
 
 Allows modifying the denylist of keys of metadata that should not be passed through to the new post. Defaults to `[ '_edit_lock, '_edit_last' ]`.
