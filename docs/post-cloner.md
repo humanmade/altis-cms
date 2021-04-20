@@ -80,3 +80,9 @@ Allows overriding the allowlist of post statuses that are eligible for cloning. 
 **`post_cloner_permission_level: (string) $permission_level`**
 
 Allows overriding the minimum capability that a user must have to clone a post. Defaults to `publish_posts`.
+
+**`post_cloner_strip_cloned: (bool) $strip, (string) $permalink, (WP_Post) $post`**
+
+Filters whether to remove the suffix from the `post_cloner_name_append` filter from the cloned post permalink. Defaults to `false`.
+
+Only set this value to true if you have `%postid%` as part of your post's permalink otherwise WordPress will fail to match the post and return a 404.
