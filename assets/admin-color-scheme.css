@@ -6,7 +6,7 @@
  * Very limited use of !important, but necessary in some places.
  */
 
-/* stylelint-disable declaration-no-important -- Overriding WordPress defaults. */
+/* stylelint-disable declaration-no-important */
 
 :root {
 	--wp-admin-theme-color: #4667de;
