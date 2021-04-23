@@ -157,8 +157,6 @@ input[type="radio"]:checked:before {
 }
 
 #adminmenu .wp-submenu a,
-#adminmenu .wp-submenu .wp-submenu-head
-#adminmenu .wp-has-current-submenu .wp-submenu a,
 .folded #adminmenu .wp-has-current-submenu .wp-submenu a,
 #adminmenu .wp-has-current-submenu.opensub .wp-submenu a,
 #adminmenu a.wp-has-current-submenu:focus + .wp-submenu a {
@@ -195,6 +193,11 @@ input[type="radio"]:checked:before {
 #adminmenu li.wp-has-current-submenu a:focus div.wp-menu-image:before,
 #adminmenu li.opensub > a.menu-top div.wp-menu-image:before {
 	color: #fff;
+}
+
+#adminmenu .wp-submenu .wp-submenu-head
+#adminmenu .wp-has-current-submenu .wp-submenu a {
+	color: #e2ecf1;
 }
 
 ul#adminmenu a.wp-has-current-submenu:after,
