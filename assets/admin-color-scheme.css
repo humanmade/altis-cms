@@ -602,7 +602,6 @@ ul.striped > :nth-child(odd) {
 .components-button.is-primary:focus:not(:disabled):not([aria-disabled="true"]),
 .wp-core-ui .button-primary:focus:not(:disabled):not([aria-disabled="true"]),
 .wrap .add-new-h2:focus:not(:disabled):not([aria-disabled="true"]),
-.wrap .add-new-h2:focus:not(:disabled):not([aria-disabled="true"]),
 .wrap .page-title-action:focus,
 .wrap .page-title-action:focus {
 	background: #4667de;
