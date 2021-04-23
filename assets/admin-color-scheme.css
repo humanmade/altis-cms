@@ -142,8 +142,8 @@ input[type="radio"]:checked:before {
 
 /* Active tabs use a bottom border color that matches the page background color. */
 .nav-tab-active,
-.about-wrap h2 .nav-tab-active,
-.nav-tab-active:hover {
+.nav-tab-active:hover,
+.about-wrap h2 .nav-tab-active {
 	background-color: #f1f1f1;
 	border-bottom-color: #f1f1f1;
 }
@@ -168,8 +168,8 @@ input[type="radio"]:checked:before {
 #adminmenu .wp-submenu a,
 #adminmenu .wp-has-current-submenu .wp-submenu a,
 .folded #adminmenu .wp-has-current-submenu .wp-submenu a,
-#adminmenu a.wp-has-current-submenu:focus + .wp-submenu a,
-#adminmenu .wp-has-current-submenu.opensub .wp-submenu a {
+#adminmenu .wp-has-current-submenu.opensub .wp-submenu a,
+#adminmenu a.wp-has-current-submenu:focus + .wp-submenu a {
 	color: #e2ecf1;
 }
 
@@ -177,12 +177,12 @@ input[type="radio"]:checked:before {
 #adminmenu .wp-submenu a:hover,
 #adminmenu .wp-has-current-submenu .wp-submenu a:focus,
 #adminmenu .wp-has-current-submenu .wp-submenu a:hover,
-.folded #adminmenu .wp-has-current-submenu .wp-submenu a:focus,
-.folded #adminmenu .wp-has-current-submenu .wp-submenu a:hover,
+#adminmenu .wp-has-current-submenu.opensub .wp-submenu a:focus,
+#adminmenu .wp-has-current-submenu.opensub .wp-submenu a:hover,
 #adminmenu a.wp-has-current-submenu:focus + .wp-submenu a:focus,
 #adminmenu a.wp-has-current-submenu:focus + .wp-submenu a:hover,
-#adminmenu .wp-has-current-submenu.opensub .wp-submenu a:focus,
-#adminmenu .wp-has-current-submenu.opensub .wp-submenu a:hover {
+.folded #adminmenu .wp-has-current-submenu .wp-submenu a:focus,
+.folded #adminmenu .wp-has-current-submenu .wp-submenu a:hover {
 	color: #fff;
 }
 
