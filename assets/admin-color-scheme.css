@@ -580,7 +580,7 @@ ul.striped > :nth-child(odd) {
 .components-button.is-secondary:focus:not(:disabled):not([aria-disabled="true"]),
 .wp-core-ui .button:focus:not(:disabled):not([aria-disabled="true"]),
 .wp-core-ui .button-secondary:focus:not(:disabled):not([aria-disabled="true"]) {
-	box-shadow: 0px 0px 3px 2px #5596f8;
+	box-shadow: 0 0 3px 2px #5596f8;
 }
 
 .components-button.is-primary,
@@ -623,7 +623,7 @@ ul.striped > :nth-child(odd) {
 .wrap .page-title-action:focus {
 	background: #4667de;
 	border-color: #4667de;
-	box-shadow: 0px 0px 3px 2px #5596f8;
+	box-shadow: 0 0 3px 2px #5596f8;
 }
 
 .components-button.is-primary:disabled,
@@ -662,7 +662,7 @@ ul.striped > :nth-child(odd) {
 
 .components-button.is-link.is-destructive:focus:not(:disabled):not([aria-disabled="true"]),
 .editor-post-trash.components-button.is-link:focus:not(:disabled):not([aria-disabled="true"]) {
-	box-shadow: 0px 0px 3px 2px #5596f8;
+	box-shadow: 0 0 3px 2px #5596f8;
 }
 
 .components-button.is-link,
