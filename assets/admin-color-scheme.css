@@ -6,15 +6,17 @@
  * Very limited use of !important, but necessary in some places.
  */
 
+/* stylelint-disable declaration-no-important -- Overriding WordPress defaults. */
+
 :root {
 	--wp-admin-theme-color: #4667de;
-	--wp-admin-theme-color-darker-10: #2041AB;
+	--wp-admin-theme-color-darker-10: #2041ab;
 	--wp-admin-theme-color-darker-20: #183080;
 }
 
 body .editor-styles-wrapper {
 	--wp-admin-theme-color: #4667de;
-	--wp-admin-theme-color-darker-10: #2041AB;
+	--wp-admin-theme-color-darker-10: #2041ab;
 	--wp-admin-theme-color-darker-20: #183080;
 }
 
@@ -586,7 +588,7 @@ ul.striped > :nth-child(odd) {
 .wrap .add-new-h2,
 .wrap .page-title-action {
 	background: #4667de;
-	color: #ffffff;
+	color: #fff;
 	border: 1px #4667de solid;
 	font-weight: 500;
 	text-shadow: none;
@@ -610,7 +612,7 @@ ul.striped > :nth-child(odd) {
 	background: #436cff;
 	box-shadow: none;
 	border: 1px #4667de solid;
-	color: #ffffff;
+	color: #fff;
 }
 
 .components-button.is-primary:focus:not(:disabled):not([aria-disabled="true"]),
