@@ -555,7 +555,7 @@ ul.striped > :nth-child(odd) {
 	background: #436cff;
 	color: #fff;
 	box-shadow: rgba( 21, 42, 78, 0.125 ) 0 3px 4px 0;
-	transition: 0.3s;
+	transition: 300ms;
 }
 
 .components-button:hover,
@@ -602,7 +602,7 @@ ul.striped > :nth-child(odd) {
 	background: #436cff;
 	box-shadow: rgba( 21, 42, 78, 0.188 ) 0 3px 4px 0;
 	border: 1px #4667de solid;
-	transition: 0.2s;
+	transition: 200ms;
 }
 
 .components-button.is-primary:active:not(:disabled):not([aria-disabled="true"]),
@@ -649,7 +649,7 @@ ul.striped > :nth-child(odd) {
 	color: #d00115;
 	background: none;
 	box-shadow: none;
-	transition: 0.3s;
+	transition: 300ms;
 }
 
 .components-button.is-link.is-destructive:active:not(:disabled):not([aria-disabled="true"]),
