@@ -1049,13 +1049,13 @@ textarea:focus {
 	color: #436cff !important;
 }
 
+#query-monitor-main #qm-wrapper .qm tbody tr:hover th,
+#query-monitor-main #qm-wrapper .qm tbody tr:hover td,
 #query-monitor-main #qm-wrapper .qm tbody tr.qm-odd.qm-hovered th,
 #query-monitor-main #qm-wrapper .qm tbody tr.qm-odd.qm-hovered td,
 #query-monitor-main #qm-wrapper .qm tbody tr.qm-odd:hover th,
 #query-monitor-main #qm-wrapper .qm tbody tr.qm-odd:hover td,
 #query-monitor-main #qm-wrapper .qm tbody tr.qm-hovered th,
-#query-monitor-main #qm-wrapper .qm tbody tr.qm-hovered td,
-#query-monitor-main #qm-wrapper .qm tbody tr:hover th,
-#query-monitor-main #qm-wrapper .qm tbody tr:hover td {
+#query-monitor-main #qm-wrapper .qm tbody tr.qm-hovered td {
 	background-color: #e5f8ff !important;
 }
