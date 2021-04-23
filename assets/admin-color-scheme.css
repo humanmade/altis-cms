@@ -6,7 +6,7 @@
  * Very limited use of !important, but necessary in some places.
  */
 
-/* stylelint-disable declaration-no-important */
+/* stylelint-disable declaration-no-important, max-line-length */
 
 :root {
 	--wp-admin-theme-color: #4667de;
