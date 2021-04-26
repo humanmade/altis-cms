@@ -1,3 +1,7 @@
+body.folded #wp-admin-bar-altis {
+	width: auto;
+}
+
 body.wp-admin:not(.folded) #wp-admin-bar-altis {
 	width: 160px;
 }
@@ -6,14 +10,18 @@ body.wp-admin:not(.folded) #wp-admin-bar-altis {
 	padding: 0 10px;
 }
 
+#wpadminbar #wp-admin-bar-altis > .ab-item {
+	display: flex;
+}
+
+#wpadminbar #wp-admin-bar-altis > .ab-item * {
+	word-break: keep-all;
+}
+
 #wpadminbar:not(.mobile) #wp-admin-bar-altis:hover > .ab-item,
 #wpadminbar:not(.mobile) #wp-admin-bar-altis:focus > .ab-item,
 #wpadminbar:not(.mobile) #wp-admin-bar-altis.hover > .ab-item {
 	color: #fff;
-}
-
-body.folded #wp-admin-bar-altis {
-	width: auto;
 }
 
 #wp-admin-bar-altis .altis-logo-wrapper {
@@ -27,14 +35,6 @@ body.folded #wp-admin-bar-altis {
 	width: auto;
 	margin: 4px 10px 0 0;
 	display: block;
-}
-
-#wpadminbar #wp-admin-bar-altis > .ab-item {
-	display: flex;
-}
-
-#wpadminbar #wp-admin-bar-altis > .ab-item * {
-	word-break: keep-all;
 }
 
 /* Hide WordPress version and update button from At a Glance dashboard widget. */
