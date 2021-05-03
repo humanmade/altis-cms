@@ -34,6 +34,14 @@ function bootstrap() {
 		add_filter( 'wp_is_large_network', function () use ( $config ) {
 			return $config['large-network'];
 		} );
+
+		if ( $config['large-network'] === true ) {
+			// Display user pagination in network/users.php even if the network is considered as large.
+			add_filter( 'users_list_table_query_args', function( $args ) {
+				$args['count_total'] = true;
+				return $args;
+			} );
+		}
 	}
 
 	if ( $config['login-logo'] ) {
