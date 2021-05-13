@@ -104,6 +104,7 @@ function remove_wp_admin_color_schemes() {
 		'ectoplasm',
 		'ocean',
 		'coffee',
+		'modern',
 	];
 
 	$user_admin_color = get_user_option( 'admin_color', get_current_user_id() );
