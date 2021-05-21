@@ -267,9 +267,7 @@ function load_plugins() {
 	require_once Altis\ROOT_DIR . '/vendor/stuttter/wp-user-signups/wp-user-signups.php';
 
 	$config = Altis\get_config()['modules']['cms'];
-	if ( $config['cloner'] ) {
-		require_once Altis\ROOT_DIR . '/vendor/humanmade/post-cloner/post-cloner.php';
-	}
+
 	if ( $config['authorship'] ) {
 		require_once Altis\ROOT_DIR . '/vendor/humanmade/authorship/plugin.php';
 	}
