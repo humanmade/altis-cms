@@ -41,7 +41,6 @@
     "altis": {
       "install-overrides": [
         "stuttter/wp-user-signups",
-        "humanmade/post-cloner",
         "humanmade/authorship",
         "humanmade/altis-reusable-blocks",
         "humanmade/asset-loader"
