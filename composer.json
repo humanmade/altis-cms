@@ -16,7 +16,6 @@
     "altis/cms-installer": "^0.4.3",
     "johnbillion/extended-cpts": "^4.5.2",
     "humanmade/clean-html": "^2.0.0",
-    "humanmade/post-cloner": "~1.4.1",
     "humanmade/authorship": "~0.2.6",
     "humanmade/altis-reusable-blocks": "~0.1.3",
     "humanmade/asset-loader": "^0.5.0"
@@ -42,7 +41,6 @@
     "altis": {
       "install-overrides": [
         "stuttter/wp-user-signups",
-        "humanmade/post-cloner",
         "humanmade/authorship",
         "humanmade/altis-reusable-blocks",
         "humanmade/asset-loader"
