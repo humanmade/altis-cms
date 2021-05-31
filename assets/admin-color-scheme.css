@@ -9,9 +9,25 @@
 /* stylelint-disable declaration-no-important, max-line-length, no-descending-specificity, selector-class-pattern */
 
 :root {
-	--wp-admin-theme-color: #4667de;
-	--wp-admin-theme-color-darker-10: #2041ab;
-	--wp-admin-theme-color-darker-20: #183080;
+	/* Main colors */
+	--altis-blue: #4667de;
+	--altis-dark-blue: #152a4e;
+	--altis-off-white: #f3f5f9;
+	--altis-white: #fff;
+	--altis-light-gray: #dfe2e7;
+	--altis-dark-gray: #5b6983;
+
+	/* Secondary colors */
+	--altis-bright-blue: #436cff;
+	--altis-green: #3fcf8e;
+	--altis-darker-blue: #0f1a3c;
+	--altis-aqua: #1bafdd;
+	--altis-flamingo: #ed7b9d;
+	--altis-sunny: #f8da6d;
+
+	/* Darker variants */
+	--altis-blue-darker-10: #2041ab;
+	--altis-blue-darker-20: #183080;
 }
 
 body .editor-styles-wrapper {
