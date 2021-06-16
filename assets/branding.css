@@ -41,3 +41,8 @@ body.wp-admin:not(.folded) #wp-admin-bar-altis {
 #dashboard_right_now #wp-version-message {
 	display: none;
 }
+
+/* Hide the User Profile Picture field. Replaced by Avatar on the same page. */
+.wp-admin tr.user-profile-picture {
+	display: none;
+}
