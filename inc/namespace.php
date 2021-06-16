@@ -279,6 +279,17 @@ function load_plugins() {
 	if ( $config['authorship'] ) {
 		require_once Altis\ROOT_DIR . '/vendor/humanmade/authorship/plugin.php';
 	}
+
+	if ( $config['local-avatars'] ) {
+		require_once Altis\ROOT_DIR . '/vendor/10up/simple-local-avatars/simple-local-avatars.php';
+
+		// Hide the User Profile Picture field if local avatars is active. Replaced by the Avatar field on the same page.
+		add_action( 'admin_head', function() {
+			echo '<style>
+				.wp-admin tr.user-profile-picture { display: none; }
+			</style>';
+		} );
+	}
 }
 
 /**
