@@ -272,6 +272,7 @@ function load_muplugins() {
  * Load plugins that are bundled with the CMS module.
  */
 function load_plugins() {
+	require_once Altis\ROOT_DIR . '/vendor/10up/simple-local-avatars/simple-local-avatars.php';
 	require_once Altis\ROOT_DIR . '/vendor/stuttter/wp-user-signups/wp-user-signups.php';
 
 	$config = Altis\get_config()['modules']['cms'];
