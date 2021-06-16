@@ -272,7 +272,6 @@ function load_muplugins() {
  * Load plugins that are bundled with the CMS module.
  */
 function load_plugins() {
-	require_once Altis\ROOT_DIR . '/vendor/10up/simple-local-avatars/simple-local-avatars.php';
 	require_once Altis\ROOT_DIR . '/vendor/stuttter/wp-user-signups/wp-user-signups.php';
 
 	$config = Altis\get_config()['modules']['cms'];
@@ -283,6 +282,13 @@ function load_plugins() {
 
 	if ( $config['local-avatars'] ) {
 		require_once Altis\ROOT_DIR . '/vendor/10up/simple-local-avatars/simple-local-avatars.php';
+
+		// Hide the User Profile Picture field if local avatars is active. Replaced by the Avatar field on the same page.
+		add_action( 'admin_head', function() {
+			echo '<style>
+				.wp-admin tr.user-profile-picture { display: none; }
+			</style>';
+		} );
 	}
 }
 
