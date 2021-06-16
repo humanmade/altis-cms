@@ -280,6 +280,10 @@ function load_plugins() {
 	if ( $config['authorship'] ) {
 		require_once Altis\ROOT_DIR . '/vendor/humanmade/authorship/plugin.php';
 	}
+
+	if ( $config['local-avatars'] ) {
+		require_once Altis\ROOT_DIR . '/vendor/10up/simple-local-avatars/simple-local-avatars.php';
+	}
 }
 
 /**
