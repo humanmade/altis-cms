@@ -17,3 +17,5 @@ By default the RSS Feeds are enabled. If you wish to disable it, set the `feeds`
 	}
 }
 ```
+
+For more information on RSS feeds, please see the [WordPress RSS documentation](https://wordpress.org/support/article/wordpress-feeds/).
