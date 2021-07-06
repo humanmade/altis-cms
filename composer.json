@@ -12,7 +12,7 @@
     "php": ">=7.1",
     "stuttter/wp-user-signups": "^5.0.2",
     "roots/wp-password-bcrypt": "1.0.0",
-    "johnpbloch/wordpress": "5.5.5",
+    "johnpbloch/wordpress": "5.7.2",
     "altis/cms-installer": "^0.4.3",
     "johnbillion/extended-cpts": "^4.4.0",
     "humanmade/clean-html": "^2.0.0",
