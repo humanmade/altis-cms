@@ -44,6 +44,6 @@ Allows overriding of the maximum allowable file size for avatar uploads. Default
 
 ```php
 add_filter( 'simple_local_avatars_upload_limit', function() {
-	return 2 * 1024; // Max 2MB.
+	return 2 * 1024; // Max 2KB.
 } );
 ```
