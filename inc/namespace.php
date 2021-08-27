@@ -435,6 +435,31 @@ function set_comments_per_page( $value ) : int {
 }
 
 /**
+ * Get the absolute path of a file without resolving symlinks.
+ *
+ * Source: https://www.php.net/manual/en/function.realpath.php#84012
+ *
+ * @param string $path The file path to resolve.
+ * @return string
+ */
+function get_absolute_path( string $path ) : string {
+	$path = str_replace( [ '/', '\\' ], DIRECTORY_SEPARATOR, $path );
+	$parts = array_filter( explode( DIRECTORY_SEPARATOR, $path ), 'strlen' );
+	$absolutes = [];
+	foreach ( $parts as $part ) {
+		if ( $part === '.' ) {
+			continue;
+		}
+		if ( $part === '..' ) {
+			array_pop( $absolutes );
+		} else {
+			$absolutes[] = $part;
+		}
+	}
+	return DIRECTORY_SEPARATOR . implode( DIRECTORY_SEPARATOR, $absolutes );
+}
+
+/**
  * Ensure URLs do not contain any relative paths.
  *
  * @param string|null $url The dependency URL.
@@ -460,24 +485,10 @@ function real_url_path( ?string $url, string $handle ) : ?string {
 		trigger_error( sprintf( 'Asset URLs should not contain relative paths. Handle: %s, URL: %s', $handle, $url ), E_USER_WARNING );
 	}
 
+	// Note we don't use realpath here to avoid symlink resolution as it breaks
+	// local dev and any other use of symlink composer repositories.
 	$path = wp_parse_url( $url, PHP_URL_PATH );
-	$path_parts = explode( '/', $path );
-
-	foreach ( $path_parts as $index => $part ) {
-		// Remove if current directory indicator.
-		if ( $part === '.' ) {
-			unset( $path_parts[ $index ] );
-		}
-		// Remove parent directory placeholder if present and the item before it.
-		if ( $part === '..' ) {
-			unset( $path_parts[ $index ] );
-			if ( isset( $path_parts[ $index - 1 ] ) ) {
-				unset( $path_parts[ $index - 1 ] );
-			}
-		}
-	}
-
-	$real_path = implode( '/', $path_parts );
+	$real_path = get_absolute_path( $path );
 	$url = str_replace( $path, $real_path, $url );
 
 	// Get & update the dependency object if available.
