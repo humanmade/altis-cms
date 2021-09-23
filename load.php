@@ -21,6 +21,7 @@ add_action( 'altis.modules.init', function () {
 		'remove-emoji' => true,
 		'xmlrpc' => true,
 		'feeds' => true,
+		'network-enable-themes' => true,
 		'network-ui' => [
 			'disable-spam' => true,
 		],
