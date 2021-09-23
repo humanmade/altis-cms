@@ -24,25 +24,3 @@ When a [new site](docs://guides/multiple-sites.md) is created, a "default" theme
 	}
 }
 ```
-
-## Network Enabled Themes
-
-By default all themes are network enabled, this means that every theme in your application is available to all sites on the network.
-
-Individual themes can still be disabled for the network, and enabled for specific sites by editing a site in the network admin.
-
-If you prefer to use the standard WordPress behaviour where themes are disabled for the network by default you can set the `network-enable-themes` config option to `false`:
-
-```json
-{
-	"extra": {
-		"altis": {
-			"modules": {
-				"cms": {
-					"network-enable-themes": false
-				}
-			}
-		}
-	}
-}
-```

@@ -79,12 +79,10 @@ function bootstrap() {
 	}
 
 	// Ensure new themes are network enabled by default.
-	if ( $config['network-enable-themes'] ) {
-		add_filter( 'site_option_allowedthemes', __NAMESPACE__ . '\\network_enable_themes_by_default' );
-		add_filter( 'pre_update_site_option_allowedthemes', __NAMESPACE__ . '\\network_enable_themes_by_default_on_update', 10, 2 );
-		// Filter out themes set to false when checking what's allowed.
-		add_filter( 'network_allowed_themes', 'array_filter' );
-	}
+	add_filter( 'site_option_allowedthemes', __NAMESPACE__ . '\\network_enable_themes_by_default' );
+	add_filter( 'pre_update_site_option_allowedthemes', __NAMESPACE__ . '\\network_enable_themes_by_default_on_update', 10, 2 );
+	// Filter out themes set to false when checking what's allowed.
+	add_filter( 'network_allowed_themes', 'array_filter' );
 
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_muplugins', 1 );
 
