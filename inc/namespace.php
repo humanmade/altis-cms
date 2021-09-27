@@ -78,6 +78,12 @@ function bootstrap() {
 		add_action( 'template_redirect', __NAMESPACE__ . '\\disable_feed_redirect' );
 	}
 
+	// Ensure new themes are network enabled by default.
+	add_filter( 'site_option_allowedthemes', __NAMESPACE__ . '\\network_enable_themes_by_default' );
+	add_filter( 'pre_update_site_option_allowedthemes', __NAMESPACE__ . '\\network_enable_themes_by_default_on_update', 10, 2 );
+	// Filter out themes set to false when checking what's allowed.
+	add_filter( 'network_allowed_themes', 'array_filter' );
+
 	add_action( 'muplugins_loaded', __NAMESPACE__ . '\\load_muplugins', 1 );
 
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\load_plugins', 1 );
@@ -569,4 +575,51 @@ function maybe_redirect( $redirect_url, $requested_url ) {
 
 	// Prevent unecessary redirect from occuring and getting cached by returning the original URL.
 	return $requested_url;
+}
+
+/**
+ * Ensure all themes have a value in the allowedthemes option value.
+ *
+ * @param array $allowed_themes Currently allowed themes.
+ * @return array
+ */
+function network_enable_themes_by_default( $allowed_themes = [] ) {
+	$themes = array_keys( wp_get_themes() );
+	foreach ( $themes as $stylesheet ) {
+		// Check if the theme is present in the network option value, then add them and set to true.
+		if ( ! isset( $allowed_themes[ $stylesheet ] ) ) {
+			$allowed_themes[ $stylesheet ] = true;
+		}
+	}
+
+	return $allowed_themes;
+}
+
+/**
+ * Enable themes by default for the network, and respect manual
+ * settings there after.
+ *
+ * @param array $allowed_themes Currently allowed themes.
+ * @param array $old_allowed_themes Previous value.
+ * @return array
+ */
+function network_enable_themes_by_default_on_update( $allowed_themes, $old_allowed_themes = [] ) {
+	// Something isn't right here.
+	if ( ! is_array( $allowed_themes ) || ! is_array( $old_allowed_themes ) ) {
+		return $allowed_themes;
+	}
+
+	// Get all available stylesheet names.
+	$themes = array_keys( wp_get_themes() );
+
+	foreach ( $themes as $stylesheet ) {
+		// Check the old value for missing themes, then add them and set to true.
+		if ( ! isset( $old_allowed_themes[ $stylesheet ] ) && ! isset( $allowed_themes[ $stylesheet ] ) ) {
+			$allowed_themes[ $stylesheet ] = true;
+		}
+		// Values are removed if a theme is disabled, and added if enabled.
+		$allowed_themes[ $stylesheet ] = isset( $allowed_themes[ $stylesheet ] ) ? $allowed_themes[ $stylesheet ] : false;
+	}
+
+	return $allowed_themes;
 }
