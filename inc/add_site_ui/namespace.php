@@ -104,7 +104,7 @@ function output_add_site_page() {
 										printf(
 											esc_html__( 'Note: Custom domains may require DNS records to be added before they can be used. %s for further details about the required records if needed.', 'altis' ),
 											sprintf(
-												'<a href="%s">%s</a>',
+												'<a href="%s" target="_blank">%s</a>',
 												'https://dashboard.altis-dxp.com/#/support',
 												esc_html__( 'Contact support', 'altis' )
 											)
