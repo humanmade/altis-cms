@@ -99,6 +99,18 @@ function output_add_site_page() {
 								<input name="domain-type" type="radio" id="site-custom-domain" value="site-custom-domain" aria-describedby="site-custom-domain-desc" />
 								<strong><?php esc_html_e( 'Custom domain', 'altis' ); ?>: </strong>
 								<span class="input-description" id="site-custom-domain-desc"><?php esc_html_e( 'recommended for microsites', 'altis' ) ?></span>
+								<p class="input-note show-on-select" id="site-custom-domain-note">
+									<?php
+										printf(
+											esc_html__( 'Note: Custom domains may require DNS records to be added before they can be used. %s for further details about the required records if needed.', 'altis' ),
+											sprintf(
+												'<a href="%s">%s</a>',
+												'https://dashboard.altis-dxp.com/#/support',
+												esc_html__( 'Contact support', 'altis' )
+											)
+										);
+									?>
+								</p>
 							</label>
 						</fieldset>
 					</td>

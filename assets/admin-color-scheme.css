@@ -117,6 +117,15 @@ input[type="radio"]:checked::before {
 	color: #666;
 }
 
+.wp-core-ui .input-note {
+	display: none;
+	font-style: italic;
+}
+
+.wp-core-ui input:checked ~ .input-note {
+	display: block;
+}
+
 /* List tables */
 .wrap .add-new-h2:hover:not(:disabled),
 .wrap .page-title-action:hover:not(:disabled),
