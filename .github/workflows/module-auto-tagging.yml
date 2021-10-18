@@ -1,0 +1,68 @@
+name: Altis Module Auto Tagging
+
+on:
+  push:
+    branches:
+      - v*-branch*
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.4.1
+      - run: npm install semver
+      - uses: actions/github-script@v5
+        with:
+          script: |
+            const semver = require( 'semver' );
+            const [ owner, repo ] = '${{ github.repository }}'.split( '/' );
+            const [
+              ref,
+              branch,
+              branchVersion,
+              isRC
+            ] = '${{ github.ref }}'.match( /^refs\/heads\/(v(\d+)-branch(-rc)?)/ );
+            const tags = await github.paginate( github.rest.git.listMatchingRefs, {
+              owner,
+              repo,
+              ref: `tags/${ branchVersion }${ isRC ? '' : '.0' }.`,
+            } );
+
+            // Start from lowest possible tag.
+            const initialTag = isRC ? `${ branchVersion }.1.0-rc.1` : `${ branchVersion }.0.0-beta.1`;
+
+            // Find the latest tag from results.
+            const newTag = tags.reduce( ( carry, tag ) => {
+              const cleanTag = semver.clean( tag.ref.replace( 'refs/tags/', '' ) );
+              let nextTag = '';
+              if ( semver.prerelease( cleanTag ) ) {
+                nextTag = semver.inc( cleanTag, 'prerelease' );
+              } else {
+                nextTag = semver.inc( cleanTag, 'patch' );
+              }
+              return semver.gt( nextTag, carry ) ? nextTag : carry;
+            }, initialTag );
+
+            const isPreRelease = semver.prerelease( newTag );
+
+            // Don't make new Pre-Release tags once we already have one.
+            if ( isPreRelease && ! isRC && newTag !== initialTag ) {
+              return;
+            }
+
+            const baseTag = `${ semver.major( newTag ) }.${ semver.minor( newTag ) }.${ semver.patch( newTag ) }`;
+            let nameSuffix = '';
+            if ( isPreRelease ) {
+              nameSuffix = isRC ? 'Preview Release' : isPreRelease.join( ' ' );
+              nameSuffix = ' ' + nameSuffix;
+            }
+
+            // Create new tag.
+            await github.request( `POST /repos/${{ github.repository }}/releases`, {
+              name: `${ baseTag }${ nameSuffix }`,
+              tag_name: newTag,
+              target_commitish: branch,
+              generate_release_notes: true,
+              prerelease: !! isPreRelease,
+            } );
