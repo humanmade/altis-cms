@@ -27,5 +27,8 @@ add_action( 'altis.modules.init', function () {
 		'authorship' => false,
 		'local-avatars' => true,
 	];
-	Altis\register_module( 'cms', __DIR__, 'CMS', $default_settings, __NAMESPACE__ . '\\bootstrap' );
+	$options = [
+		'defaults' => $default_settings,
+	];
+	Altis\register_module( 'cms', __DIR__, 'CMS', $options, __NAMESPACE__ . '\\bootstrap' );
 }, 5 );
