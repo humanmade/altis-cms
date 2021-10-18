@@ -1,0 +1,40 @@
+name: Altis Module Auto Release On Manual Tags
+
+on:
+  push:
+    tags:
+      - '*.0.0'
+      - '*.0.0-beta*'
+      - '*.0.0-rc*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/github-script@v5
+        with:
+          script: |
+            const tag = '${{ github.ref }}'.replace( 'refs/tags/', '' );
+            const [
+              _,
+              baseTag,
+              majorVersion,
+              stability,
+              preReleaseVersion,
+            ] = tag.match( /^((\d+)\.\d+\.\d+)(?:-(beta|rc)\.?(\d+)?)?/ )
+
+            let nameSuffix = '';
+            if ( stability ) {
+              nameSuffix = stability === 'beta' ? 'Beta' : 'Release Candidate';
+              nameSuffix = ' ' + nameSuffix + ' ' + preReleaseVersion;
+            }
+
+            // Create new release from tag.
+            await github.request( `POST /repos/${{ github.repository }}/releases`, {
+              name: `${ baseTag }${ nameSuffix }`,
+              tag_name: tag,
+              target_commitish: `v${ majorVersion }-branch`,
+              generate_release_notes: true,
+              prerelease: !! stability,
+            } );
