@@ -22,7 +22,7 @@ function bootstrap() {
  * @return string
  */
 function remove_blog_prefix( string $value ) : string {
-	if ( strpos( $value, '/blog' ) === 0 ) {
+	if ( is_multisite() && is_main_site() && strpos( $value, '/blog' ) === 0 ) {
 		$value = preg_replace( '#^/blog#', '', $value );
 	}
 
