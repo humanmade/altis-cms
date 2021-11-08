@@ -19,7 +19,8 @@
     "humanmade/authorship": "~0.2.9",
     "humanmade/altis-reusable-blocks": "~0.2.0",
     "humanmade/asset-loader": "^0.5.0",
-    "10up/simple-local-avatars": "~2.2.0"
+    "10up/simple-local-avatars": "~2.2.0",
+    "automattic/advanced-post-cache": "dev-master"
   },
   "autoload": {
     "files": [
@@ -45,7 +46,8 @@
         "stuttter/wp-user-signups",
         "humanmade/authorship",
         "humanmade/altis-reusable-blocks",
-        "humanmade/asset-loader"
+        "humanmade/asset-loader",
+        "automattic/advanced-post-cache"
       ]
     }
   }
