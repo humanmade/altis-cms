@@ -272,6 +272,7 @@ function add_login_logo() {
  */
 function load_muplugins() {
 	require_once Altis\ROOT_DIR . '/vendor/humanmade/asset-loader/asset-loader.php';
+	require_once Altis\ROOT_DIR . '/vendor/automattic/advanced-post-cache/advanced-post-cache.php';
 }
 
 /**
