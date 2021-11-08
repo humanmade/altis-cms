@@ -20,7 +20,7 @@
     "humanmade/altis-reusable-blocks": "~0.2.0",
     "humanmade/asset-loader": "^0.5.0",
     "10up/simple-local-avatars": "~2.2.0",
-    "automattic/advanced-post-cache": "dev-master"
+    "automattic/advanced-post-cache": "dev-master#c46b2d95773689938ef1e89a3dfcb9cbd94022b8"
   },
   "autoload": {
     "files": [
