@@ -3,11 +3,20 @@ updates:
 - package-ecosystem: composer
   directory: "/"
   schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  allow:
+  - dependency-type: "direct"
+  versioning-strategy: "increase"
+- package-ecosystem: composer
+  directory: "/"
+  schedule:
     interval: daily
   open-pull-requests-limit: 10
   allow:
   - dependency-type: "direct"
   versioning-strategy: "increase"
+  target-branch: v9-branch
 - package-ecosystem: composer
   directory: "/"
   schedule:
@@ -35,12 +44,3 @@ updates:
   - dependency-type: "direct"
   versioning-strategy: "increase"
   target-branch: v6-branch
-- package-ecosystem: composer
-  directory: "/"
-  schedule:
-    interval: daily
-  open-pull-requests-limit: 10
-  allow:
-  - dependency-type: "direct"
-  versioning-strategy: "increase"
-  target-branch: v5-branch
