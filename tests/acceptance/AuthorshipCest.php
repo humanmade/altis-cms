@@ -1,6 +1,6 @@
 <?php
 /**
- * Tests for core module's admin features.
+ * Tests for core module's authorship features.
  *
  * phpcs:disable WordPress.Files, WordPress.NamingConventions, PSR1.Classes.ClassDeclaration.MissingNamespace, HM.Functions.NamespacedFunctions
  */
