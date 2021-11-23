@@ -13,6 +13,13 @@ use Codeception\Util\Locator;
 class AuthorshipCest {
 
 	/**
+	 * Rollback callback for the authorship activation bootstrap call.
+	 *
+	 * @var callable
+	 */
+	protected $rollback = null;
+
+	/**
 	 * Make sure Authorship is activated.
 	 *
 	 * @param AcceptanceTester $I Actor object.
@@ -20,7 +27,19 @@ class AuthorshipCest {
 	 * @return void
 	 */
 	public function _before( AcceptanceTester $I ) {
-		$I->bootstrapWith( [ __CLASS__, '_enableAuthorship' ] );
+		$this->rollback = $I->bootstrapWith( [ __CLASS__, '_enableAuthorship' ] );
+	}
+
+	/**
+	 * Deactivate authorship after tests are finished.
+	 *
+	 * @param AcceptanceTester $I Actor.
+	 *
+	 * @return void
+	 */
+	public function _after( AcceptanceTester $I ) {
+		$callback = $this->rollback;
+		$callback();
 	}
 
 	/**
