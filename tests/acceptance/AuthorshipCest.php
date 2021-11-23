@@ -69,7 +69,6 @@ class AuthorshipCest {
 
 		// Go to new post page.
 		$I->amOnAdminPage( 'post-new.php' );
-		$I->wait( 10 );
 
 		// Add a title.
 		$I->click( '.editor-post-title__input' );
@@ -82,17 +81,17 @@ class AuthorshipCest {
 		$I->click( '.authorship-select__input input' );
 		$I->type( 'Gusto' );
 		$el = Locator::contains( 'div.authorship-select__option', 'Create "Gusto"' );
-		$I->waitForElementVisible( $el, 20 );
+		$I->waitForElementVisible( $el, 30 );
 		$I->click( $el );
-		$I->waitForElement( '.authorship-select__multi-value__label' );
+		$I->seeElement( '.authorship-select__multi-value__label' );
 
 		// Add an existing author.
 		$I->click( '.authorship-select__input input' );
 		$I->type( 'Arthur' );
 		$el = Locator::contains( 'div.authorship-select__option', 'Arthur' );
-		$I->waitForElementVisible( $el, 20 );
+		$I->waitForElementVisible( $el, 30 );
 		$I->click( $el );
-		$I->waitForElement( '.authorship-select__multi-value__label:nth-child(1)' );
+		$I->seeElement( '.authorship-select__multi-value__label:nth-child(1)' );
 
 		// Publish the post.
 		$I->click( '.editor-post-publish-button__button' );
