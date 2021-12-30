@@ -51,6 +51,12 @@ function bootstrap() {
 		add_action( 'login_header', __NAMESPACE__ . '\\add_login_logo' );
 	}
 
+	if ( isset( $config['favicon-icon'] ) ) {
+		add_action( 'admin_head', __NAMESPACE__ . '\\add_favicon_icon' );
+		add_action( 'login_header', __NAMESPACE__ . '\\add_favicon_icon' );
+		add_action( 'wp_head', __NAMESPACE__ . '\\add_favicon_icon' );
+	}
+
 	// Backwards compat for `shared-blocks` option.
 	if ( isset( $config['shared-blocks'] ) ) {
 		$config['reusable-blocks'] = $config['shared-blocks'];
@@ -265,6 +271,21 @@ function add_login_logo() {
 		}
 	</style>
 	<?php
+}
+
+/**
+ * Add the custom login logo to the login page.
+ */
+function add_favicon_icon() {
+	// check if the icon is set through the customizer first
+	if ( has_site_icon() ) {
+		$icon = get_site_icon_url();
+	} else {
+		// Use the icon from the config as the fallback
+		$icon = Altis\get_config()['modules']['cms']['favicon-icon'];
+	}
+
+	echo '<link rel="icon" href="' . esc_url( $icon ) . '" />';
 }
 
 /**

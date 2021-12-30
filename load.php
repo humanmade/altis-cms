@@ -14,6 +14,7 @@ add_action( 'altis.modules.init', function () {
 	$default_settings = [
 		'enabled' => true,
 		'branding' => true,
+		'favicon-icon' => '/vendor/altis/cms/assets/favicon.ico',
 		'large-network' => true,
 		'login-logo' => '/vendor/altis/cms/assets/logo.svg',
 		'reusable-blocks' => true,
