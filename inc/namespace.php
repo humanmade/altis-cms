@@ -277,11 +277,11 @@ function add_login_logo() {
  * Add the custom login logo to the login page.
  */
 function add_favicon_icon() {
-	// check if the icon is set through the customizer first
 	if ( has_site_icon() ) {
+		// Use the icon from the customizer.
 		$icon = get_site_icon_url();
 	} else {
-		// Use the icon from the config as the fallback
+		// Use the icon from the config as the fallback.
 		$icon = Altis\get_config()['modules']['cms']['favicon-icon'];
 	}
 
