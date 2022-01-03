@@ -274,7 +274,7 @@ function add_login_logo() {
 }
 
 /**
- * Add the custom login logo to the login page.
+ * Add the favicon-icon when the site has no icon set.
  */
 function add_favicon_icon() {
 	if ( ! has_site_icon() ) {
