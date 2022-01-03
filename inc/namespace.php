@@ -51,7 +51,7 @@ function bootstrap() {
 		add_action( 'login_header', __NAMESPACE__ . '\\add_login_logo' );
 	}
 
-	if ( isset( $config['favicon-icon'] ) ) {
+	if ( ! empty( $config['favicon-icon'] ) ) {
 		add_action( 'admin_head', __NAMESPACE__ . '\\add_favicon_icon' );
 		add_action( 'login_header', __NAMESPACE__ . '\\add_favicon_icon' );
 		add_action( 'wp_head', __NAMESPACE__ . '\\add_favicon_icon' );
@@ -277,10 +277,12 @@ function add_login_logo() {
  * Add the favicon-icon when the site has no icon set.
  */
 function add_favicon_icon() {
-	if ( ! has_site_icon() ) {
-		$icon = Altis\get_config()['modules']['cms']['favicon-icon'];
-		echo '<link rel="icon" href="' . esc_url( $icon ) . '" />';
+	if( has_site_icon() ){
+		return;
 	}
+
+	$favicon = get_site_icon_url( '', Altis\get_config()['modules']['cms']['favicon-icon'] );
+	echo '<link rel="icon" href="' . esc_url( $favicon ) . '" />';
 }
 
 /**
