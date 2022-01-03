@@ -277,15 +277,10 @@ function add_login_logo() {
  * Add the custom login logo to the login page.
  */
 function add_favicon_icon() {
-	if ( has_site_icon() ) {
-		// Use the icon from the customizer.
-		$icon = get_site_icon_url();
-	} else {
-		// Use the icon from the config as the fallback.
+	if ( ! has_site_icon() ) {
 		$icon = Altis\get_config()['modules']['cms']['favicon-icon'];
+		echo '<link rel="icon" href="' . esc_url( $icon ) . '" />';
 	}
-
-	echo '<link rel="icon" href="' . esc_url( $icon ) . '" />';
 }
 
 /**

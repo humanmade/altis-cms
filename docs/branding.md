@@ -56,7 +56,7 @@ function add_colour_scheme() {
 ```
 
 ## Custom Favicon
-The favicon shown on the CMS can be set using the steps below or the configuration option mentioned further down.
+The favicon shown on the CMS can be set using wither the CMS or Configuration option. Using the CMS option will override the Configuration option.
 
 #### CMS option
 1. Login to the admin area
@@ -66,7 +66,7 @@ The favicon shown on the CMS can be set using the steps below or the configurati
 5. Publish your changes.
 
 #### Configuration option
-You can use the `favicon-icon` configuration option to provide a project root relative path to an image file. Using this option will override the CMS option.
+You can use the `favicon-icon` configuration option to provide a project root relative path to an image file.
 
 ```json
 {
