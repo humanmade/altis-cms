@@ -51,10 +51,8 @@ function bootstrap() {
 		add_action( 'login_header', __NAMESPACE__ . '\\add_login_logo' );
 	}
 
-	if ( ! empty( $config['favicon-icon'] ) ) {
-		add_action( 'admin_head', __NAMESPACE__ . '\\add_favicon_icon' );
-		add_action( 'login_header', __NAMESPACE__ . '\\add_favicon_icon' );
-		add_action( 'wp_head', __NAMESPACE__ . '\\add_favicon_icon' );
+	if ( ! empty( $config['favicon'] ) ) {
+		add_filter( 'get_site_icon_url',  __NAMESPACE__ . '\\filter_favicon' );
 	}
 
 	// Backwards compat for `shared-blocks` option.
@@ -274,15 +272,19 @@ function add_login_logo() {
 }
 
 /**
- * Add the favicon-icon when the site has no icon set.
+ * Undocumented function
+ *
+ * @param string $url Filters the site icon URL.
+ *
+ * @return string
  */
-function add_favicon_icon() {
-	if( has_site_icon() ){
-		return;
+function filter_favicon( $url ){
+	if ( ! $url ) {
+		$favicon = Altis\get_config()['modules']['cms']['favicon'];
+		$url = get_site_url( get_main_site_id( get_main_network_id() ), $favicon );
 	}
 
-	$favicon = get_site_icon_url( '', Altis\get_config()['modules']['cms']['favicon-icon'] );
-	echo '<link rel="icon" href="' . esc_url( $favicon ) . '" />';
+	return $url;
 }
 
 /**
