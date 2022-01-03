@@ -52,7 +52,7 @@ function bootstrap() {
 	}
 
 	if ( ! empty( $config['favicon'] ) ) {
-		add_filter( 'get_site_icon_url',  __NAMESPACE__ . '\\filter_favicon' );
+		add_filter( 'get_site_icon_url', __NAMESPACE__ . '\\filter_favicon' );
 	}
 
 	// Backwards compat for `shared-blocks` option.
@@ -278,7 +278,7 @@ function add_login_logo() {
  *
  * @return string
  */
-function filter_favicon( $url ){
+function filter_favicon( $url ) {
 	if ( ! $url ) {
 		$favicon = Altis\get_config()['modules']['cms']['favicon'];
 		$url = get_site_url( get_main_site_id( get_main_network_id() ), $favicon );
