@@ -61,8 +61,8 @@ The favicon shown for the application can be set using either the CMS or a confi
 ### CMS Option
 1. Login to the admin area
 2. Go to **Appearance** > **Customize** and click on the **Site Identity** tab
-3. Scroll to **Site Icon** click on the select site icon button and then upload the image you want to use as the icon.
-4. Make any adjustment to the image if it's too large.
+3. Scroll to **Site Icon** and click on the select site icon button, then upload the image you want to use as the icon.
+4. Make any adjustments needed to the image if it's too large.
 5. Publish your changes.
 
 ### Configuration Option
