@@ -56,17 +56,17 @@ function add_colour_scheme() {
 ```
 
 ## Custom Favicon
-The favicon shown on the CMS can be set using wither the CMS or Configuration option. Using the CMS option will override the Configuration option.
+The favicon shown for the application can be set using either the CMS or a configuration option. Using the CMS option will override the configuration option.
 
-#### CMS option
+### CMS Option
 1. Login to the admin area
-2. Go to <strong>Appearance</strong> > <strong>Customize</strong> and click on the <strong>Site Identity</strong> tab
-3. Scroll to <strong>Site Icon</strong> click on the select site icon button and then upload the image you want to use as the icon.
+2. Go to **Appearance** > **Customize** and click on the **Site Identity** tab
+3. Scroll to **Site Icon** click on the select site icon button and then upload the image you want to use as the icon.
 4. Make any adjustment to the image if it's too large.
 5. Publish your changes.
 
-#### Configuration option
-You can use the `favicon-icon` configuration option to provide a project root relative path to an image file.
+### Configuration Option
+You can use the `favicon` configuration option to provide a project root relative path to an image file.
 
 ```json
 {
@@ -74,7 +74,7 @@ You can use the `favicon-icon` configuration option to provide a project root re
 		"altis": {
 			"modules": {
 				"cms": {
-					"favicon-icon": "/content/favicon.png"
+					"favicon": "/content/favicon.png"
 				}
 			}
 		}

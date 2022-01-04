@@ -272,14 +272,13 @@ function add_login_logo() {
 }
 
 /**
- * Undocumented function
+ * Filter to set the favicon url.
  *
  * @param string $url Filters the site icon URL.
- *
- * @return string
+ * @return string $url The URL for the favicon.
  */
-function filter_favicon( $url ) {
-	if ( ! $url ) {
+function filter_favicon( string $url ) {
+	if ( empty( $url ) ) {
 		$favicon = Altis\get_config()['modules']['cms']['favicon'];
 		$url = get_site_url( get_main_site_id( get_main_network_id() ), $favicon );
 	}
