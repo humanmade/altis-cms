@@ -51,6 +51,10 @@ function bootstrap() {
 		add_action( 'login_header', __NAMESPACE__ . '\\add_login_logo' );
 	}
 
+	if ( ! empty( $config['favicon'] ) ) {
+		add_filter( 'get_site_icon_url', __NAMESPACE__ . '\\filter_favicon' );
+	}
+
 	// Backwards compat for `shared-blocks` option.
 	if ( isset( $config['shared-blocks'] ) ) {
 		$config['reusable-blocks'] = $config['shared-blocks'];
@@ -265,6 +269,21 @@ function add_login_logo() {
 		}
 	</style>
 	<?php
+}
+
+/**
+ * Filter to set the favicon url.
+ *
+ * @param string $url Filters the site icon URL.
+ * @return string $url The URL for the favicon.
+ */
+function filter_favicon( string $url ) {
+	if ( empty( $url ) ) {
+		$favicon = Altis\get_config()['modules']['cms']['favicon'];
+		$url = Altis\Cloud\get_main_site_url( $favicon );
+	}
+
+	return $url;
 }
 
 /**
