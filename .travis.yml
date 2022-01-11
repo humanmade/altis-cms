@@ -48,6 +48,7 @@ branches:
     - master
     - main
     - /v\d+-branch/
+    - travis
 
 before_script:
   # Install Altis and start the local server
