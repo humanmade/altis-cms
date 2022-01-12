@@ -28,6 +28,7 @@ class AuthorshipCest {
 	 */
 	public function _before( AcceptanceTester $I ) {
 		$this->rollback = $I->bootstrapWith( [ __CLASS__, '_enableAuthorship' ] );
+		var_dump( $this->rollback );
 	}
 
 	/**
@@ -38,9 +39,9 @@ class AuthorshipCest {
 	 * @return void
 	 */
 	public function _after( AcceptanceTester $I ) {
-		$callback = $this->rollback;
-		var_dump( $callback );
-		call_user_func( $callback );
+		// if ( $this->rollback ) {
+			call_user_func( $this->rollback );
+		// }
 	}
 
 	/**
