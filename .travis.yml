@@ -59,7 +59,5 @@ before_script:
 script:
   # Start local server
   - cd $HOME/test-root && composer serve
-  # Run PHPUnit for module tests.
-  - cd $HOME/test-root && composer dev-tools phpunit -- vendor/$ALTIS_PACKAGE/tests
   # Run Codeception for module tests, if test suites are found.
   - cd $HOME/test-root && test -n "$(find $HOME/test-root/tests -name '*.suite.yml')" && composer dev-tools codecept run -p vendor/$ALTIS_PACKAGE/tests
