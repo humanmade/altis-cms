@@ -39,6 +39,7 @@ class AuthorshipCest {
 	 */
 	public function _after( AcceptanceTester $I ) {
 		$callback = $this->rollback;
+		var_dump( $callback );
 		call_user_func( $callback );
 	}
 
