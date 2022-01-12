@@ -28,7 +28,6 @@ class AuthorshipCest {
 	 */
 	public function _before( AcceptanceTester $I ) {
 		$this->rollback = $I->bootstrapWith( [ __CLASS__, '_enableAuthorship' ] );
-		var_dump( $this->rollback );
 	}
 
 	/**
@@ -39,9 +38,7 @@ class AuthorshipCest {
 	 * @return void
 	 */
 	public function _after( AcceptanceTester $I ) {
-		// if ( $this->rollback ) {
-			call_user_func( $this->rollback );
-		// }
+		call_user_func( $this->rollback );
 	}
 
 	/**
@@ -121,7 +118,7 @@ class AuthorshipCest {
 		$I->amOnPage( '/wp-json/wp/v2/posts/' . $post_id );
 		$source = $I->grabTextFrom( 'pre' );
 		$decoded = json_decode( $source );
-		$I->assertEquals( $decoded->authorship, [ 3, 2 ] );
+		$I->assertEquals( [ 3, 2 ], $decoded->authorship );
 	}
 
 	/**
