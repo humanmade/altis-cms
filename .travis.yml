@@ -1,0 +1,65 @@
+# Default Travis CI config for Altis
+os: linux
+dist: xenial
+
+# Ensure PHP CLI and Composer are available
+language: php
+php:
+  - '7.4'
+
+# Set NodeJS version to match the build server.
+node_js:
+  - 12
+
+# Ensure docker-compose is available
+services:
+  - docker
+
+# Configure local-server to ensure startup will complete in Travis CI
+env:
+  global:
+    - COMPOSE_HTTP_TIMEOUT=360
+    - ES_MEM_LIMIT=2g
+
+# Default notification settings
+notifications:
+  email:
+    on_success: never
+    on_failure: change
+
+# Cache composer dependencies by default
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+# Ensure correct node version is used for build
+before_install:
+  # Exit early if no tests are found
+  - test -n "$(find $TRAVIS_BUILD_DIR/tests -name '*.suite.yml' 2>/dev/null)" || exit 0
+  - nvm install v12
+  - nvm use v12
+  # Authenticate with docker hub.
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+# We handle installation via composer create-project
+install: skip
+
+# Only run for target branch
+branches:
+  only:
+    - master
+    - main
+    - /v\d+-branch/
+    - travis
+
+before_script:
+  # Install Altis and start the local server
+  - composer create-project altis/skeleton:dev-$TRAVIS_BRANCH --stability=dev $HOME/test-root || exit 1
+  # Require the current module and alias the branch to be tested to the target version main branch
+  - cd $HOME/test-root && composer require "$ALTIS_PACKAGE:dev-$TRAVIS_PULL_REQUEST_BRANCH as dev-$TRAVIS_BRANCH"
+
+script:
+  # Start local server
+  - cd $HOME/test-root && composer serve
+  # Run Codeception for module tests, if test suites are found.
+  - cd $HOME/test-root && composer dev-tools codecept run -p vendor/$ALTIS_PACKAGE/tests

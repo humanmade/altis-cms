@@ -38,8 +38,7 @@ class AuthorshipCest {
 	 * @return void
 	 */
 	public function _after( AcceptanceTester $I ) {
-		$callback = $this->rollback;
-		$callback();
+		call_user_func( $this->rollback );
 	}
 
 	/**
@@ -119,7 +118,7 @@ class AuthorshipCest {
 		$I->amOnPage( '/wp-json/wp/v2/posts/' . $post_id );
 		$source = $I->grabTextFrom( 'pre' );
 		$decoded = json_decode( $source );
-		$I->assertEquals( $decoded->authorship, [ 3, 2 ] );
+		$I->assertEquals( [ 3, 2 ], $decoded->authorship );
 	}
 
 	/**
