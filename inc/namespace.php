@@ -8,7 +8,6 @@
 namespace Altis\CMS;
 
 use Altis;
-use WP_CLI;
 use WP_DB_Table_Signupmeta;
 use WP_DB_Table_Signups;
 
@@ -108,6 +107,9 @@ function bootstrap() {
 	add_action( 'wp_dashboard_setup', __NAMESPACE__ . '\\remove_site_healthcheck_dashboard_widget' );
 
 	add_filter( 'login_headerurl', __NAMESPACE__ . '\\login_header_url' );
+
+	// Setup signups db tables on migrate.
+	add_action( 'altis.migrate', __NAMESPACE__ . '\\setup_user_signups_on_install' );
 
 	// Fix network admin site actions.
 	add_filter( 'network_admin_url', __NAMESPACE__ . '\\fix_network_action_confirmation' );
@@ -389,6 +391,17 @@ function disable_site_healthcheck_access() {
  */
 function remove_site_healthcheck_dashboard_widget() {
 	remove_meta_box( 'dashboard_site_health', 'dashboard', 'normal' );
+}
+
+/**
+ * When WordPress is installed via WP-CLI, run the user-signups setup.
+ */
+function setup_user_signups_on_migrate() {
+	$signups = new WP_DB_Table_Signups();
+	$signups->maybe_upgrade();
+
+	$signups_meta = new WP_DB_Table_Signupmeta();
+	$signups_meta->maybe_upgrade();
 }
 
 /**
