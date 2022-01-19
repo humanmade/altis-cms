@@ -109,10 +109,6 @@ function bootstrap() {
 
 	add_filter( 'login_headerurl', __NAMESPACE__ . '\\login_header_url' );
 
-	if ( defined( 'WP_CLI' ) && WP_CLI ) {
-		WP_CLI::add_hook( 'after_invoke:core multisite-install', __NAMESPACE__ . '\\setup_user_signups_on_install' );
-	}
-
 	// Fix network admin site actions.
 	add_filter( 'network_admin_url', __NAMESPACE__ . '\\fix_network_action_confirmation' );
 
@@ -297,6 +293,10 @@ function load_muplugins() {
  * Load plugins that are bundled with the CMS module.
  */
 function load_plugins() {
+	if ( defined( 'WP_INITIAL_INSTALL' ) && WP_INITIAL_INSTALL ) {
+		return;
+	}
+
 	require_once Altis\ROOT_DIR . '/vendor/stuttter/wp-user-signups/wp-user-signups.php';
 
 	$config = Altis\get_config()['modules']['cms'];
@@ -389,17 +389,6 @@ function disable_site_healthcheck_access() {
  */
 function remove_site_healthcheck_dashboard_widget() {
 	remove_meta_box( 'dashboard_site_health', 'dashboard', 'normal' );
-}
-
-/**
- * When WordPress is installed via WP-CLI, run the user-signups setup.
- */
-function setup_user_signups_on_install() {
-	$signups = new WP_DB_Table_Signups();
-	$signups->maybe_upgrade();
-
-	$signups_meta = new WP_DB_Table_Signupmeta();
-	$signups_meta->maybe_upgrade();
 }
 
 /**
