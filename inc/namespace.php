@@ -8,7 +8,6 @@
 namespace Altis\CMS;
 
 use Altis;
-use WP_CLI;
 use WP_DB_Table_Signupmeta;
 use WP_DB_Table_Signups;
 
@@ -296,6 +295,10 @@ function load_muplugins() {
  * Load plugins that are bundled with the CMS module.
  */
 function load_plugins() {
+	if ( defined( 'WP_INITIAL_INSTALL' ) && WP_INITIAL_INSTALL ) {
+		return;
+	}
+
 	require_once Altis\ROOT_DIR . '/vendor/stuttter/wp-user-signups/wp-user-signups.php';
 
 	$config = Altis\get_config()['modules']['cms'];
@@ -393,7 +396,7 @@ function remove_site_healthcheck_dashboard_widget() {
 /**
  * When WordPress is installed via WP-CLI, run the user-signups setup.
  */
-function setup_user_signups_on_install() {
+function setup_user_signups_on_migrate() {
 	$signups = new WP_DB_Table_Signups();
 	$signups->maybe_upgrade();
 
