@@ -109,9 +109,8 @@ function bootstrap() {
 
 	add_filter( 'login_headerurl', __NAMESPACE__ . '\\login_header_url' );
 
-	if ( defined( 'WP_CLI' ) && WP_CLI ) {
-		WP_CLI::add_hook( 'after_invoke:core multisite-install', __NAMESPACE__ . '\\setup_user_signups_on_install' );
-	}
+	// Setup signups db tables on migrate.
+	add_action( 'altis.migrate', __NAMESPACE__ . '\\setup_user_signups_on_migrate' );
 
 	// Fix network admin site actions.
 	add_filter( 'network_admin_url', __NAMESPACE__ . '\\fix_network_action_confirmation' );
