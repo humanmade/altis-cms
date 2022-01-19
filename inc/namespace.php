@@ -109,7 +109,7 @@ function bootstrap() {
 	add_filter( 'login_headerurl', __NAMESPACE__ . '\\login_header_url' );
 
 	// Setup signups db tables on migrate.
-	add_action( 'altis.migrate', __NAMESPACE__ . '\\setup_user_signups_on_install' );
+	add_action( 'altis.migrate', __NAMESPACE__ . '\\setup_user_signups_on_migrate' );
 
 	// Fix network admin site actions.
 	add_filter( 'network_admin_url', __NAMESPACE__ . '\\fix_network_action_confirmation' );
