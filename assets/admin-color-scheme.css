@@ -324,7 +324,7 @@ ul#adminmenu > li.current > a.current::after {
 #wpadminbar .quicklinks .menupop ul li a,
 #wpadminbar .quicklinks .menupop.hover ul li a,
 #wpadminbar.nojs .quicklinks .menupop:hover ul li a {
-	color: #e2ecf1;
+	color: #a2aabe;
 }
 
 #wpadminbar .quicklinks li .blavatar,
