@@ -324,7 +324,8 @@ ul#adminmenu > li.current > a.current::after {
 #wpadminbar .quicklinks .menupop ul li a,
 #wpadminbar .quicklinks .menupop.hover ul li a,
 #wpadminbar.nojs .quicklinks .menupop:hover ul li a {
-	color: #a2aabe;
+	color: #e2ecf1;
+	border-left: 3px solid transparent;
 }
 
 #wpadminbar .quicklinks li .blavatar,
@@ -351,6 +352,10 @@ ul#adminmenu > li.current > a.current::after {
 #wpadminbar li:hover #adminbarsearch::before,
 #wpadminbar li #adminbarsearch.adminbar-focused::before {
 	color: #fff;
+}
+
+#wpadminbar .quicklinks .menupop.hover ul li > a:hover {
+	border-left-color: #fff;
 }
 
 #wpadminbar .quicklinks li a:hover .blavatar,
