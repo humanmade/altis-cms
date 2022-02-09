@@ -63,6 +63,8 @@ class AuthorshipCest {
 	public function testAuthorship( AcceptanceTester $I ) {
 		$I->haveUserInDatabase( 'Arthur', 'author' );
 
+		$I->reindexElastic();
+
 		$I->wantToTest( 'I can add multiple authors' );
 		$I->loginAsAdmin();
 
