@@ -14,8 +14,16 @@ function bootstrap() {
 	add_action( 'admin_init', __NAMESPACE__ . '\\remove_maybe_update_checks', 1 );
 	add_action( 'admin_init', __NAMESPACE__ . '\\remove_update_nag' );
 	add_action( 'plugins_loaded', __NAMESPACE__ . '\\remove_update_check_cron' );
+	add_action( 'admin_bar_menu', __NAMESPACE__ . '\\remove_admin_bar_updates' );
 	add_filter( 'map_meta_cap', __NAMESPACE__ . '\\remove_update_capabilities', 10, 2 );
 	remove_auto_updates();
+}
+
+/**
+ * Remove admin bar updates menu item.
+ */
+function remove_admin_bar_updates() : void {
+	remove_action( 'admin_bar_menu', 'wp_admin_bar_updates_menu', 50 );
 }
 
 /**
