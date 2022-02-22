@@ -363,20 +363,21 @@ function remove_howdy_greeting( WP_Admin_Bar $wp_admin_bar ) {
  * Enqueue branding script for the post previews.
  */
 function enqueue_block_editor_branding_assets() {
-
 	global $pagenow;
 
-	$dependants = [
-		'wp-element',
-		'wp-hooks',
-	];
-
-	$dependants[] = ( $pagenow === 'widgets.php' ? 'wp-edit-widgets' : 'wp-editor' );
+	// Return early when viewing the customizer or widgets screen.
+	if ( is_customize_preview() || 'widgets.php' === $pagenow ) {
+		return;
+	}
 
 	wp_enqueue_script(
 		'altis-branding',
 		plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/branding.js',
-		$dependants,
+		[
+			'wp-element',
+			'wp-editor',
+			'wp-hooks',
+		],
 		false,
 		true
 	);
