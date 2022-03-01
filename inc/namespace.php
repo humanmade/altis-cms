@@ -533,7 +533,7 @@ function clear_signups_cache() {
  */
 function maybe_redirect( $redirect_url, $requested_url ) {
 	$redirect_query_string = parse_url( $redirect_url, PHP_URL_QUERY );
-	$requested_query_string = parse_url( $redirect_url, PHP_URL_QUERY );
+	$requested_query_string = parse_url( $requested_url, PHP_URL_QUERY );
 
 	// Check we have query strings on both request and redirect.
 	if ( empty( $redirect_query_string ) || empty( $requested_query_string ) ) {
