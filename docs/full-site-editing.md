@@ -2,7 +2,7 @@
 
 With the introduction of WordPress 5.9 the block editor can now be used to edit the entire website, including the header, navigation menus, sidebars, footer and layouts.
 
-This is achieved with a new type of theme called a Block Theme. The core difference betweem classic themes and block themes is that your template files are HTML files rather than PHP, containing a combination of raw HTML and block editor comments.
+This is achieved with a new type of theme called a Block Theme. The core difference between classic themes and block themes is that your template files are HTML rather than PHP, containing a combination of raw HTML and block editor comments.
 
 [For a more in depth overview and comparison to classic themes see the WordPress Theme Handbook](https://developer.wordpress.org/themes/block-themes/).
 
