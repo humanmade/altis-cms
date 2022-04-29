@@ -158,6 +158,10 @@ You can experiment with FSE by installing and looking at existing examples:
 - [Empty Theme](https://github.com/WordPress/theme-experiments/tree/master/emptytheme): a sample empty theme to start building from
 - [Full Site Editing tag on WordPress.org themes repository](https://en-gb.wordpress.org/themes/tags/full-site-editing/)
 
+### Courses
+
+- [Building Block Themes by Fränk Klein](https://wpdevelopment.courses/courses/building-block-themes/)
+
 ### Handbooks
 
 - [Block Editor Handbook](https://developer.wordpress.org/block-editor/)
