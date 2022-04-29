@@ -17,6 +17,7 @@ use WP_CLI;
 function bootstrap() {
 	if ( is_initial_install() ) {
 		define( 'WP_INITIAL_INSTALL', true );
+		error_reporting( E_ALL & ~E_STRICT & ~E_DEPRECATED & ~E_USER_WARNING );
 	}
 }
 
