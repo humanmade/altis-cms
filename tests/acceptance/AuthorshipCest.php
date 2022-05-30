@@ -63,12 +63,16 @@ class AuthorshipCest {
 	public function testAuthorship( AcceptanceTester $I ) {
 		$I->wantToTest( 'I can add multiple authors' );
 
-		$I->haveUserInDatabase( 'arthur', [
-			1 => 'author',
-		], [
-			'user_email' => 'arthur@example.com',
-			'display_name' => 'Arthur',
-		] );
+		$I->haveUserInDatabase(
+			'arthur',
+			[
+				1 => 'author', // Multisite syntax, Blog ID => Role.
+			],
+			[
+				'user_email' => 'arthur@example.com',
+				'display_name' => 'Arthur',
+			]
+		);
 
 		$I->reindexContent( '--indexables=user' );
 
