@@ -61,11 +61,17 @@ class AuthorshipCest {
 	 * @return void
 	 */
 	public function testAuthorship( AcceptanceTester $I ) {
-		$I->haveUserInDatabase( 'Arthur', 'author' );
-
-		$I->reindexContent();
-
 		$I->wantToTest( 'I can add multiple authors' );
+
+		$I->haveUserInDatabase( 'arthur', [
+			1 => 'author',
+		], [
+			'user_email' => 'arthur@example.com',
+			'display_name' => 'Arthur',
+		] );
+
+		$I->reindexContent( '--indexables=user' );
+
 		$I->loginAsAdmin();
 
 		// Go to new post page.
@@ -88,7 +94,7 @@ class AuthorshipCest {
 
 		// Add an existing author.
 		$I->click( '.authorship-select__input input' );
-		$I->type( 'Arthur' );
+		$I->type( 'Arth' );
 		$el = Locator::contains( 'div.authorship-select__option', 'Arthur' );
 		$I->waitForElementVisible( $el, 30 );
 		$I->click( $el );
@@ -107,10 +113,10 @@ class AuthorshipCest {
 		] );
 
 		// Check both guest and author users are added.
-		$I->seeUserInDatabase( [ 'user_login' => 'Gusto' ] );
+		$I->seeUserInDatabase( [ 'user_login' => 'gusto' ] );
 		$post_id = $I->grabFromDatabase( $I->grabPostsTableName(), 'ID', [ 'post_title' => 'Test post 1' ] );
-		$guest_user_id = $I->grabUserIdFromDatabase( 'Gusto' );
-		$author_user_id = $I->grabUserIdFromDatabase( 'Arthur' );
+		$guest_user_id = $I->grabUserIdFromDatabase( 'gusto' );
+		$author_user_id = $I->grabUserIdFromDatabase( 'arthur' );
 		$guest_term_id = $I->grabTermIdFromDatabase( [ 'slug' => $guest_user_id ] );
 		$author_term_id = $I->grabTermIdFromDatabase( [ 'slug' => $author_user_id ] );
 		$I->seePostWithTermInDatabase( $post_id, $guest_term_id, null, 'authorship' );
