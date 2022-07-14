@@ -19,7 +19,7 @@
     "humanmade/authorship": "~0.2.12",
     "humanmade/altis-reusable-blocks": "~0.2.3",
     "humanmade/asset-loader": "^0.6.1",
-    "10up/simple-local-avatars": "~2.4.0"
+    "10up/simple-local-avatars": "~2.5.0"
   },
   "autoload": {
     "files": [
