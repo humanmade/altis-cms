@@ -308,7 +308,7 @@ function load_plugins() {
 	}
 
 	if ( $config['local-avatars'] ) {
-		require_once Altis\ROOT_DIR . '/vendor/10up/simple-local-avatars/simple-local-avatars.php';
+		require_once dirname( __DIR__ ) . '/lib/simple-local-avatars/simple-local-avatars.php';
 
 		// Hide the User Profile Picture field if local avatars is active. Replaced by the Avatar field on the same page.
 		add_action( 'admin_head', function() {
