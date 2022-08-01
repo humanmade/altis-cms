@@ -18,7 +18,7 @@
     "humanmade/clean-html": "^2.0.0",
     "humanmade/authorship": "~0.2.12",
     "humanmade/altis-reusable-blocks": "~0.2.3",
-    "humanmade/asset-loader": "^0.6.1"
+    "humanmade/asset-loader": "^0.6.2"
   },
   "autoload": {
     "files": [
