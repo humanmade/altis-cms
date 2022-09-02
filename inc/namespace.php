@@ -164,7 +164,7 @@ function bootstrap() {
  * @return string The complete network admin URL including scheme and path.
  */
 function fix_network_action_confirmation( string $url ) : string {
-	parse_str( wp_parse_url( $url, PHP_URL_QUERY ), $params );
+	parse_str( (string) wp_parse_url( $url, PHP_URL_QUERY ), $params );
 	if ( isset( $params['action'] ) && $params['action'] === 'confirm' ) {
 		$url = add_query_arg( [
 			'_wp_http_referer' => urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ),
