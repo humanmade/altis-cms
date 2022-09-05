@@ -236,11 +236,6 @@ function admin_bar_menu( WP_Admin_Bar $wp_admin_bar ) {
 		'title' => '<span class="altis-logo-wrapper"><img src="' . get_logo_url( 'white' ) . '" alt="Altis Admin" /></span>',
 	];
 
-	// Set tabindex="0" to make sub menus accessible when no URL is available.
-	$logo_menu_args['meta'] = [
-		'tabindex' => 0,
-	];
-
 	$wp_admin_bar->add_menu( $logo_menu_args );
 }
 
