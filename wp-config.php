@@ -71,6 +71,7 @@ $required_constants = [
 
 foreach ( $required_constants as $constant ) {
 	if ( ! defined( $constant ) ) {
+		http_response_code( 500 );
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		die( "$constant constant is not defined." );
 	}
