@@ -1044,7 +1044,8 @@ textarea:focus {
 
 #query-monitor-main #qm-wrapper #qm-panel-menu li button:hover,
 #query-monitor-main #qm-wrapper #qm-panel-menu li button:focus {
-	background-color: #e5f8ff !important;
+	background-color: var( --altis-blue ) !important;
+	color: var( --altis-white ) !important;
 }
 
 #query-monitor-main #qm-wrapper #qm-panel-menu li button:active {
@@ -1057,12 +1058,17 @@ textarea:focus {
 	border-color: var( --altis-blue ) !important;
 }
 
+#query-monitor-main #qm-wrapper .qm tbody tr:hover .qm-toggle {
+	border-color: var( --altis-white ) !important;
+}
+
+
 #query-monitor-main #qm-wrapper .qm button.qm-filter-trigger,
 #query-monitor-main #qm-wrapper .qm button.qm-filter-trigger code,
 #query-monitor-main #qm-wrapper .qm tbody .qm-warn a code,
 #query-monitor-main #qm-wrapper .qm a code,
 #query-monitor-main #qm-wrapper .qm a {
-	color: var( --altis-blue ) !important;
+	color: var( --altis-aqua ) !important;
 }
 
 #query-monitor-main #qm-wrapper .qm button.qm-filter-trigger::after,
@@ -1083,6 +1089,11 @@ textarea:focus {
 	color: var( --altis-bright-blue ) !important;
 }
 
+#query-monitor-main #qm-wrapper .qm button.qm-filter-trigger:hover svg,
+#query-monitor-main #qm-wrapper .qm a:hover svg {
+	fill: var( --altis-bright-blue ) !important;
+}
+
 #query-monitor-main #qm-wrapper .qm tbody tr:hover th,
 #query-monitor-main #qm-wrapper .qm tbody tr:hover td,
 #query-monitor-main #qm-wrapper .qm tbody tr.qm-odd.qm-hovered th,
@@ -1091,5 +1102,30 @@ textarea:focus {
 #query-monitor-main #qm-wrapper .qm tbody tr.qm-odd:hover td,
 #query-monitor-main #qm-wrapper .qm tbody tr.qm-hovered th,
 #query-monitor-main #qm-wrapper .qm tbody tr.qm-hovered td {
-	background-color: #e5f8ff !important;
+	background-color: var( --altis-blue ) !important;
+	color: var( --altis-white ) !important;
+}
+
+#query-monitor-main #qm-wrapper .qm tbody tr:hover code,
+#query-monitor-main #qm-wrapper .qm tbody tr:hover li,
+#query-monitor-main #qm-wrapper .qm tbody tr:hover pre,
+#query-monitor-main #qm-wrapper .qm tbody tr:hover .qm-info,
+#query-monitor-main #qm-wrapper .qm tbody tr.qm-hovered code,
+#query-monitor-main #qm-wrapper .qm tbody tr.qm-hovered li,
+#query-monitor-main #qm-wrapper .qm tbody tr.qm-hovered pre,
+#query-monitor-main #qm-wrapper .qm tbody tr.qm-hovered .qm-info {
+	color: var( --altis-off-white ) !important;
+}
+
+
+#query-monitor-main #qm-wrapper .qm tbody tr:hover a,
+#query-monitor-main #qm-wrapper .qm tbody tr:hover button.qm-filter-trigger,
+#query-monitor-main #qm-wrapper .qm tbody tr:hover button.qm-filter-trigger code {
+	color: var( --altis-white ) !important;
+	text-decoration: underline !important;
+}
+
+#query-monitor-main #qm-wrapper .qm tbody tr:hover a.qm-link svg,
+#query-monitor-main #qm-wrapper .qm tbody tr:hover button.qm-filter-trigger svg{
+	fill: var( --altis-white ) !important;
 }
