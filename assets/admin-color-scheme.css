@@ -1062,7 +1062,6 @@ textarea:focus {
 	border-color: var( --altis-white ) !important;
 }
 
-
 #query-monitor-main #qm-wrapper .qm button.qm-filter-trigger,
 #query-monitor-main #qm-wrapper .qm button.qm-filter-trigger code,
 #query-monitor-main #qm-wrapper .qm tbody .qm-warn a code,
@@ -1117,7 +1116,6 @@ textarea:focus {
 	color: var( --altis-off-white ) !important;
 }
 
-
 #query-monitor-main #qm-wrapper .qm tbody tr:hover a,
 #query-monitor-main #qm-wrapper .qm tbody tr:hover button.qm-filter-trigger,
 #query-monitor-main #qm-wrapper .qm tbody tr:hover button.qm-filter-trigger code {
@@ -1126,6 +1124,6 @@ textarea:focus {
 }
 
 #query-monitor-main #qm-wrapper .qm tbody tr:hover a.qm-link svg,
-#query-monitor-main #qm-wrapper .qm tbody tr:hover button.qm-filter-trigger svg{
+#query-monitor-main #qm-wrapper .qm tbody tr:hover button.qm-filter-trigger svg {
 	fill: var( --altis-white ) !important;
 }
