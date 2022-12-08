@@ -15,7 +15,7 @@
     "johnpbloch/wordpress": "6.0.3",
     "altis/cms-installer": "^0.4.3",
     "humanmade/clean-html": "^2.0.0",
-    "humanmade/authorship": "~0.2.12",
+    "humanmade/authorship": "~0.2.13",
     "humanmade/altis-reusable-blocks": "~0.2.3",
     "humanmade/asset-loader": "^0.6.1"
   },
