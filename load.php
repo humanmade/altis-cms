@@ -25,7 +25,6 @@ add_action( 'altis.modules.init', function () {
 		'network-ui' => [
 			'disable-spam' => true,
 		],
-		'authorship' => false,
 		'local-avatars' => true,
 	];
 	$options = [

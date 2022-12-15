@@ -303,10 +303,6 @@ function load_plugins() {
 
 	$config = Altis\get_config()['modules']['cms'];
 
-	if ( $config['authorship'] ) {
-		require_once Altis\ROOT_DIR . '/vendor/humanmade/authorship/plugin.php';
-	}
-
 	if ( $config['local-avatars'] ) {
 		require_once dirname( __DIR__ ) . '/lib/simple-local-avatars/simple-local-avatars.php';
 
