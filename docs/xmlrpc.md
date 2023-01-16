@@ -22,7 +22,7 @@ By default XML RPC is enabled. If you wish to disable the processing of requests
 
 This change won't stop traffic from making requests to XML-RPC, it only disables the functionality in WordPress.
 
-To block the traffic from reaching the application completely, you can indeed create a custom NGINX block in `nginx-additions.conf`:
+To block the traffic from reaching the application completely, create a custom NGINX block in `nginx-additions.conf`:
 
 ```
 # Block XMLRPC
