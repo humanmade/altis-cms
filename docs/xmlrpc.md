@@ -4,7 +4,7 @@ XML RPC (Remote Procedure Call) is a type of API which uses XML to encode its ca
 
 It is used to enable remote management of applications, for example via mobile or desktop apps.
 
-By default XML RPC is enabled. If you wish to disable it, set the `xmlrpc` configuration property to `false`
+By default XML RPC is enabled. If you wish to disable the processing of requests, set the `xmlrpc` configuration property to `false`
 
 ```json
 {
@@ -17,5 +17,17 @@ By default XML RPC is enabled. If you wish to disable it, set the `xmlrpc` confi
 			}
 		}
 	}
+}
+```
+
+This change won't stop traffic from making requests to XML-RPC, it only disables the functionality in WordPress.
+
+To block the traffic from reaching the application completely, you can indeed create a custom NGINX block in `nginx-additions.conf`:
+
+```
+# Block XMLRPC
+location ~* xmlrpc.php {
+    deny all;
+    return 404;
 }
 ```
