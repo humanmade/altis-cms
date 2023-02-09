@@ -16,7 +16,7 @@
     "altis/cms-installer": "^0.4.3",
     "humanmade/clean-html": "^2.0.0",
     "humanmade/altis-reusable-blocks": "~0.2.4",
-    "humanmade/asset-loader": "^0.6.1",
+    "humanmade/asset-loader": "^0.6.3",
     "10up/simple-local-avatars": "~2.7.3"
   },
   "autoload": {
