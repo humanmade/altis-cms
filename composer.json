@@ -16,7 +16,7 @@
     "altis/cms-installer": "^0.4.3",
     "johnbillion/extended-cpts": "^4.5.2",
     "humanmade/clean-html": "^2.0.0",
-    "humanmade/authorship": "~0.2.14",
+    "humanmade/authorship": "~0.2.15",
     "humanmade/altis-reusable-blocks": "~0.2.3",
     "humanmade/asset-loader": "^0.6.1"
   },
