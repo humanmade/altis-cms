@@ -7,6 +7,8 @@
 
 namespace Altis\CMS\Signup_Notification;
 
+use WP_Signup_Query;
+
 /**
  * Boostrap setup to remove updates from the admin.
  */
@@ -24,10 +26,10 @@ function bootstrap() {
  * Remove the core wpmu_*_notification functions.
  */
 function remove_wpmu_blog_notifications() {
-	remove_action( 'wpmu_activate_blog', 'wpmu_welcome_notification', 10, 5 );
+	remove_action( 'wpmu_activate_blog', 'wpmu_welcome_notification', 10 );
 	remove_action( 'after_signup_site', 'wpmu_signup_blog_notification', 10 );
-	remove_action( 'wpmu_activate_user', 'wpmu_welcome_user_notification', 10, 3 );
-	remove_action( 'after_signup_user', 'wpmu_signup_user_notification', 10, 4 );
+	remove_action( 'wpmu_activate_user', 'wpmu_welcome_user_notification', 10 );
+	remove_action( 'after_signup_user', 'wpmu_signup_user_notification', 10 );
 }
 
 /**
@@ -74,6 +76,17 @@ function altis_signup_blog_notification( $domain, $path, $title, $user_login, $u
 	 */
 	if ( ! apply_filters( 'wpmu_signup_blog_notification', $domain, $path, $title, $user_login, $user_email, $key, $meta ) ) {
 		return false;
+	}
+
+	// Patch error in wp-user-signups passing through signup key.
+	if ( class_exists( 'WP_Signup_Query' ) && empty( $key ) ) {
+		$query = new WP_Signup_Query( [
+			'domain' => $domain,
+			'path' => $path,
+			'user_email' => $user_email,
+			'user_login' => $user_login,
+		] );
+		$key = $query->signups[0]->activation_key ?? '';
 	}
 
 	// Send email with activation link.
@@ -195,7 +208,7 @@ function altis_signup_blog_notification( $domain, $path, $title, $user_login, $u
  * @param array  $meta       Optional. Signup meta data. Default empty array.
  * @return bool
  */
-function altis_signup_user_notification( $user_login, $user_email, $key, $meta = array() ) {
+function altis_signup_user_notification( $user_login, $user_email, $key, $meta = [] ) {
 	/**
 	 * Filters whether to bypass the email notification for new user sign-up.
 	 *
@@ -208,6 +221,15 @@ function altis_signup_user_notification( $user_login, $user_email, $key, $meta =
 	 */
 	if ( ! apply_filters( 'wpmu_signup_user_notification', $user_login, $user_email, $key, $meta ) ) {
 		return false;
+	}
+
+	// Patch error in wp-user-signups passing through signup key.
+	if ( class_exists( 'WP_Signup_Query' ) && empty( $key ) ) {
+		$query = new WP_Signup_Query( [
+			'user_email' => $user_email,
+			'user_login' => $user_login,
+		] );
+		$key = $query->signups[0]->activation_key ?? '';
 	}
 
 	$user            = get_user_by( 'login', $user_login );
@@ -301,7 +323,7 @@ function altis_signup_user_notification( $user_login, $user_email, $key, $meta =
  * @param array  $meta     Optional. Signup meta data. By default, contains the requested privacy setting and lang_id.
  * @return bool Whether the email notification was sent.
  */
-function altis_welcome_notification( $blog_id, $user_id, $password, $title, $meta = array() ) {
+function altis_welcome_notification( $blog_id, $user_id, $password, $title, $meta = [] ) {
 	$current_network = get_network();
 
 	/**
@@ -422,7 +444,7 @@ We hope you enjoy your new site. Thanks!
  * @param array  $meta     Optional. Signup meta data. Default empty array.
  * @return bool
  */
-function altis_welcome_user_notification( $user_id, $password, $meta = array() ) {
+function altis_welcome_user_notification( $user_id, $password, $meta = [] ) {
 	$current_network = get_network();
 
 	/**
