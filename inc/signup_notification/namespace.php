@@ -16,7 +16,7 @@ function bootstrap() {
 	add_action( 'init', __NAMESPACE__ . '\\remove_wpmu_blog_notifications', 9 );
 
 	add_action( 'after_signup_site', __NAMESPACE__ . '\\altis_signup_blog_notification', 10, 7 );
-	add_action( 'wpmu_activate_blog',  __NAMESPACE__ . '\\altis_welcome_notification', 10, 5 );
+	add_action( 'wpmu_activate_blog', __NAMESPACE__ . '\\altis_welcome_notification', 10, 5 );
 
 	add_action( 'after_signup_user', __NAMESPACE__ . '\\altis_signup_user_notification', 10, 4 );
 	add_action( 'wpmu_activate_user', __NAMESPACE__ . '\\altis_welcome_user_notification', 10, 3 );
