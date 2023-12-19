@@ -18,8 +18,8 @@ function bootstrap() {
 	add_action( 'after_signup_site', __NAMESPACE__ . '\\altis_signup_blog_notification', 10, 7 );
 	add_action( 'wpmu_activate_blog',  __NAMESPACE__ . '\\altis_welcome_notification', 10, 5 );
 
-	add_action( 'after_signup_user',  __NAMESPACE__ . '\\altis_signup_user_notification', 10, 4 );
-	add_action( 'wpmu_activate_user',  __NAMESPACE__ . '\\altis_welcome_user_notification', 10, 3 );
+	add_action( 'after_signup_user', __NAMESPACE__ . '\\altis_signup_user_notification', 10, 4 );
+	add_action( 'wpmu_activate_user', __NAMESPACE__ . '\\altis_welcome_user_notification', 10, 3 );
 }
 
 /**
@@ -348,7 +348,7 @@ function altis_welcome_notification( $blog_id, $user_id, $password, $title, $met
 	$switched_locale = switch_to_user_locale( $user_id );
 
 	$welcome_email = get_site_option( 'welcome_email' );
-	if ( false == $welcome_email ) {
+	if ( empty( $welcome_email ) ) {
 		/* translators: Do not translate USERNAME, SITE_NAME, BLOG_URL, PASSWORD: those are placeholders. */
 		$welcome_email = __(
 			'Howdy USERNAME,
