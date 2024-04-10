@@ -221,23 +221,23 @@ function remove_emoji() {
 	remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
 	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
 	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
-	add_filter( 'wp_resource_hints', __NAMESPACE__ . '\\disable_emojis_remove_dns_prefetch', 10, 2 );
+	add_filter( 'wp_resource_hints', __NAMESPACE__ . '\\remove_domains_from_dns_prefetch', 10, 2 );
 }
 
 /**
- * Remove emoji DNS prefetching.
+ * Remove domains from DNS prefetching.
  *
  * @param array $urls URLs for resources.
  * @param string $relation_type Relation type.
  * @return array New array with resources.
  */
-function disable_emojis_remove_dns_prefetch( array $urls, string $relation_type ) : array {
+function remove_domains_from_dns_prefetch( array $urls, string $relation_type ) : array {
 	if ( 'dns-prefetch' !== $relation_type ) {
 		return $urls;
 	}
 
-	// Strip out any URLs referencing the WordPress.org emoji location.
-	$emoji_svg_url_bit = 'https://s.w.org/images/core/emoji/';
+	// Strip out any URLs we don't want.
+	$domains_to_remove = get_prefetch_domains_to_remove();
 	foreach ( $urls as $key => $url ) {
 		if ( is_array( $url ) ) {
 			if ( ! isset( $url['href'] ) ) {
@@ -246,11 +246,30 @@ function disable_emojis_remove_dns_prefetch( array $urls, string $relation_type 
 
 			$url = $url['href'];
 		}
-		if ( strpos( $url, $emoji_svg_url_bit ) !== false ) {
-			unset( $urls[ $key ] );
-		}
+		array_map( function ( $domain ) use ( $key, $url, $urls ) {
+			if ( str_contains( $url, $domain ) ) {
+				unset( $urls[ $key ] );
+			}
+		}, $domains_to_remove );
+
 	}
 	return $urls;
+}
+
+/**
+ * Get the domains to remove from DNS prefetching.
+ *
+ * @return array
+ */
+function get_prefetch_domains_to_remove() : array {
+	$domains = [
+		'https://s.w.org/images/core/emoji/',
+	] ;
+	if ( defined('S3_UPLOADS_BUCKET_URL') ) {
+		$domains[] = S3_UPLOADS_BUCKET_URL;
+	}
+
+	return apply_filters( 'altis.cms.prefetch_domains.remove', $domains );
 }
 
 /**
