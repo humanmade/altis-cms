@@ -227,8 +227,9 @@ function remove_emoji() {
 /**
  * Remove domains from DNS prefetching.
  *
- * @param array $urls URLs for resources.
+ * @param array  $urls          URLs for resources.
  * @param string $relation_type Relation type.
+ *
  * @return array New array with resources.
  */
 function remove_domains_from_dns_prefetch( array $urls, string $relation_type ) : array {
@@ -246,14 +247,14 @@ function remove_domains_from_dns_prefetch( array $urls, string $relation_type ) 
 
 			$url = $url['href'];
 		}
-		array_map( function ( $domain ) use ( $key, $url, $urls ) {
+		$urls = array_map( function ( $domain ) use ( $key, $url, $urls ) {
 			if ( str_contains( $url, $domain ) ) {
 				unset( $urls[ $key ] );
 			}
 		}, $domains_to_remove );
-
 	}
-	return $urls;
+
+	return array_filter( $urls );
 }
 
 /**
@@ -264,8 +265,8 @@ function remove_domains_from_dns_prefetch( array $urls, string $relation_type ) 
 function get_prefetch_domains_to_remove() : array {
 	$domains = [
 		'https://s.w.org/images/core/emoji/',
-	] ;
-	if ( defined('S3_UPLOADS_BUCKET_URL') ) {
+	];
+	if ( defined( 'S3_UPLOADS_BUCKET_URL' ) ) {
 		$domains[] = S3_UPLOADS_BUCKET_URL;
 	}
 
