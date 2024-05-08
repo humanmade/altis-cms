@@ -44,12 +44,3 @@ updates:
   - dependency-type: "direct"
   versioning-strategy: "increase"
   target-branch: v16-branch
-- package-ecosystem: composer
-  directory: "/"
-  schedule:
-    interval: weekly
-  open-pull-requests-limit: 10
-  allow:
-  - dependency-type: "direct"
-  versioning-strategy: "increase"
-  target-branch: v15-branch
