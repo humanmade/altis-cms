@@ -44,6 +44,9 @@ class SignupsCest {
 		// Login with that user.
 		$I->amOnPage( '/wp-login.php?action=logout' );
 		$I->click( '//a[contains(@href,"action=logout")]' );
+
+		$I->wait(5); // wait for 5 seconds to avoid rate limiting.
+
 		$I->loginAs( 'signo', $pass );
 	}
 }
