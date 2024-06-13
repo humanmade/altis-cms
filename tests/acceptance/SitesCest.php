@@ -18,7 +18,7 @@ class SiteCest {
 	 * @return void
 	 */
 	public function testSitesManagementActions( AcceptanceTester $I ) {
-		$I->wait(10); // wait for 10 seconds to avoid rate limiting.
+		$I->wait( 10 ); // wait for 10 seconds to avoid rate limiting.
 
 		$I->wantToTest( 'I want to manage my network sites.' );
 		$I->loginAsAdmin();
@@ -55,7 +55,7 @@ class SiteCest {
 		$I->amOnPage( '/testsubdir/' );
 		$I->see( 'This site has been archived or suspended.' );
 
-		$I->wait(10); // wait for 10 seconds to avoid rate limiting.
+		$I->wait( 10 ); // wait for 10 seconds to avoid rate limiting.
 
 		// Mark a site as spam.
 		$I->loginAsAdmin();
