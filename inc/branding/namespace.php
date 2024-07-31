@@ -43,7 +43,7 @@ function bootstrap() {
 	add_filter( 'get_the_generator_rss2', __NAMESPACE__ . '\\override_generator', 10, 2 );
 	add_filter( 'get_the_generator_comment', __NAMESPACE__ . '\\override_generator', 10, 2 );
 	add_filter( 'get_the_generator_export', __NAMESPACE__ . '\\override_generator', 10, 2 );
-	add_filter( 'admin_bar_menu', __NAMESPACE__ . '\\remove_howdy_greeting', 25 );
+	add_filter( 'admin_bar_menu', __NAMESPACE__ . '\\remove_howdy_greeting', 9992 );
 	add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\\enqueue_block_editor_branding_assets' );
 	add_action( 'do_faviconico', __NAMESPACE__ . '\\override_default_favicon' );
 }
