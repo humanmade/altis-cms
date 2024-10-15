@@ -8,14 +8,14 @@ By default XML RPC is enabled. If you wish to disable it, set the `xmlrpc` confi
 
 ```json
 {
-	"extra": {
-		"altis": {
-			"modules": {
-				"cms": {
-					"xmlrpc": false
-				}
-			}
-		}
-	}
+    "extra": {
+        "altis": {
+            "modules": {
+                "cms": {
+                    "xmlrpc": false
+                }
+            }
+        }
+    }
 }
 ```
