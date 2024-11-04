@@ -9,21 +9,23 @@ WordPress's built in Reusable Blocks feature has been supercharged in Altis with
 * Provide a much more seamless implementation of reusable blocks into enterprise-level setups and workflows.
 * Provide an improved user interface that allows for better block discovery, including search and filtering.
 
-Within the block editor it's possible to reuse blocks of content across multiple posts or pages. In Altis these blocks can be more easily be created and managed from a single location and any updates will be reflected everywhere the block is used.
+Within the block editor it's possible to reuse blocks of content across multiple posts or pages. In Altis these blocks can be more
+easily be created and managed from a single location and any updates will be reflected everywhere the block is used.
 
-You can toggle these enhancements on or off in your `composer.json` file by setting the `reusable-blocks` property for the CMS module to `true` or `false`.
+You can toggle these enhancements on or off in your `composer.json` file by setting the `reusable-blocks` property for the CMS
+module to `true` or `false`.
 
 ```json
 {
-	"extra": {
-		"altis": {
-			"modules": {
-				"cms": {
-					"reusable-blocks": false
-				}
-			}
-		}
-	}
+    "extra": {
+        "altis": {
+            "modules": {
+                "cms": {
+                    "reusable-blocks": false
+                }
+            }
+        }
+    }
 }
 ```
 
@@ -33,17 +35,21 @@ Altis Reusable Blocks includes features and improvements both for the creation a
 
 #### Relationship and usage tracking
 
-Keep track of all usages of reusable blocks within your posts. Within the edit screen for your reusable blocks, you will find the Relationships sidebar with a paginated view of all the posts that are using the reusable block that you are currently editing.
+Keep track of all usages of reusable blocks within your posts. Within the edit screen for your reusable blocks, you will find the
+Relationships sidebar with a paginated view of all the posts that are using the reusable block that you are currently editing.
 
 On the reusable blocks post list table, you can see at a quick glance the usage count for that reusable block.
 
 #### Admin Bar and Menu
 
-By default, reusable blocks are somewhat hidden and can only be accessed from a submenu item in the block editor.
+By default, reusable blocks are somewhat hidden and can only be accessed from a sub-menu item in the block editor.
 With Altis Reusable Blocks, however, reusable blocks are upgraded to first-party citizens in the admin area.
 
-As with every other content type, the admin menu on the left contains a dedicated submenu for reusable blocks, offering shortcuts to see all existing reusable blocks, to create a new reusable block, and to see and manage categories, as well as any other publicly available taxonomy registered for reusable blocks.
-Also, the admin bar at the top now contains a shortcut to create a new reusable block, just like it is possible to do for posts, media, pages or users.
+As with every other content type, the admin menu on the left contains a dedicated sub-menu for reusable blocks, offering shortcuts
+to see all existing reusable blocks, to create a new reusable block, and to see and manage categories, as well as any other publicly
+available taxonomy registered for reusable blocks. Also, the admin bar at the top now contains a shortcut to create a new reusable
+block, just like it is possible to do for posts,
+media, pages or users.
 
 #### Categories
 
@@ -59,20 +65,19 @@ However, this can be changed, without affecting the post's categories.
 
 #### Search
 
-In addition to the Category filter, the block picker also provides a search field.
-The search query is used to find reusable blocks with either a matching title or content, or both.
-Search results are sorted based on a smart algorithm using different weights for title matches vs. content matches, and exact matches vs. partial matches.
-As a result, more relevant blocks are displayed first.
+In addition to the Category filter, the block picker also provides a search field. The search query is used to find reusable blocks
+with either a matching title or content, or both. Search results are sorted based on a smart algorithm using different weights for
+title matches vs. content matches, and exact matches vs. partial matches. As a result, more relevant blocks are displayed first.
 
-The search input also supports numeric ID lookups.
-By entering a block ID, the result set will be just that one according block, ready to be inserted.
-If the provided ID is a post ID, the results will be all reusable blocks referenced by that post, if any.
+The search input also supports looking up numeric IDs. By entering a block ID, the result set will be just that one according block,
+ready to be inserted. If the provided ID is a post ID, the results will be all reusable blocks referenced by that post, if any.
 
 ### PHP Filters
 
 #### `altis_post_types_with_reusable_blocks`
 
-This filter allows the user to manipulate the post types that can use reusable blocks and should have the relationship for the shadow taxonomy.
+This filter allows the user to manipulate the post types that can use reusable blocks and should have the relationship for the
+shadow taxonomy.
 
 **Arguments:**
 
@@ -84,9 +89,9 @@ This filter allows the user to manipulate the post types that can use reusable b
 // Add the "page" post type.
 add_filter( 'altis_post_types_with_reusable_blocks', function ( aray $post_types ): array {
 
-	$post_types[] = 'page';
+    $post_types[] = 'page';
 
-	return $post_types;
+    return $post_types;
 } );
 ```
 
@@ -104,14 +109,14 @@ This filter allows the user to modify the schema for the relationship data befor
 // Add the post author to the schema.
 add_filter( 'rest_get_relationship_item_additional_fields_schema', function ( array $additional_fields ): array {
 
-	$additional_fields['author'] = [
-		'description' => __( 'User ID for the author of the post.' ),
-		'type'        => 'integer',
-		'context'     => [ 'view' ],
-		'readonly'    => true,
-	];
+    $additional_fields['author'] = [
+        'description' => __( 'User ID for the author of the post.' ),
+        'type'        => 'integer',
+        'context'     => [ 'view' ],
+        'readonly'    => true,
+    ];
 
-	return $additional_fields;
+    return $additional_fields;
 } );
 ```
 
@@ -131,8 +136,8 @@ This filter allows the user to modify the relationship data right before it is r
 // Add the post author to the REST response.
 add_filter( 'rest_prepare_relationships_response', function ( WP_REST_Response $response, WP_Post $post ): WP_REST_Response {
 
-	$response->data['author'] = $post->post_author;
+    $response->data['author'] = $post->post_author;
 
-	return $response;
+    return $response;
 }, 10, 2 );
 ```
