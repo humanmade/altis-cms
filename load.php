@@ -11,10 +11,15 @@ use Altis;
 
 // Register core module.
 add_action( 'altis.modules.init', function () {
+	$favicon_path = '/vendor/altis/cms/assets/favicon.ico';
+	if ( Altis\get_environment_type() === 'local' ) {
+		$favicon_path = '/vendor/altis/cms/assets/favicon-local.ico';
+	}
+
 	$default_settings = [
 		'enabled' => true,
 		'branding' => true,
-		'favicon' => '/vendor/altis/cms/assets/favicon.ico',
+		'favicon' => $favicon_path,
 		'large-network' => true,
 		'login-logo' => '/vendor/altis/cms/assets/logo.svg',
 		'reusable-blocks' => true,
