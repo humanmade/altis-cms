@@ -6,8 +6,8 @@ filters associated with it, e.g.:
 
 ```php
 add_action( 'plugins_loaded', function () {
-    remove_filter( 'sanitize_option_permalink_structure', '\Altis\CMS\Permalinks\remove_blog_prefix' );
-    remove_filter( 'option_permalink_structure', '\Altis\CMS\Permalinks\remove_blog_prefix' );
+    remove_filter( 'sanitize_option_permalink_structure', 'Altis\CMS\Permalinks\remove_blog_prefix' );
+    remove_filter( 'option_permalink_structure', 'Altis\CMS\Permalinks\remove_blog_prefix' );
 } );
 ```
 
