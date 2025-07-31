@@ -41,7 +41,7 @@ add_filter( 'simple_local_avatars_upload_limit', function() {
 
 <!-- markdownlint-disable-file MD024 -->
 
-## Disable Local Avatars
+## Disabling Local Avatars
 
 Local avatars can be disabled and the default functionality restored by updating your Altis config:
 
