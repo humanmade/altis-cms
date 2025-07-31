@@ -8,7 +8,7 @@ By default the RSS Feeds are enabled.
 For more information on RSS feeds, please see
 the [WordPress RSS documentation](https://wordpress.org/support/article/wordpress-feeds/).
 
-## Disable RSS Feeds
+## Disabling RSS Feeds
 RSS feeds can be disabled by setting the `feeds` configuration property to `false`
 
 ```json
