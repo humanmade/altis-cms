@@ -5,20 +5,7 @@ plugin. By default, a [Gravatar](https://en.gravatar.com/) will be used to fetch
 existing Gravatar, and have no desire to create one, you can use any image uploaded to the media library — or upload a new
 image — and set that as your profile picture or "avatar".
 
-By default, local avatars is enabled and the default profile picture field on the Edit Profile page is hidden. However, this can be
-disabled and the default functionality restored by updating your Altis config:
-
-```json
-{
-    "extra": {
-        "altis": {
-            "cms": {
-                "local-avatars": false
-            }
-        }
-    }
-}
-```
+By default, local avatars is enabled and the default profile picture field on the Edit Profile page is hidden. 
 
 ## Filters
 
@@ -53,3 +40,19 @@ add_filter( 'simple_local_avatars_upload_limit', function() {
 ```
 
 <!-- markdownlint-disable-file MD024 -->
+
+## Disabling Local Avatars
+
+Local avatars can be disabled and the default functionality restored by updating your Altis config:
+
+```json
+{
+    "extra": {
+        "altis": {
+            "cms": {
+                "local-avatars": false
+            }
+        }
+    }
+}
+```
