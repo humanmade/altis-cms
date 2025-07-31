@@ -6,7 +6,7 @@ It is used to enable remote management of applications, for example via mobile o
 
 By default XML RPC is enabled.
 
-## Disable XML RPC
+## Disabling XML RPC
 
 XML RPC can be disabled by setting the `xmlrpc` configuration property to `false`
 
