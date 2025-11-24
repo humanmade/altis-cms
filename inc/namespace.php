@@ -324,9 +324,9 @@ function load_plugins() {
 	$config = Altis\get_config()['modules']['cms'];
 
 	if ( $config['local-avatars'] ) {
-		require_once Altis\ROOT_DIR . '/vendor/10up/simple-local-avatars/simple-local-avatars.php';
+		require_once WP_PLUGIN_DIR . '/simple-local-avatars/simple-local-avatars.php';
 
-		// Hide the User Profile Picture field if local avatars is active. Replaced by the Avatar field on the same page.
+		// Hide the core User Profile Picture field if local avatars is active. Replaced by the Avatar field on the same page.
 		add_action( 'admin_head', function() {
 			echo '<style>
 				.wp-admin tr.user-profile-picture { display: none; }
