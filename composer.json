@@ -16,7 +16,7 @@
     "humanmade/clean-html": "^2.0.0",
     "humanmade/altis-reusable-blocks": "~0.2.4",
     "humanmade/asset-loader": "^0.6.4",
-    "wpackagist-plugin/simple-local-avatars": "~2.8.5"
+    "10up/simple-local-avatars": "~2.8.5"
   },
   "autoload": {
     "files": [
@@ -39,6 +39,7 @@
     "altis": {
       "install-overrides": [
         "10up/simple-local-avatars",
+        "10up/wp-compat-validation-tool",
         "stuttter/wp-user-signups",
         "humanmade/altis-reusable-blocks",
         "humanmade/asset-loader"
