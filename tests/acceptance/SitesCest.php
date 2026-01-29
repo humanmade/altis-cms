@@ -25,7 +25,7 @@ class SiteCest {
 		$I->amOnAdminPage( 'network/site-new.php' );
 		$I->fillField( '#site-address', 'testsubdom' );
 		$I->fillField( '#site-title', 'Test Subdomain Site' );
-		$I->click( 'Add Site' );
+		$I->click('#add-site');  // instead of $I->click('Add Site'); which clashes wih the hidden menu item of the same name.
 		$I->waitForText( 'Site added.' );
 
 		// Add a new site as subdirectory.
@@ -33,7 +33,7 @@ class SiteCest {
 		$I->fillField( '#site-address', 'testsubdir' );
 		$I->fillField( '#site-title', 'Test Subdirectory Site' );
 		$I->click( '#site-subdirectory' );
-		$I->click( 'Add Site' );
+		$I->click('#add-site');  // instead of $I->click('Add Site');
 		$I->waitForText( 'Site added.' );
 
 		// Test both sites are accessible, as well as their dashboards.
