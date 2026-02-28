@@ -54,14 +54,3 @@ updates:
   target-branch: v23-branch
   commit-message:
     prefix: "[v23-branch]"
-- package-ecosystem: composer
-  directory: "/"
-  schedule:
-    interval: weekly
-  open-pull-requests-limit: 10
-  allow:
-  - dependency-type: "direct"
-  versioning-strategy: "increase"
-  target-branch: v22-branch
-  commit-message:
-    prefix: "[v22-branch]"
