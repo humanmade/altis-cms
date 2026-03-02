@@ -20,6 +20,10 @@ function bootstrap() {
 
 	add_action( 'after_signup_user', __NAMESPACE__ . '\\altis_signup_user_notification', 10, 4 );
 	add_action( 'wpmu_activate_user', __NAMESPACE__ . '\\altis_welcome_user_notification', 10, 3 );
+
+	// Redirect to password reset after activation (priority 20, after welcome emails at 10).
+	add_action( 'wpmu_activate_user', __NAMESPACE__ . '\\redirect_to_password_reset', 20, 3 );
+	add_action( 'wpmu_activate_blog', __NAMESPACE__ . '\\redirect_blog_user_to_password_reset', 20, 5 );
 }
 
 /**
@@ -374,7 +378,7 @@ We hope you enjoy your new site. Thanks!
 	$welcome_email = str_replace( 'BLOG_TITLE', $title, $welcome_email );
 	$welcome_email = str_replace( 'BLOG_URL', $url, $welcome_email );
 	$welcome_email = str_replace( 'USERNAME', $user->user_login, $welcome_email );
-	$welcome_email = str_replace( 'PASSWORD', $password, $welcome_email );
+	$welcome_email = str_replace( 'PASSWORD', __( 'Please set your password by visiting the login page.' ), $welcome_email );
 
 	/**
 	 * Filters the content of the welcome email sent to the site administrator after site activation.
@@ -483,7 +487,7 @@ function altis_welcome_user_notification( $user_id, $password, $meta = [] ) {
 	$welcome_email = apply_filters( 'update_welcome_user_email', $welcome_email, $user_id, $password, $meta );
 	$welcome_email = str_replace( 'SITE_NAME', $current_network->site_name, $welcome_email );
 	$welcome_email = str_replace( 'USERNAME', $user->user_login, $welcome_email );
-	$welcome_email = str_replace( 'PASSWORD', $password, $welcome_email );
+	$welcome_email = str_replace( 'PASSWORD', __( 'Please set your password by visiting the login page.' ), $welcome_email );
 	$welcome_email = str_replace( 'LOGINLINK', wp_login_url(), $welcome_email );
 
 	$admin_email = get_site_option( 'admin_email' );
@@ -521,4 +525,86 @@ function altis_welcome_user_notification( $user_id, $password, $meta = [] ) {
 	}
 
 	return true;
+}
+
+/**
+ * Redirect a user to the password reset page after account activation.
+ *
+ * Fires on `wpmu_activate_user` at priority 20, after the welcome email
+ * has been sent at priority 10. This prevents the plaintext password from
+ * being displayed on the wp-activate.php page.
+ *
+ * @param int    $user_id  User ID.
+ * @param string $password User password.
+ * @param array  $meta     Signup meta data.
+ */
+function redirect_to_password_reset( $user_id, $password, $meta ) {
+	$user = get_userdata( $user_id );
+	if ( ! $user ) {
+		return;
+	}
+
+	$reset_key = get_password_reset_key( $user );
+	if ( is_wp_error( $reset_key ) ) {
+		return;
+	}
+
+	$login_url = network_site_url( 'wp-login.php', 'login' );
+	$redirect_url = add_query_arg( [
+		'action' => 'rp',
+		'key'    => $reset_key,
+		'login'  => rawurlencode( $user->user_login ),
+	], $login_url );
+
+	// Invalidate the wp-user-signups cache so the admin list table reflects
+	// the updated activation status. Core's wpmu_activate_signup() updates
+	// the DB directly but doesn't clean the plugin's object cache.
+	wp_cache_set( 'last_changed', microtime(), 'signups' );
+
+	wp_safe_redirect( $redirect_url );
+	exit;
+}
+
+/**
+ * Redirect a blog signup user to the password reset page after activation.
+ *
+ * Fires on `wpmu_activate_blog` at priority 20, after the welcome email
+ * has been sent at priority 10. This prevents the plaintext password from
+ * being displayed on the wp-activate.php page.
+ *
+ * @param int    $blog_id  Blog ID.
+ * @param int    $user_id  User ID.
+ * @param string $password User password.
+ * @param string $title    Site title.
+ * @param array  $meta     Signup meta data.
+ */
+function redirect_blog_user_to_password_reset( $blog_id, $user_id, $password, $title, $meta ) {
+	$user = get_userdata( $user_id );
+	if ( ! $user ) {
+		return;
+	}
+
+	$reset_key = get_password_reset_key( $user );
+	if ( is_wp_error( $reset_key ) ) {
+		return;
+	}
+
+	// Use the network login URL rather than the new blog's login URL.
+	// The password reset key works network-wide, and wp_safe_redirect()
+	// may reject cross-host redirects to the new blog's subdomain.
+	$login_url = network_site_url( 'wp-login.php', 'login' );
+
+	$redirect_url = add_query_arg( [
+		'action' => 'rp',
+		'key'    => $reset_key,
+		'login'  => rawurlencode( $user->user_login ),
+	], $login_url );
+
+	// Invalidate the wp-user-signups cache so the admin list table reflects
+	// the updated activation status. Core's wpmu_activate_signup() updates
+	// the DB directly but doesn't clean the plugin's object cache.
+	wp_cache_set( 'last_changed', microtime(), 'signups' );
+
+	wp_safe_redirect( $redirect_url );
+	exit;
 }
