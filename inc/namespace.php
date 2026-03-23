@@ -324,9 +324,11 @@ function load_plugins() {
 	$config = Altis\get_config()['modules']['cms'];
 
 	if ( $config['local-avatars'] ) {
+		// Setup the wp-compat-validation-tool for simple-local-avatars.
+		setup_simple_local_avatars_compat_tool();
 		require_once Altis\ROOT_DIR . '/vendor/10up/simple-local-avatars/simple-local-avatars.php';
 
-		// Hide the User Profile Picture field if local avatars is active. Replaced by the Avatar field on the same page.
+		// Hide the core User Profile Picture field if local avatars is active. Replaced by the Avatar field on the same page.
 		add_action( 'admin_head', function() {
 			echo '<style>
 				.wp-admin tr.user-profile-picture { display: none; }
@@ -659,4 +661,96 @@ function network_enable_themes_by_default_on_update( $allowed_themes, $old_allow
 	}
 
 	return $allowed_themes;
+}
+
+/**
+ * Setup the wp-compat-validation-tool for simple-local-avatars.
+ *
+ * The simple-local-avatars plugin expects the wp-compat-validation-tool to be
+ * installed at ./10up-lib/wp-compat-validation-tool/ relative to itself, with
+ * the namespace replaced from WP_Compat_Validation_Tool to SimpleLocalAvatarsValidator.
+ *
+ * Since Composer installs it to vendor/10up/wp-compat-validation-tool instead,
+ * we need to copy it to the correct location and perform the namespace replacement.
+ */
+function setup_simple_local_avatars_compat_tool() {
+	$source_dir = Altis\ROOT_DIR . '/vendor/10up/wp-compat-validation-tool';
+	$target_dir = Altis\ROOT_DIR . '/vendor/10up/simple-local-avatars/10up-lib/wp-compat-validation-tool';
+
+	// Check if source exists.
+	if ( ! is_dir( $source_dir ) ) {
+		return;
+	}
+
+	// Check if already setup by looking for the modified namespace in a key file.
+	$check_file = $target_dir . '/src/WP_Compat_Validation_Tool.php';
+	if ( file_exists( $check_file ) ) {
+		$contents = file_get_contents( $check_file );
+		if ( strpos( $contents, 'namespace SimpleLocalAvatarsValidator' ) !== false ) {
+			// Already setup with correct namespace.
+			return;
+		}
+	}
+
+	// Create target directory structure.
+	if ( ! is_dir( dirname( $target_dir ) ) ) {
+		mkdir( dirname( $target_dir ), 0755, true );
+	}
+
+	// Copy the directory recursively.
+	copy_directory_recursive( $source_dir, $target_dir );
+
+	// Replace namespace in all PHP files.
+	replace_namespace_in_directory( $target_dir, 'WP_Compat_Validation_Tool', 'SimpleLocalAvatarsValidator' );
+}
+
+/**
+ * Recursively copy a directory.
+ *
+ * @param string $source Source directory path.
+ * @param string $dest   Destination directory path.
+ */
+function copy_directory_recursive( string $source, string $dest ) {
+	if ( ! is_dir( $dest ) ) {
+		mkdir( $dest, 0755, true );
+	}
+
+	$iterator = new \RecursiveIteratorIterator(
+		new \RecursiveDirectoryIterator( $source, \RecursiveDirectoryIterator::SKIP_DOTS ),
+		\RecursiveIteratorIterator::SELF_FIRST
+	);
+
+	foreach ( $iterator as $item ) {
+		$target = $dest . DIRECTORY_SEPARATOR . $iterator->getSubPathname();
+		if ( $item->isDir() ) {
+			if ( ! is_dir( $target ) ) {
+				mkdir( $target, 0755, true );
+			}
+		} else {
+			copy( $item->getPathname(), $target );
+		}
+	}
+}
+
+/**
+ * Replace a namespace in all PHP files within a directory.
+ *
+ * @param string $directory     Directory to process.
+ * @param string $old_namespace Old namespace to replace.
+ * @param string $new_namespace New namespace to use.
+ */
+function replace_namespace_in_directory( string $directory, string $old_namespace, string $new_namespace ) {
+	$iterator = new \RecursiveIteratorIterator(
+		new \RecursiveDirectoryIterator( $directory, \RecursiveDirectoryIterator::SKIP_DOTS )
+	);
+
+	foreach ( $iterator as $file ) {
+		if ( $file->isFile() && $file->getExtension() === 'php' ) {
+			$contents = file_get_contents( $file->getPathname() );
+			$updated = str_replace( $old_namespace, $new_namespace, $contents );
+			if ( $contents !== $updated ) {
+				file_put_contents( $file->getPathname(), $updated );
+			}
+		}
+	}
 }
