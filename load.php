@@ -22,7 +22,7 @@ add_action( 'altis.modules.init', function () {
 		'favicon' => $favicon_path,
 		'large-network' => true,
 		'login-logo' => '/vendor/altis/cms/assets/logo.svg',
-		'reusable-blocks' => true,
+		'reusable-blocks' => false,
 		'default-theme' => 'base',
 		'remove-emoji' => true,
 		'xmlrpc' => true,

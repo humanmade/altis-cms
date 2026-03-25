@@ -104,7 +104,7 @@ can go, one of `header`, `general` and `footer`.
 
 ### Block Patterns
 
-Block Patterns allow you to create reusable patterns of blocks that do not need to be created as reusable blocks in the admin. They
+Block Patterns allow you to create reusable patterns of blocks that do not need to be created as synced patterns in the admin. They
 are similar to template parts but can be used in any block editor context, template part or template.
 
 Using Block Patterns is necessary to provide translatable text in HTML templates, they can be included using the core pattern block
