@@ -54,13 +54,7 @@ function bootstrap() {
 		add_filter( 'get_site_icon_url', __NAMESPACE__ . '\\filter_favicon' );
 	}
 
-	// Backwards compat for `shared-blocks` option.
-	if ( isset( $config['shared-blocks'] ) ) {
-		$config['reusable-blocks'] = $config['shared-blocks'];
-	}
-	if ( $config['reusable-blocks'] ) {
-		Block_Editor\bootstrap();
-	}
+	Block_Editor\bootstrap();
 
 	if ( $config['xmlrpc'] === false ) {
 		add_filter( 'xmlrpc_enabled', '__return_false' );
