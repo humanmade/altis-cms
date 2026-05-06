@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+      - main
+      - 'v*-branch'
+  pull_request:
+    branches:
+      - master
+      - main
+      - 'v*-branch'
+
+jobs:
+  ci:
+    uses: humanmade/altis-dev-tools/.github/workflows/module-ci.yml@master
+    with:
+      altis-package: altis/cms
+    secrets:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
