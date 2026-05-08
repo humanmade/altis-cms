@@ -37,7 +37,6 @@ class SiteCest {
 		$I->waitForText( 'Site added.' );
 
 		// Test both sites are accessible, as well as their dashboards.
-		// TODO fix the subdomain site test, since Altis local-server does not yet support it.
 		$I->amOnPage( '/testsubdir/' );
 		$I->see( 'Test Subdirectory Site' );
 
@@ -63,6 +62,14 @@ class SiteCest {
 		$this->logOut( $I );
 		$I->amOnPage( '/testsubdir/' );
 		$I->see( 'This site has been archived or suspended.' );
+
+		// Subdomain site is reachable via Traefik routing. Done last because
+		// amOnUrl() reconfigures the module's base host and would break the
+		// subdirectory checks above.
+		$main_url = $I->grabBlogUrl( 1 );
+		$subdomain_url = preg_replace( '#^(https?://)#', '$1testsubdom.', $main_url );
+		$I->amOnUrl( $subdomain_url );
+		$I->see( 'Test Subdomain Site' );
 	}
 
 	/**
