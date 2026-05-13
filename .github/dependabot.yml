@@ -21,6 +21,11 @@ updates:
   target-branch: v26-branch
   commit-message:
     prefix: "[v26-branch]"
+  ignore:
+    - dependency-name: "*"
+      update-types:
+        - "version-update:semver-major"
+        - "version-update:semver-minor"
 - package-ecosystem: composer
   directory: "/"
   schedule:
@@ -32,6 +37,11 @@ updates:
   target-branch: v25-branch
   commit-message:
     prefix: "[v25-branch]"
+  ignore:
+    - dependency-name: "*"
+      update-types:
+        - "version-update:semver-major"
+        - "version-update:semver-minor"
 - package-ecosystem: composer
   directory: "/"
   schedule:
@@ -43,6 +53,11 @@ updates:
   target-branch: v24-branch
   commit-message:
     prefix: "[v24-branch]"
+  ignore:
+    - dependency-name: "*"
+      update-types:
+        - "version-update:semver-major"
+        - "version-update:semver-minor"
 - package-ecosystem: composer
   directory: "/"
   schedule:
@@ -54,3 +69,8 @@ updates:
   target-branch: v23-branch
   commit-message:
     prefix: "[v23-branch]"
+  ignore:
+    - dependency-name: "*"
+      update-types:
+        - "version-update:semver-major"
+        - "version-update:semver-minor"
