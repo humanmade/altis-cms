@@ -539,6 +539,13 @@ function altis_welcome_user_notification( $user_id, $password, $meta = [] ) {
  * @param array  $meta     Signup meta data.
  */
 function redirect_to_password_reset( $user_id, $password, $meta ) {
+	// Only redirect in the public activation flow (wp-activate.php). When a
+	// network admin activates a signup from the admin list, leave the admin
+	// flow alone so the "Activated <email>" notice renders.
+	if ( is_admin() ) {
+		return;
+	}
+
 	$user = get_userdata( $user_id );
 	if ( ! $user ) {
 		return;
@@ -579,6 +586,13 @@ function redirect_to_password_reset( $user_id, $password, $meta ) {
  * @param array  $meta     Signup meta data.
  */
 function redirect_blog_user_to_password_reset( $blog_id, $user_id, $password, $title, $meta ) {
+	// Only redirect in the public activation flow (wp-activate.php). When a
+	// network admin activates a signup from the admin list, leave the admin
+	// flow alone so the "Activated <email>" notice renders.
+	if ( is_admin() ) {
+		return;
+	}
+
 	$user = get_userdata( $user_id );
 	if ( ! $user ) {
 		return;
