@@ -18,6 +18,22 @@ updates:
   allow:
   - dependency-type: "direct"
   versioning-strategy: "increase"
+  target-branch: v27-branch
+  commit-message:
+    prefix: "[v27-branch]"
+  ignore:
+    - dependency-name: "*"
+      update-types:
+        - "version-update:semver-major"
+        - "version-update:semver-minor"
+- package-ecosystem: composer
+  directory: "/"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  allow:
+  - dependency-type: "direct"
+  versioning-strategy: "increase"
   target-branch: v26-branch
   commit-message:
     prefix: "[v26-branch]"
@@ -53,22 +69,6 @@ updates:
   target-branch: v24-branch
   commit-message:
     prefix: "[v24-branch]"
-  ignore:
-    - dependency-name: "*"
-      update-types:
-        - "version-update:semver-major"
-        - "version-update:semver-minor"
-- package-ecosystem: composer
-  directory: "/"
-  schedule:
-    interval: weekly
-  open-pull-requests-limit: 10
-  allow:
-  - dependency-type: "direct"
-  versioning-strategy: "increase"
-  target-branch: v23-branch
-  commit-message:
-    prefix: "[v23-branch]"
   ignore:
     - dependency-name: "*"
       update-types:
