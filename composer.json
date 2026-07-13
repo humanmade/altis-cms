@@ -11,7 +11,7 @@
   "require": {
     "php": ">=8.2",
     "stuttter/wp-user-signups": "^5.0.2",
-    "johnpbloch/wordpress": "7.0.0",
+    "johnpbloch/wordpress": "7.0.1",
     "altis/cms-installer": "^0.4.4",
     "humanmade/clean-html": "^2.0.0",
     "humanmade/asset-loader": "^1.0.0",
