@@ -501,7 +501,7 @@ function handle_custom_domain( string $url ) : ?array {
 	}
 
 	$domain = trim( $url_array['host'], '.' );
-	$path = trim( $url_array['path'], '/' );
+	$path = trim( $url_array['path'] ?? '', '/' );
 
 	return [
 		'domain' => idna_encode( $domain ),
