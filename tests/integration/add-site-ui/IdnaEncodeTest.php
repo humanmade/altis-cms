@@ -76,6 +76,10 @@ class IdnaEncodeTest extends \Codeception\TestCase\WPTestCase {
 
 			$contents = file_get_contents( $file->getPathname() );
 
+			// A false return would coerce to an empty string and silently scan
+			// as clean, which would make this test pass for the wrong reason.
+			$this->assertNotFalse( $contents, sprintf( 'Could not read %s', $file->getPathname() ) );
+
 			if ( preg_match( '/\bRequests_[A-Za-z_]+/', $contents ) ) {
 				$offenders[] = str_replace( $inc_dir . '/', '', $file->getPathname() );
 			}
