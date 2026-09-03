@@ -23,7 +23,7 @@ class HandleCustomDomainTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * Custom domain inputs and their expected domain and path.
 	 *
-	 * The function wp_parse_url() omits the `path` key entirely for a bare domain, 
+	 * The function wp_parse_url() omits the `path` key entirely for a bare domain,
 	 * which is the common case when a super admin adds a site by custom domain.
 	 *
 	 * @return array<string, array{0: string, 1: array}>
