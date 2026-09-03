@@ -7,7 +7,7 @@
 
 namespace Altis\CMS\Add_Site_UI;
 
-use Requests_IDNAEncoder;
+use WpOrg\Requests\IdnaEncoder;
 
 const REGEX_DOMAIN_SEGMENT = '(?![0-9]+$)(?!.*-$)(?!-)[a-zA-Z0-9-]{1,63}';
 
@@ -214,17 +214,17 @@ function validate_domain_segment( string $segment ) : bool {
 /**
  * Encode a URL string with the IDNA encoder
  *
- * @see https://developer.wordpress.org/reference/classes/requests_idnaencoder/
+ * @see https://developer.wordpress.org/reference/classes/wporg-requests-idnaencoder/
  * @see https://tools.ietf.org/html/rfc3490
  *
- * @uses https://developer.wordpress.org/reference/classes/requests_idnaencoder/encode/
+ * @uses https://developer.wordpress.org/reference/classes/wporg-requests-idnaencoder/encode/
  *
  * @param string $url A URL domain string to encode.
  *
  * @return string The encoded string.
  */
 function idna_encode( string $url ) : string {
-	return Requests_IDNAEncoder::encode( $url );
+	return IdnaEncoder::encode( $url );
 }
 
 /**
