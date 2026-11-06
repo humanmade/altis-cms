@@ -121,6 +121,9 @@ function bootstrap() {
 	// Disable the admin_email verification interval.
 	add_filter( 'admin_email_check_interval', '__return_zero' );
 
+	// Disable random content redirects.
+	add_filter( 'wp_enable_random_content_redirect', '__return_false' );
+
 	/*
 	 * Performance enhancements for comments as best practice.
 	 * This is to prevent the CMS generating large HTML pages
